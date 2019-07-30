@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 
 #@+ ========================== User configuration ===========================
-set(THIS Information_Access_Manager_Example_Code)
+set(THIS Information_Access_Manager)
 #@- ===================== END OF USER CONFIGURATION =========================
 
 set(CMAKE_VERBOSE_MAKEFILE on)
@@ -15,6 +15,11 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -Wall")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
 project(${THIS} ${PROJECT_FLAGS})
+
+#@+ ========================== User configuration ===========================
+find_package(Information_Modeler REQUIRED PATHS "./modules")
+find_package(Data_Consumer_Notifier REQUIRED PATHS "./modules")
+#@- ===================== END OF USER CONFIGURATION =========================
 
 enable_testing()
 
@@ -30,6 +35,7 @@ set(INCLUDES_DIR "${PROJECT_SOURCE_DIR}/includes")
 set(INCLUDES_DEST "include/")
 set(LIBS_DEST "lib/")
 set(BINS_DEST "bin/")
+set(CONFIGS_DEST "./")
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX "./" CACHE PATH "Specifies where the cpacked binaries and related fills will be installed." FORCE)
@@ -53,9 +59,9 @@ include_directories(${INCLUDES_DIR})
    
 add_subdirectory(sources)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_subdirectory(tests/unit_tests/Example)
-endif()
+# if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+#     add_subdirectory(tests/unit_tests/Example)
+# endif()
 
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "This module registers handles Device and Data Consumer managment")
 set(CPACK_PACKAGE_VENDOR "Hahn-Schickard")
@@ -69,10 +75,12 @@ set(CPACK_PACKAGE_VERSION_PATCH ${PACKAGE_PATCH_VER})
 set(CPACK_OUTPUT_FILE_PREFIX cpack_packages)
 
 install(DIRECTORY "${PROJECT_SOURCE_DIR}/docs/code_documentation/" DESTINATION "docs")
-if(EXISTS ${PROJECT_SOURCE_DIR}/${PROJECT_NAME}-config.cmake)
-    install(FILES ${PROJECT_NAME}-config.cmake DESTINATION ${LIBS_DEST})
+set(CONFIG_FILE "")
+string(TOLOWER ${PROJECT_NAME} CONFIG_FILE)
+if(EXISTS ${PROJECT_SOURCE_DIR}/${CONFIG_FILE}-config.cmake)
+    install(FILES ${CONFIG_FILE}-config.cmake DESTINATION ${CONFIGS_DEST})
 else()
-    message(ERROR "No ${PROJECT_NAME}-config.cmake has been found! Please provide ${PROJECT_NAME}-config.cmake so your packages could be used by other developers!")
+    message(ERROR " No ${CONFIG_FILE}-config.cmake has been found! Please provide ${CONFIG_FILE}-config.cmake so your packages could be used by other developers!")
 endif()
 install(EXPORT ${PROJECT_NAME} DESTINATION ${LIBS_DEST})
 
