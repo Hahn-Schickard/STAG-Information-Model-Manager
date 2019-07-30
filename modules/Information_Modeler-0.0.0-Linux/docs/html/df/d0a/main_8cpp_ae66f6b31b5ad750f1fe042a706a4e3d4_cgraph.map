@@ -1,0 +1,17 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$dd/d42/classModel__Factory_1_1DeviceBuilder.html#a08d83b1afbe24eb1f7eab3b9d983ee0e" title="This method calls DeviceElementGroupImpl::addDeviceElement() method to create an instance of Informat..." alt="" coords="380,333,587,375"/>
+<area shape="rect" id="node8" href="$dd/d42/classModel__Factory_1_1DeviceBuilder.html#a901b2902eb0c26729e9e3a2b3251f8b6" title="This calls DeviceImpl::addDeviceElementGroup() method, whcih sets a single instance of Information_Mo..." alt="" coords="380,399,587,440"/>
+<area shape="rect" id="node10" href="$df/d0a/main_8cpp.html#a3391735c6fdb0c59e17e8bfb25a36f1f" title="buildDeviceFromAFunction" alt="" coords="108,370,297,397"/>
+<area shape="rect" id="node11" href="$dd/d42/classModel__Factory_1_1DeviceBuilder.html#a66c6fb2f0332a17f56ffc2ac0fe1e97d" title="This method returns a pointer with full ownership rights. " alt="" coords="380,464,587,505"/>
+<area shape="rect" id="node12" href="$df/d0a/main_8cpp.html#a3c9f91031cc80b32b3c5a10c52e091bd" title="printDevice" alt="" coords="155,185,250,211"/>
+<area shape="rect" id="node3" href="$d8/d4e/classInformation__Model_1_1DeviceElementGroupImpl.html#ad09d7f77e990709d320abe021c7d4f46" title="This method creates an instance of Information_Model:DeviceElement class and adds it to DeviceElement..." alt="" coords="673,297,857,353"/>
+<area shape="rect" id="node4" href="$d8/d4e/classInformation__Model_1_1DeviceElementGroupImpl.html#a7410ba50df07d7f0ba0dab3a5def359c" title="Information_Model::\lDeviceElementGroupImpl\l::generate_Reference_ID" alt="" coords="908,286,1092,342"/>
+<area shape="rect" id="node5" href="$d3/d15/classInformation__Model_1_1NamedElement.html#af2632fe7fb4c20c7d68ea20c127d95f7" title="Information_Model::\lNamedElement::getElementRefId" alt="" coords="1140,212,1375,253"/>
+<area shape="rect" id="node6" href="$d8/d4e/classInformation__Model_1_1DeviceElementGroupImpl.html#ad702989f5cab3b5a0617cbb51234fcaa" title="Information_Model::\lDeviceElementGroupImpl\l::getNumericElementId" alt="" coords="1165,363,1349,419"/>
+<area shape="rect" id="node7" href="$d8/d4e/classInformation__Model_1_1DeviceElementGroupImpl.html#a7d0c8f8d1fbe5d85268d5c17ec328c52" title="Information_Model::\lDeviceElementGroupImpl\l::incrementElementId" alt="" coords="1165,283,1349,339"/>
+<area shape="rect" id="node9" href="$dc/d8c/classModel__Factory_1_1DeviceImpl.html#a6b4657905de62f38bd9f1c32855f985c" title="This sets the DeviceImpl: DeviceImpl::device_element_group field. " alt="" coords="669,399,860,440"/>
+<area shape="rect" id="node13" href="$d3/d15/classInformation__Model_1_1NamedElement.html#ad9240e589de0bab6d0ff52061d819069" title="Information_Model::\lNamedElement::getElementName" alt="" coords="362,268,605,309"/>
+<area shape="rect" id="node14" href="$d3/d15/classInformation__Model_1_1NamedElement.html#ad434e9f9bf62d370baae7eba8a7c1bba" title="Information_Model::\lNamedElement::getElementDescription" alt="" coords="345,5,621,47"/>
+<area shape="rect" id="node15" href="$dd/d81/classInformation__Model_1_1Device.html#aceba0b174bb27d7d887a3a5e78de1a7e" title="Information_Model::\lDevice::getDeviceElementGroup" alt="" coords="369,71,598,112"/>
+<area shape="rect" id="node16" href="$df/d20/classInformation__Model_1_1DeviceElementGroup.html#a51e3690d3c056c39f3bc1594381a12f7" title="Information_Model::\lDeviceElementGroup::\lgetSubelements" alt="" coords="401,137,566,193"/>
+</map>

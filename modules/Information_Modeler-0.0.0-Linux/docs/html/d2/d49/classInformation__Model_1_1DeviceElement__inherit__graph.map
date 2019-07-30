@@ -1,0 +1,7 @@
+<map id="Information_Model::DeviceElement" name="Information_Model::DeviceElement">
+<area shape="rect" id="node3" href="$df/d20/classInformation__Model_1_1DeviceElementGroup.html" title="This Class Models a List of Elements within the Device. It may contain more DeviceElementGroup instan..." alt="" coords="28,184,185,225"/>
+<area shape="rect" id="node6" href="$dd/d7c/classModel__Factory_1_1DeviceElementBuilder.html" title="This class constructs an instance of Information_Model::DeviceElement that are used by Model_Factory:..." alt="" coords="209,184,425,225"/>
+<area shape="rect" id="node2" href="$d3/d15/classInformation__Model_1_1NamedElement.html" title="This is the base class for all of the other modelling classes. " alt="" coords="138,5,286,47"/>
+<area shape="rect" id="node4" href="$d8/d4e/classInformation__Model_1_1DeviceElementGroupImpl.html" title="This class is an implementation of Information_Model::DeviceElementGroup It contains all of the virtu..." alt="" coords="15,273,199,315"/>
+<area shape="rect" id="node5" href="$d5/d44/classModel__Factory_1_1DeviceGroupBuilder.html" title="This class constructs an instance of Information_Model::DeviceElement that are used by Model_Factory:..." alt="" coords="5,363,208,404"/>
+</map>
