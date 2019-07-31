@@ -3,15 +3,11 @@ cmake_minimum_required(VERSION 3.6)
 set(THIS Model_Manager)
 
 file(GLOB sources_list "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
-file(GLOB includes_list "${PROJECT_SOURCE_DIR}/includes/Model_Manager/*.hpp"
-                        "${PROJECT_SOURCE_DIR}/includes/Notifier/*.hpp"
-                        "${PROJECT_SOURCE_DIR}/includes/Listener/*.hpp")
+file(GLOB includes_list "${PROJECT_SOURCE_DIR}/includes/Model_Manager/*.hpp")
 
 PRINT_MODULE_FILES(${THIS} "${sources_list}" "${includes_list}")
 
 include_directories(${PROJECT_SOURCE_DIR}/includes/Model_Manager/)
-include_directories(${PROJECT_SOURCE_DIR}/includes/Notifier/)
-include_directories(${PROJECT_SOURCE_DIR}/includes/Listener/)
 
 add_library(${THIS} SHARED
             ${sources_list}
@@ -38,8 +34,6 @@ endif ()
                            
 target_include_directories(${THIS} INTERFACE
                            $<BUILD_INTERFACE:${INCLUDES_DIR}/Model_Manager/>
-                           $<BUILD_INTERFACE:${INCLUDES_DIR}/Notifier/>
-                           $<BUILD_INTERFACE:${INCLUDES_DIR}/Listener/>
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
                            $<INSTALL_INTERFACE:${INCLUDES_DEST}>
                            $<INSTALL_INTERFACE:${LIBS_DEST}>)
