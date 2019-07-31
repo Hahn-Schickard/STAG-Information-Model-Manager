@@ -18,7 +18,7 @@ var files =
     ] ],
     [ "DeviceElementGroupImpl.cpp", "dc/d98/DeviceElementGroupImpl_8cpp.html", null ],
     [ "DeviceElementGroupImpl.hpp", "d1/d64/DeviceElementGroupImpl_8hpp.html", [
-      [ "DeviceElementGroupImpl", "d8/d4e/classInformation__Model_1_1DeviceElementGroupImpl.html", "d8/d4e/classInformation__Model_1_1DeviceElementGroupImpl" ]
+      [ "DeviceElementGroupImpl", "d4/d29/classModel__Factory_1_1DeviceElementGroupImpl.html", "d4/d29/classModel__Factory_1_1DeviceElementGroupImpl" ]
     ] ],
     [ "DeviceElementImpl.cpp", "d2/d7e/DeviceElementImpl_8cpp.html", null ],
     [ "DeviceGroupBuilder.hpp", "d3/dd2/DeviceGroupBuilder_8hpp.html", [
@@ -35,7 +35,8 @@ var files =
       [ "InvalidReferenceIdException", "d4/dd3/structInvalidReferenceIdException.html", "d4/dd3/structInvalidReferenceIdException" ],
       [ "ElementTypeMismatchException", "d9/dcc/structElementTypeMismatchException.html", "d9/dcc/structElementTypeMismatchException" ],
       [ "FunctionElementException", "d5/d07/structFunctionElementException.html", "d5/d07/structFunctionElementException" ],
-      [ "UndefinedElementTypeException", "de/d07/structUndefinedElementTypeException.html", "de/d07/structUndefinedElementTypeException" ]
+      [ "UndefinedElementTypeException", "de/d07/structUndefinedElementTypeException.html", "de/d07/structUndefinedElementTypeException" ],
+      [ "GroupElementDoesNotExistException", "d2/d45/structGroupElementDoesNotExistException.html", "d2/d45/structGroupElementDoesNotExistException" ]
     ] ],
     [ "main.cpp", "df/d0a/main_8cpp.html", "df/d0a/main_8cpp" ],
     [ "MakeUnique.hpp", "d1/de3/MakeUnique_8hpp.html", "d1/de3/MakeUnique_8hpp" ],

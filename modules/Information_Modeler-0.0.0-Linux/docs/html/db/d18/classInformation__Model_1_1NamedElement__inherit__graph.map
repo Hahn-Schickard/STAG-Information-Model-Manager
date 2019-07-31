@@ -4,6 +4,6 @@
 <area shape="rect" id="node3" href="$dc/d8c/classModel__Factory_1_1DeviceImpl.html" title="This class is an implementation of Information_Model::Device It contains all of the virtual method im..." alt="" coords="410,13,601,39"/>
 <area shape="rect" id="node5" href="$df/d20/classInformation__Model_1_1DeviceElementGroup.html" title="This Class Models a List of Elements within the Device. It may contain more DeviceElementGroup instan..." alt="" coords="427,67,584,108"/>
 <area shape="rect" id="node8" href="$dd/d7c/classModel__Factory_1_1DeviceElementBuilder.html" title="This class constructs an instance of Information_Model::DeviceElement that are used by Model_Factory:..." alt="" coords="397,132,613,173"/>
-<area shape="rect" id="node6" href="$d8/d4e/classInformation__Model_1_1DeviceElementGroupImpl.html" title="This class is an implementation of Information_Model::DeviceElementGroup It contains all of the virtu..." alt="" coords="661,67,845,108"/>
-<area shape="rect" id="node7" href="$d5/d44/classModel__Factory_1_1DeviceGroupBuilder.html" title="This class constructs an instance of Information_Model::DeviceElement that are used by Model_Factory:..." alt="" coords="893,67,1096,108"/>
+<area shape="rect" id="node6" href="$d4/d29/classModel__Factory_1_1DeviceElementGroupImpl.html" title="This class is an implementation of Information_Model::DeviceElementGroup It contains all of the virtu..." alt="" coords="661,67,877,108"/>
+<area shape="rect" id="node7" href="$d5/d44/classModel__Factory_1_1DeviceGroupBuilder.html" title="This class constructs an instance of Information_Model::DeviceElement that are used by Model_Factory:..." alt="" coords="925,67,1128,108"/>
 </map>

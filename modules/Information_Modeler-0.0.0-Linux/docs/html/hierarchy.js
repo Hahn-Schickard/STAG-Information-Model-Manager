@@ -7,6 +7,7 @@ var hierarchy =
     [ "exception", null, [
       [ "ElementTypeMismatchException", "d9/dcc/structElementTypeMismatchException.html", null ],
       [ "FunctionElementException", "d5/d07/structFunctionElementException.html", null ],
+      [ "GroupElementDoesNotExistException", "d2/d45/structGroupElementDoesNotExistException.html", null ],
       [ "InvalidReferenceIdException", "d4/dd3/structInvalidReferenceIdException.html", null ],
       [ "UndefinedElementTypeException", "de/d07/structUndefinedElementTypeException.html", null ]
     ] ],
@@ -16,7 +17,7 @@ var hierarchy =
       ] ],
       [ "Information_Model::DeviceElement", "d6/d9e/classInformation__Model_1_1DeviceElement.html", [
         [ "Information_Model::DeviceElementGroup", "df/d20/classInformation__Model_1_1DeviceElementGroup.html", [
-          [ "Information_Model::DeviceElementGroupImpl", "d8/d4e/classInformation__Model_1_1DeviceElementGroupImpl.html", [
+          [ "Model_Factory::DeviceElementGroupImpl", "d4/d29/classModel__Factory_1_1DeviceElementGroupImpl.html", [
             [ "Model_Factory::DeviceGroupBuilder", "d5/d44/classModel__Factory_1_1DeviceGroupBuilder.html", null ]
           ] ]
         ] ],
