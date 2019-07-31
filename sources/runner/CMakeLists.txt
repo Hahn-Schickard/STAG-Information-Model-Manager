@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.6) 
 
-set(THIS Runner_MAIN)
+set(THIS ${PROJECT_NAME}_Runner_MAIN)
 
 file(GLOB sources_list "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
 file(GLOB includes_list "${PROJECT_SOURCE_DIR}/includes/Model_Manager/*.hpp")
@@ -10,10 +10,6 @@ PRINT_MODULE_FILES(${THIS} "${sources_list}" "${includes_list}")
 add_executable(${THIS} 
                ${sources_list}
                ${includes_list})
-
-target_link_libraries(${THIS} PUBLIC 
-                      Model_Manager
-                      gcov)
 
 if (WIN32)
     target_link_libraries(${THIS} PUBLIC
