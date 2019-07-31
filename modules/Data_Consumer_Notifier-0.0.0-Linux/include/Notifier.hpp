@@ -6,11 +6,12 @@
 
 namespace Notifier {
 class Notifier {
-protected:
+public:
   void registerListener(std::shared_ptr<Listener> listiner) {
     listiners.push_back(listiner);
   }
 
+protected:
   void notifyListeners(Information_Model::Device *device) {
     for (auto listiner : listiners) {
       listiner->handleEvent(device);
@@ -20,6 +21,6 @@ protected:
 private:
   std::vector<std::shared_ptr<Listener>> listiners;
 };
-}
+} // namespace Notifier
 
 #endif //__NOTIFIER_HPP

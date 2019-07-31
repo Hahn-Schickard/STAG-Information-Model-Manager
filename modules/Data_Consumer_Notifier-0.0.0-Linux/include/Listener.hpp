@@ -6,9 +6,9 @@
 namespace Notifier {
 class Listener {
 public:
-  virtual ~Listener();
+  virtual ~Listener() = default;
   virtual void handleEvent(Information_Model::Device *device) = 0;
 };
-}
+} // namespace Notifier
 
 #endif //__LISTENER__HPP
