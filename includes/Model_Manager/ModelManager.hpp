@@ -6,14 +6,16 @@
 #include <memory>
 #include <unordered_map>
 
-namespace Model_Manager {
-class ModelManager : Notifier::Notifier {
+namespace Model_Manager
+{
+class ModelManager : public Notifier::Notifier
+{
 public:
-  void register_device(std::unique_ptr<Information_Model::Device> device);
+  void registerDevice(std::unique_ptr<Information_Model::Device> device);
 
 private:
   std::unordered_map<std::string, Information_Model::Device *> devices;
 };
-}
+} // namespace Model_Manager
 
 #endif //__MODEL_MANAGER_HPP
