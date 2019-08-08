@@ -97,7 +97,7 @@ unique_ptr<Device> makeTestDevice()
 int main()
 {
     ModelManager *model_manager = new ModelManager();
-    shared_ptr<SimpelListener> this_listemer(new SimpelListener());
+    SimpelListener *this_listemer = new SimpelListener();
     model_manager->registerListener(this_listemer);
 
     unique_ptr<Device> local_scope_device = makeTestDevice();
