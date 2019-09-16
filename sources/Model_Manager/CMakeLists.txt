@@ -15,18 +15,18 @@ add_library(${THIS} SHARED
 
 if (WIN32)
     target_link_libraries(${THIS} PUBLIC
-                                  Information_Model
+                                  
                                   Model_Factory
                                   Notifier)
 elseif (UNIX)
     target_link_libraries(${THIS} PUBLIC 
                                   gcov
-                                  Information_Model
+                                  
                                   Model_Factory
                                   Notifier)
 else ()
     target_link_libraries(${THIS} PUBLIC
-                                  Information_Model
+                                  
                                   Model_Factory
                                   Notifier)
     message(WARNING "Please configure your linking for your operating system for target ${THIS}")

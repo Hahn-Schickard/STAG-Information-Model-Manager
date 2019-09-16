@@ -2,7 +2,7 @@
 #include "DeviceElement.hpp"
 #include "DeviceElementBuilder.hpp"
 #include "DeviceGroupBuilder.hpp"
-#include "informationModelExceptions.hpp"
+#include "InformationModelExceptions.hpp"
 #include <memory>
 
 using namespace std;

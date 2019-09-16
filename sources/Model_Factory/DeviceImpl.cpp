@@ -1,6 +1,6 @@
 #include "DeviceImpl.hpp"
 #include <memory>
-#include "informationModelExceptions.hpp"
+#include "InformationModelExceptions.hpp"
 
 using namespace std;
 using namespace Model_Factory;

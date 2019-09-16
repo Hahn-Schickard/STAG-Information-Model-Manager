@@ -16,7 +16,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_targetsDefined)
 set(_targetsNotDefined)
 set(_expectedTargets)
-foreach(_expectedTarget Information_Model Model_Factory)
+foreach(_expectedTarget Information_Model_Interface)
   list(APPEND _expectedTargets ${_expectedTarget})
   if(NOT TARGET ${_expectedTarget})
     list(APPEND _targetsNotDefined ${_expectedTarget})
@@ -48,24 +48,15 @@ if(_IMPORT_PREFIX STREQUAL "/")
   set(_IMPORT_PREFIX "")
 endif()
 
-# Create imported target Information_Model
-add_library(Information_Model SHARED IMPORTED)
+# Create imported target Information_Model_Interface
+add_library(Information_Model_Interface INTERFACE IMPORTED)
 
-set_target_properties(Information_Model PROPERTIES
+set_target_properties(Information_Model_Interface PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/;${_IMPORT_PREFIX}/lib/"
-  INTERFACE_LINK_LIBRARIES "gcov"
 )
 
-# Create imported target Model_Factory
-add_library(Model_Factory SHARED IMPORTED)
-
-set_target_properties(Model_Factory PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/;${_IMPORT_PREFIX}/lib/"
-  INTERFACE_LINK_LIBRARIES "gcov;Information_Model"
-)
-
-if(CMAKE_VERSION VERSION_LESS 2.8.12)
-  message(FATAL_ERROR "This file relies on consumers using CMake 2.8.12 or greater.")
+if(CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "This file relies on consumers using CMake 3.0.0 or greater.")
 endif()
 
 # Load information for each installed configuration.

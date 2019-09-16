@@ -1,4 +1,4 @@
 cmake_minimum_required(VERSION 3.6)
-
+add_subdirectory(Model_Factory)
 add_subdirectory(Model_Manager)
 add_subdirectory(runner)

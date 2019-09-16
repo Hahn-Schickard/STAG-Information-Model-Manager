@@ -1,6 +1,6 @@
 #include "DeviceBuilder.hpp"
 #include "DeviceElementBuilder.hpp"
-#include "informationModelExceptions.hpp"
+#include "InformationModelExceptions.hpp"
 #include <iostream>
 
 using namespace std;

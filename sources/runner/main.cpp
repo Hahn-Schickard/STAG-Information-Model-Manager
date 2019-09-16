@@ -1,5 +1,4 @@
 #include "ModelManager.hpp"
-#include "DeviceAssembler.hpp"
 #include "Listener.hpp"
 #include <iostream>
 #include <memory>
@@ -81,27 +80,14 @@ public:
     }
 };
 
-unique_ptr<Device> makeTestDevice()
-{
-    DeviceAssembler *asembler = new DeviceAssembler("TestDevice", "1234", "A simple desc for this Test Device");
-    asembler->addDeviceElementGroup("RootGroup", "Testy test");
-    asembler->addDeviceElement("FirstLevelEmenet", "A simple element inside of the root gorup", ElementType::Readonly);
-    string parent_group = asembler->addDeviceElement("FirstLevelSubgroup", "A Subgroup inside of the root group", ElementType::Group);
-    asembler->addDeviceElement(parent_group, "SecondLevelElement", "A simple element inside of FirstLevelSubgroup", ElementType::Readonly);
-    unique_ptr<Device> device = asembler->getDevice();
-
-    delete asembler;
-    return move(device);
-}
-
 int main()
 {
     ModelManager *model_manager = new ModelManager();
     SimpelListener *this_listemer = new SimpelListener();
     model_manager->registerListener(this_listemer);
 
-    unique_ptr<Device> local_scope_device = makeTestDevice();
-    model_manager->registerDevice(move(local_scope_device));
+    //unique_ptr<Device> local_scope_device = makeTestDevice();
+    //model_manager->registerDevice(move(local_scope_device));
 
     exit(0);
 }
