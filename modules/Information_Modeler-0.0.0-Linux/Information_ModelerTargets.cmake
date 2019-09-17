@@ -16,7 +16,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_targetsDefined)
 set(_targetsNotDefined)
 set(_expectedTargets)
-foreach(_expectedTarget Information_Model_Interface)
+foreach(_expectedTarget Information_Modeler::Information_Model_Interface)
   list(APPEND _expectedTargets ${_expectedTarget})
   if(NOT TARGET ${_expectedTarget})
     list(APPEND _targetsNotDefined ${_expectedTarget})
@@ -48,11 +48,11 @@ if(_IMPORT_PREFIX STREQUAL "/")
   set(_IMPORT_PREFIX "")
 endif()
 
-# Create imported target Information_Model_Interface
-add_library(Information_Model_Interface INTERFACE IMPORTED)
+# Create imported target Information_Modeler::Information_Model_Interface
+add_library(Information_Modeler::Information_Model_Interface INTERFACE IMPORTED)
 
-set_target_properties(Information_Model_Interface PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/;${_IMPORT_PREFIX}/lib/"
+set_target_properties(Information_Modeler::Information_Model_Interface PROPERTIES
+  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/Information_Modeler-0.0.0-Linux/include//Information_Model"
 )
 
 if(CMAKE_VERSION VERSION_LESS 3.0.0)
@@ -61,7 +61,7 @@ endif()
 
 # Load information for each installed configuration.
 get_filename_component(_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-file(GLOB CONFIG_FILES "${_DIR}/Information_Modeler-*.cmake")
+file(GLOB CONFIG_FILES "${_DIR}/Information_ModelerTargets-*.cmake")
 foreach(f ${CONFIG_FILES})
   include(${f})
 endforeach()
