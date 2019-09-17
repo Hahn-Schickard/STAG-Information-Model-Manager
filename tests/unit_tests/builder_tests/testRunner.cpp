@@ -1,7 +1,6 @@
 #include "RefIDTest.hpp"
 #include "ElementNameTest.hpp"
 #include "ElementDescriptionTest.hpp"
-#include "DeviceTest.hpp"
 #include "DeviceElementTest.hpp"
 #include "DeviceElementGroupTest.hpp"
 #include "gtest/gtest.h"
