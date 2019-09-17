@@ -13,14 +13,17 @@ add_executable(${THIS}
 
 if (WIN32)
     target_link_libraries(${THIS} PUBLIC
-                                  Model_Manager)
+                                  Model_Manager
+                                  Information_Modeler::Information_Model_Interface)
 elseif (UNIX)
     target_link_libraries(${THIS} PUBLIC 
                                   Model_Manager
+                                  Information_Modeler::Information_Model_Interface
                                   gcov)
 else ()
     target_link_libraries(${THIS} PUBLIC
-                                  Model_Manager)
+                                  Model_Manager
+                                  Information_Modeler::Information_Model_Interface)
     message(WARNING "Please configure your linking for your operating system for target ${THIS}")
 endif ()
    

@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.6)
 
 set (THIS InfoModel_Test_Suite)
 
-include_directories(${Information_Modeler_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/includes/Model_Factory/)
 include_directories(${PROJECT_SOURCE_DIR}/includes/Utilities/)
 
@@ -14,6 +13,7 @@ add_executable(${THIS} ${Test_Suite} ${Test_Cases} )
 target_link_libraries(${THIS} PUBLIC
     
     Model_Factory
+    Information_Modeler::Information_Model_Interface
     gtest_main)
 
 add_test(

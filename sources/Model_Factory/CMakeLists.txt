@@ -6,8 +6,6 @@ file(GLOB sources_list "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
 file(GLOB includes_list  "${PROJECT_SOURCE_DIR}/includes/Model_Factory/*.hpp"
                          )
 
-include_directories(${Information_Modeler_DIR}/include)
-
 PRINT_MODULE_FILES(${THIS} "${sources_list}" "${includes_list}")
 
 include_directories(${PROJECT_SOURCE_DIR}/includes/Model_Factory/)
@@ -16,7 +14,10 @@ add_library(${THIS} SHARED
             ${sources_list}
             ${includes_list})
 
-
+target_link_libraries(${THIS} PUBLIC
+            Information_Modeler::Information_Model_Interface
+        )
+        
 
 
 target_include_directories(${THIS} INTERFACE

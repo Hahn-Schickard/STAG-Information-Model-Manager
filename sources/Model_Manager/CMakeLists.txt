@@ -17,17 +17,20 @@ if (WIN32)
     target_link_libraries(${THIS} PUBLIC
                                   
                                   Model_Factory
+                                  Information_Modeler::Information_Model_Interface
                                   Notifier)
 elseif (UNIX)
     target_link_libraries(${THIS} PUBLIC 
                                   gcov
                                   
                                   Model_Factory
+                                  Information_Modeler::Information_Model_Interface
                                   Notifier)
 else ()
     target_link_libraries(${THIS} PUBLIC
                                   
                                   Model_Factory
+                                  Information_Modeler::Information_Model_Interface
                                   Notifier)
     message(WARNING "Please configure your linking for your operating system for target ${THIS}")
 endif ()
