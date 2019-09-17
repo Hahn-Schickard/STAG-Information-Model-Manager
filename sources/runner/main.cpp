@@ -1,4 +1,5 @@
 #include "ModelManager.hpp"
+#include "DeviceBuilder.hpp"
 #include "Listener.hpp"
 #include <iostream>
 #include <memory>
@@ -6,6 +7,7 @@
 using namespace std;
 using namespace Model_Manager;
 using namespace Information_Model;
+using namespace Model_Factory;
 
 string
 elementType_str(ElementType elementType)
@@ -80,14 +82,26 @@ public:
     }
 };
 
+unique_ptr<Device> makeTestDevice(){
+    DeviceBuilder *builder = new DeviceBuilder("TestDevice","1234","This is a TestDevice");
+    std::string basegroupID = builder->addDeviceElementGroup("BaseGroup","This is BaseGroup");
+    builder->addDeviceElement(basegroupID, "SubTestDevice","This is the first Subelement", ElementType::Readonly);
+    std::string subgroupID = builder->addDeviceElement("TestGroup", "This is a synthetic test for device element group.", ElementType::Group);
+    builder->addDeviceElement(subgroupID, "Sub2TestDevice","This is the second Subelement", ElementType::Readonly);
+    unique_ptr<Device> device = builder->getDevice();
+
+    delete builder;
+    return move(device);
+}
+
 int main()
 {
     ModelManager *model_manager = new ModelManager();
     SimpelListener *this_listemer = new SimpelListener();
     model_manager->registerListener(this_listemer);
 
-    //unique_ptr<Device> local_scope_device = makeTestDevice();
-    //model_manager->registerDevice(move(local_scope_device));
+    unique_ptr<Device> local_scope_device = makeTestDevice();
+    model_manager->registerDevice(move(local_scope_device));
 
     exit(0);
 }
