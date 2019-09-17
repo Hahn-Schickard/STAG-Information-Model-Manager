@@ -26,13 +26,6 @@ string DeviceBuilder::addDeviceElement(const std::string NAME, const std::string
   return REF_ID;
 }
 
- 
-
-
-
-
-
-
 string DeviceBuilder::addDeviceElement(const std::string GROUP_REFID, const std::string NAME,
                                        const std::string DESC,
                                        ElementType type) 
@@ -78,9 +71,6 @@ DeviceElementGroupImpl *  DeviceBuilder::getDeviceElementGroup()
   }
 }
 
-
-
-
 string DeviceBuilder::addDeviceElementToSubgroup(DeviceElementGroupImpl * parentGroup, const string GROUP_REFID, const string NAME, const string DESC, ElementType type)
 {
   try {
@@ -115,9 +105,7 @@ DeviceElementGroupImpl * DeviceBuilder::getSubelementGroup(DeviceElementGroupImp
         return elementGroup;
       }
   }
-  return nullptr;
-  
-    
+  return nullptr;  
 }
 
 DeviceElementGroupImpl * DeviceBuilder::findElementGroup(string RefId, DeviceElementGroupImpl * deviceElementGroup)
@@ -143,9 +131,7 @@ DeviceElementGroupImpl * DeviceBuilder::findElementGroup(string RefId, DeviceEle
      }
      return nullptr;
  }
-
-
-
+ 
 unique_ptr<Information_Model::Device> DeviceBuilder::getDevice() {
   return move(device);
 }

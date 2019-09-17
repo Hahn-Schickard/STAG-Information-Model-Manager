@@ -66,18 +66,13 @@ Information_Model::DeviceElement * DeviceElementGroupImpl::findSubelement(const 
 }
 
 Information_Model::DeviceElement *
-DeviceElementGroupImpl::getSubelement(const std::string REF_ID) {
-  
- 
-  
+DeviceElementGroupImpl::getSubelement(const std::string REF_ID) {  
   auto el = findSubelement(REF_ID);
   if (el != nullptr)
     return el;
   else
-    throw InvalidReferenceIdException("RefId " + REF_ID + " not found.");
-  
+    throw InvalidReferenceIdException("RefId " + REF_ID + " not found.");  
 }
-
 
 vector<std::shared_ptr<Information_Model::DeviceElement>>
 DeviceElementGroupImpl::getSubelements() {
@@ -89,8 +84,6 @@ DeviceElementGroupImpl::getSubelements() {
   return v_subelements;
 }
 
-
-
 void DeviceElementGroupImpl::incrementElementId()
 {
    this->elementId++; 
@@ -100,7 +93,6 @@ unsigned int DeviceElementGroupImpl::getNumericElementId()
 {
   return elementId;
 }
-
 
 string DeviceElementGroupImpl::generate_Reference_ID() {
   const string BASE_ID = this->getElementRefId();
@@ -113,5 +105,4 @@ string DeviceElementGroupImpl::generate_Reference_ID() {
     element_id = "." + to_string(elId);
    incrementElementId();
   return BASE_ID + element_id;
-
 }

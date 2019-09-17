@@ -5,12 +5,9 @@
 #include "MakeUnique.hpp"
 #include "InformationModelExceptions.hpp"
 
-
 using namespace std;
 using namespace Model_Factory;
 using namespace Information_Model;
-
-
 
 TEST(DeviceBuilder, Create_NameRefIdAndDescription_ReturnsCorrectElementName)
 {
@@ -19,10 +16,9 @@ TEST(DeviceBuilder, Create_NameRefIdAndDescription_ReturnsCorrectElementName)
 	//Act
 	auto builder = make_unique<DeviceBuilder>("TestDevice","123","A device for testing only");
 	std::unique_ptr<Information_Model::Device> device = builder->getDevice();
-	// //Assert
 
+	//Assert
      ASSERT_EQ("TestDevice",device->getElementName());
-
 }
 
 TEST(DeviceBuilder, Create_NameRefIdAndDescription_ReturnsCorrectElementRefId)
@@ -32,10 +28,9 @@ TEST(DeviceBuilder, Create_NameRefIdAndDescription_ReturnsCorrectElementRefId)
 	//Act
 	auto builder = make_unique<DeviceBuilder>("TestDevice","123","A device for testing only");
 	std::unique_ptr<Information_Model::Device> device = builder->getDevice();
-	// //Assert
 
-     ASSERT_EQ("123",device->getElementRefId());
-
+	//Assert
+	ASSERT_EQ("123",device->getElementRefId());
 }
 
 TEST(DeviceBuilder, Create_NameRefIdAndDescription_ReturnsCorrectElementDescription)
@@ -45,10 +40,10 @@ TEST(DeviceBuilder, Create_NameRefIdAndDescription_ReturnsCorrectElementDescript
 	//Act
 	auto builder = make_unique<DeviceBuilder>("TestDevice","123","A device for testing only");
 	std::unique_ptr<Information_Model::Device> device = builder->getDevice();
-	// //Assert
+
+	//Assert
 
      ASSERT_EQ("A device for testing only",device->getElementDescription());
-
 }
 
 
@@ -62,9 +57,8 @@ TEST(DeviceBuilder, AddDeviceElementGroup_ReturnsCorrectGroupName)
 	std::unique_ptr<Information_Model::Device> device = builder->getDevice();
 	auto group = device->getDeviceElementGroup();
 	
-	// //Assert
+	//Assert
     ASSERT_EQ("TestBaseGroup",group->getElementName());
-
 }
 
 TEST(DeviceBuilder, AddDeviceElementGroup_ReturnsCorrectGroupDescription)
@@ -77,9 +71,8 @@ TEST(DeviceBuilder, AddDeviceElementGroup_ReturnsCorrectGroupDescription)
 	std::unique_ptr<Information_Model::Device> device = builder->getDevice();
 	auto group = device->getDeviceElementGroup();
 	
-	// //Assert
+	//Assert
     ASSERT_EQ("A base group",group->getElementDescription());
-
 }
 
 TEST(DeviceBuilder, AddDeviceElementGroup_ReturnsCorrectGroupRefId)
@@ -90,12 +83,10 @@ TEST(DeviceBuilder, AddDeviceElementGroup_ReturnsCorrectGroupRefId)
 	auto builder = make_unique<DeviceBuilder>("TestDevice","123","A device for testing only");
 	builder->addDeviceElementGroup("TestBaseGroup","A base group");
 	std::unique_ptr<Information_Model::Device> device = builder->getDevice();
-	auto group = device->getDeviceElementGroup();
+	auto group = device->getDeviceElementGroup();	
 	
-	
-	// //Assert
+	//Assert
     ASSERT_EQ("123:",group->getElementRefId());
-
 }
 
 TEST(DeviceBuilder, AddSubGroup_ReturnsCorrectGroupRefId)
@@ -124,7 +115,6 @@ TEST(DeviceBuilder, AddSubGroup_ReturnsCorrectGroupRefId)
 
 	ASSERT_EQ(1, subElements.size());
 	ASSERT_NE(nullptr,subgroup);
-	//Assert
     ASSERT_EQ("123:0",subgroup->getElementRefId());
 }
 
@@ -136,15 +126,12 @@ TEST(DeviceBuilder, AaddDeviceElement_GROUP_CorrectGroupRefId)
 	builder->addDeviceElementGroup("TestBaseGroup","A base group");
 	
 	//Act
-	builder->addDeviceElement("Subgroup1", "A Subgroup",ElementType::Group);
-	
+	builder->addDeviceElement("Subgroup1", "A Subgroup",ElementType::Group);	
 	
 	//Assert
 	std::unique_ptr<Information_Model::Device> device = builder->getDevice();
 	auto group = device->getDeviceElementGroup();
-	auto subElements = group->getSubelements();
-
-	
+	auto subElements = group->getSubelements();	
 
 	std::shared_ptr<DeviceElementGroup> subgroup;
 
@@ -196,10 +183,8 @@ TEST(DeviceBuilder, AddDeviceElement_SubgroupRefId_Observable_ReturnsCorrectMetr
 	//Assert
 	std::unique_ptr<Information_Model::Device> device = builder->getDevice();
 
-
 	auto actualRefId =  static_pointer_cast<DeviceElementGroup>(device->getDeviceElementGroup()->getSubelements()[0])->getSubelements()[0]->getElementRefId();
-	EXPECT_EQ("123:0.0",actualRefId);
-	
+	EXPECT_EQ("123:0.0",actualRefId);	
 }
 
 TEST(DeviceBuilder, Adding_Metric_To_Two_Subgroups_ReturnsCorrectRefIds)
@@ -223,8 +208,7 @@ TEST(DeviceBuilder, Adding_Metric_To_Two_Subgroups_ReturnsCorrectRefIds)
 	auto observableRefId = static_cast<DeviceElementGroup *>(device->getDeviceElementGroup()->getSubelement("123:0.0"))->getElementRefId();  
 	auto writeableRefId = static_cast<DeviceElementGroup *>(device->getDeviceElementGroup()->getSubelement("123:1.0"))->getElementRefId();  
 	EXPECT_EQ("123:0.0",observableRefId);
-	EXPECT_EQ("123:1.0",writeableRefId);
-	
+	EXPECT_EQ("123:1.0",writeableRefId);	
 }
 
 TEST(DeviceBuilder, Adding_Two_Metrics_To_One_Subgroup_ReturnsCorrectRefIds)
@@ -242,7 +226,6 @@ TEST(DeviceBuilder, Adding_Two_Metrics_To_One_Subgroup_ReturnsCorrectRefIds)
 	builder->addDeviceElement(anotherSubgroupRefId, "Observable Metric", "An observable Metric added to a subgroup", ElementType::Observable);
 	builder->addDeviceElement(anotherSubgroupRefId, "Writable Metric", "An writable Metric added to a subgroup", ElementType::Writable);	
 
-
 	//Assert
 	std::unique_ptr<Information_Model::Device> device = builder->getDevice();
 
@@ -254,8 +237,7 @@ TEST(DeviceBuilder, Adding_Two_Metrics_To_One_Subgroup_ReturnsCorrectRefIds)
 	EXPECT_EQ("123:0.0",observableRefId1);
 	EXPECT_EQ("123:0.1",writeableRefId1);
 	EXPECT_EQ("123:1.0",observableRefId2);
-	EXPECT_EQ("123:1.1",writeableRefId2);
-	
+	EXPECT_EQ("123:1.1",writeableRefId2);	
 }
 
 TEST(DeviceBuilder, Adding_Two_Metrics_And_One_Group_To_One_Subgroup_ReturnsCorrectRefIds)
@@ -290,8 +272,7 @@ TEST(DeviceBuilder, Adding_Two_Metrics_And_One_Group_To_One_Subgroup_ReturnsCorr
 	EXPECT_EQ("123:0.2",subgroupRefId1);
 	EXPECT_EQ("123:1.0",observableRefId2);
 	EXPECT_EQ("123:1.1",writeableRefId2);
-	EXPECT_EQ("123:1.2",subgroupRefId2);
-	
+	EXPECT_EQ("123:1.2",subgroupRefId2);	
 }
 
 TEST(DeviceBuilder, Adding_Two_Metrics_And_One_Group_To_One_Subgroup_ReturnsCorrectNames)
@@ -331,8 +312,7 @@ TEST(DeviceBuilder, Adding_Two_Metrics_And_One_Group_To_One_Subgroup_ReturnsCorr
 	EXPECT_EQ("Subgroup2",static_cast<DeviceElementGroup *>(device->getDeviceElementGroup()->getSubelement(anotherSubgroupRefId))->getElementName());
 	EXPECT_EQ("Observable Metric 2",observableRefId2);
 	EXPECT_EQ("Writable Metric 2",writeableRefId2);
-	EXPECT_EQ("Subgroup2a",subgroupRefId2);
-	
+	EXPECT_EQ("Subgroup2a",subgroupRefId2);	
 }
 
 TEST(DeviceBuilder, getDeviceElementGroup_throws_exception_when_accessing_not_existing_elements)
@@ -341,9 +321,6 @@ TEST(DeviceBuilder, getDeviceElementGroup_throws_exception_when_accessing_not_ex
    	auto builder = make_unique<DeviceBuilder>("TestDevice","123","A device for testing only");
 	
 	std::unique_ptr<Information_Model::Device> device = builder->getDevice();
-	
-	//Act
-	
 
 	//Assert
 	EXPECT_THROW(auto elGroup = device->getDeviceElementGroup(),GroupElementDoesNotExistException);
