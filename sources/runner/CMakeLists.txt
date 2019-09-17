@@ -14,17 +14,20 @@ add_executable(${THIS}
 if (WIN32)
     target_link_libraries(${THIS} PUBLIC
                                   Model_Manager
-                                  Information_Modeler::Information_Model_Interface)
+                                  Information_Modeler::Information_Model_Interface
+                        )
 elseif (UNIX)
     target_link_libraries(${THIS} PUBLIC 
                                   Model_Manager
                                   Information_Modeler::Information_Model_Interface
-                                  gcov)
+                                  gcov
+                        )
 else ()
     target_link_libraries(${THIS} PUBLIC
                                   Model_Manager
                                   Information_Modeler::Information_Model_Interface)
-    message(WARNING "Please configure your linking for your operating system for target ${THIS}")
+    message(WARNING "Please configure your linking for your operating system for target ${THIS}"
+                        )
 endif ()
    
 if(CLANG_TIDY_EXE)               
@@ -41,7 +44,8 @@ add_custom_command(TARGET ${THIS} POST_BUILD
                         $<TARGET_FILE:${THIS}> 
                         "${CMAKE_BINARY_DIR}/bin"
                     COMMENT "Copying shared library files from ${CMAKE_CURRENT_BINARY_DIR} directory to ${CMAKE_BINARY_DIR}/bin directory."
-                        VERBATIM)
+                        VERBATIM
+                  )
 
 install(
     TARGETS ${THIS} 

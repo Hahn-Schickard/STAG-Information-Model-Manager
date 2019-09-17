@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.6)
 
 set (THIS InfoModel_Test_Suite)
 
-include_directories(${PROJECT_SOURCE_DIR}/includes/Model_Factory/)
 include_directories(${PROJECT_SOURCE_DIR}/includes/Utilities/)
 
 file(GLOB Test_Suite "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
@@ -10,11 +9,11 @@ file(GLOB Test_Cases "${CMAKE_CURRENT_LIST_DIR}/*.hpp")
 
 add_executable(${THIS} ${Test_Suite} ${Test_Cases} )
 
-target_link_libraries(${THIS} PUBLIC
-    
+target_link_libraries(${THIS} PUBLIC    
     Model_Factory
     Information_Modeler::Information_Model_Interface
-    gtest_main)
+    gtest_main
+)
 
 add_test(
     NAME ${THIS}
@@ -23,9 +22,10 @@ add_test(
 
 if(CLANG_TIDY_EXE)               
     set_target_properties(
-                        ${THIS} PROPERTIES
-                        CXX_CLANG_TIDY ${CMAKE_CXX_CLANG_TIDY}
-                        )
+        ${THIS} PROPERTIES
+        CXX_CLANG_TIDY ${CMAKE_CXX_CLANG_TIDY}
+    
+        )
 endif() 
 
 if(WIN32)
