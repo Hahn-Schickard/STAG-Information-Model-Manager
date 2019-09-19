@@ -1,42 +1,41 @@
 cmake_minimum_required(VERSION 3.6) 
 
-set(THIS ${PROJECT_NAME}_Runner_MAIN)
+set(THIS Model_Factory)
 
 file(GLOB sources_list "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
-file(GLOB includes_list "${PROJECT_SOURCE_DIR}/includes/Model_Manager/*.hpp")
+file(GLOB includes_list  "${PROJECT_SOURCE_DIR}/includes/Model_Factory/*.hpp"
+                         )
 
 PRINT_MODULE_FILES(${THIS} "${sources_list}" "${includes_list}")
 
-add_executable(${THIS} 
-               ${sources_list}
-               ${includes_list})
+include_directories(${PROJECT_SOURCE_DIR}/includes/Model_Factory/)
 
-if (WIN32)
-    target_link_libraries(${THIS} PUBLIC
-                                  Model_Manager
-                                  Information_Modeler::Information_Model_Interface
-                        )
-elseif (UNIX)
-    target_link_libraries(${THIS} PUBLIC 
-                                  Model_Manager
-                                  Information_Modeler::Information_Model_Interface
-                                  gcov
-                        )
-else ()
-    target_link_libraries(${THIS} PUBLIC
-                                  Model_Manager
-                                  Information_Modeler::Information_Model_Interface)
-    message(WARNING "Please configure your linking for your operating system for target ${THIS}"
-                        )
-endif ()
-   
+add_library(${THIS} SHARED
+            ${sources_list}
+            ${includes_list}
+           )
+
+target_link_libraries(${THIS} PUBLIC
+            Information_Modeler::Information_Model_Interface
+        )
+        
+
+
+target_include_directories(${THIS} INTERFACE
+                           $<BUILD_INTERFACE:${Information_Modeler_DIR}/include>
+                           $<BUILD_INTERFACE:${INCLUDES_DIR}/Model_Factory/>
+                           $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+                           $<INSTALL_INTERFACE:${INCLUDES_DEST}>
+                           $<INSTALL_INTERFACE:${LIBS_DEST}>
+                          )
+
 if(CLANG_TIDY_EXE)               
     set_target_properties(
                         ${THIS} PROPERTIES
                         CXX_CLANG_TIDY ${CMAKE_CXX_CLANG_TIDY}
                         )
 endif()    
-
+                           
 add_custom_command(TARGET ${THIS} POST_BUILD 
                     COMMAND ${CMAKE_COMMAND} -E make_directory 
                         ${CMAKE_BINARY_DIR}/bin
@@ -50,8 +49,8 @@ add_custom_command(TARGET ${THIS} POST_BUILD
 install(
     TARGETS ${THIS} 
     EXPORT ${PROJECT_NAME}
-    RUNTIME 
-    DESTINATION ${BINS_DEST}
+    ARCHIVE DESTINATION ${LIBS_DEST}
+    LIBRARY DESTINATION ${LIBS_DEST}
     COMPONENT libraries
 )
 

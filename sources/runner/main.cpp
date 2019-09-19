@@ -1,5 +1,5 @@
 #include "ModelManager.hpp"
-#include "DeviceAssembler.hpp"
+#include "DeviceBuilder.hpp"
 #include "Listener.hpp"
 #include <iostream>
 #include <memory>
@@ -7,6 +7,7 @@
 using namespace std;
 using namespace Model_Manager;
 using namespace Information_Model;
+using namespace Model_Factory;
 
 string
 elementType_str(ElementType elementType)
@@ -81,16 +82,15 @@ public:
     }
 };
 
-unique_ptr<Device> makeTestDevice()
-{
-    DeviceAssembler *asembler = new DeviceAssembler("TestDevice", "1234", "A simple desc for this Test Device");
-    asembler->addDeviceElementGroup("RootGroup", "Testy test");
-    asembler->addDeviceElement("FirstLevelEmenet", "A simple element inside of the root gorup", ElementType::Readonly);
-    string parent_group = asembler->addDeviceElement("FirstLevelSubgroup", "A Subgroup inside of the root group", ElementType::Group);
-    asembler->addDeviceElement(parent_group, "SecondLevelElement", "A simple element inside of FirstLevelSubgroup", ElementType::Readonly);
-    unique_ptr<Device> device = asembler->getDevice();
+unique_ptr<Device> makeTestDevice(){
+    DeviceBuilder *builder = new DeviceBuilder("TestDevice","1234","This is a TestDevice");
+    std::string basegroupID = builder->addDeviceElementGroup("BaseGroup","This is BaseGroup");
+    builder->addDeviceElement(basegroupID, "SubTestDevice","This is the first Subelement", ElementType::Readonly);
+    std::string subgroupID = builder->addDeviceElement("TestGroup", "This is a synthetic test for device element group.", ElementType::Group);
+    builder->addDeviceElement(subgroupID, "Sub2TestDevice","This is the second Subelement", ElementType::Readonly);
+    unique_ptr<Device> device = builder->getDevice();
 
-    delete asembler;
+    delete builder;
     return move(device);
 }
 

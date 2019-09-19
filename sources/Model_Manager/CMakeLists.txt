@@ -11,24 +11,31 @@ include_directories(${PROJECT_SOURCE_DIR}/includes/Model_Manager/)
 
 add_library(${THIS} SHARED
             ${sources_list}
-            ${includes_list})
+            ${includes_list}
+           )
 
 if (WIN32)
     target_link_libraries(${THIS} PUBLIC
-                                  Information_Model
+                                  
                                   Model_Factory
-                                  Notifier)
+                                  Information_Modeler::Information_Model_Interface
+                                  Notifier
+                         )
 elseif (UNIX)
     target_link_libraries(${THIS} PUBLIC 
                                   gcov
-                                  Information_Model
+                                  
                                   Model_Factory
-                                  Notifier)
+                                  Information_Modeler::Information_Model_Interface
+                                  Notifier
+                         )
 else ()
     target_link_libraries(${THIS} PUBLIC
-                                  Information_Model
+                                  
                                   Model_Factory
-                                  Notifier)
+                                  Information_Modeler::Information_Model_Interface
+                                  Notifier
+                         )
     message(WARNING "Please configure your linking for your operating system for target ${THIS}")
 endif ()
                            
@@ -36,7 +43,8 @@ target_include_directories(${THIS} INTERFACE
                            $<BUILD_INTERFACE:${INCLUDES_DIR}/Model_Manager/>
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
                            $<INSTALL_INTERFACE:${INCLUDES_DEST}>
-                           $<INSTALL_INTERFACE:${LIBS_DEST}>)
+                           $<INSTALL_INTERFACE:${LIBS_DEST}>
+                          )
 
 if(CLANG_TIDY_EXE)               
     set_target_properties(
@@ -52,7 +60,8 @@ add_custom_command(TARGET ${THIS} POST_BUILD
                         $<TARGET_FILE:${THIS}> 
                         "${CMAKE_BINARY_DIR}/bin"
                     COMMENT "Copying shared library files from ${CMAKE_CURRENT_BINARY_DIR} directory to ${CMAKE_BINARY_DIR}/bin directory."
-                        VERBATIM)
+                        VERBATIM
+                  )
 
 install(
     TARGETS ${THIS} 
