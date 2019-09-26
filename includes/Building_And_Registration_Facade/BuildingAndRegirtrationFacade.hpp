@@ -12,6 +12,7 @@ class BuildingAndRegirtrationFacade
     : public Information_Model_Static_Part::BuildingAndRegistrationInterface {
 
 public:
+  BuildingAndRegirtrationFacade();
   void buildDeviceBase(const std::string UNIQUE_ID, const std::string NAME,
                        const std::string DESC);
   std::string buildDeviceElement(const std::string NAME, const std::string DESC,
@@ -25,7 +26,7 @@ public:
 
 private:
   std::shared_ptr<Model_Manager::ModelManager> manager_;
-  Model_Factory::DeviceBuilder builder_;
+  Model_Factory::DeviceBuilder *builder_;
 };
 } // namespace Information_Access_Manager
 
