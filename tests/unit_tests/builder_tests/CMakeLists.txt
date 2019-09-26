@@ -10,9 +10,9 @@ file(GLOB Test_Cases "${CMAKE_CURRENT_LIST_DIR}/*.hpp")
 add_executable(${THIS} ${Test_Suite} ${Test_Cases} )
 
 target_link_libraries(${THIS} PUBLIC    
-    Model_Factory
-    Information_Modeler::Information_Model_Interface
-    gtest_main
+                              Information_Modeler::Information_Model_Interface
+                              Model_Factory
+                              gtest_main
 )
 
 add_test(
@@ -23,9 +23,8 @@ add_test(
 if(CLANG_TIDY_EXE)               
     set_target_properties(
         ${THIS} PROPERTIES
-        CXX_CLANG_TIDY ${CMAKE_CXX_CLANG_TIDY}
-    
-        )
+        CMAKE_CXX_CLANG_TIDY "${CMAKE_CXX_CLANG_TIDY}"
+)
 endif() 
 
 if(WIN32)
