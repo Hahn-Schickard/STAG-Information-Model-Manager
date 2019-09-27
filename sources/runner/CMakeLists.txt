@@ -5,7 +5,7 @@ set(THIS ${PROJECT_NAME}_Runner_MAIN)
 file(GLOB sources_list "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
 
 INCLUDE_DIRS_AND_FILES(PUBLIC_INCLUDES_DIRS PUBLIC_INCLUDES)
-PRINT_MODULE_FILES(${THIS} "${sources_list}" "${PUBLIC_INCLUDES}")
+PRINT_MODULE_FILES(${THIS} ${sources_list} "${PUBLIC_INCLUDES}")
 
 add_executable(${THIS} 
                ${PUBLIC_INCLUDES}
