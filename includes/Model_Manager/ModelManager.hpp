@@ -6,10 +6,8 @@
 #include <memory>
 #include <unordered_map>
 
-namespace Model_Manager
-{
-class ModelManager : public Notifier::Notifier
-{
+namespace Model_Manager {
+class ModelManager : public Notifier::Notifier {
 public:
   void registerDevice(std::unique_ptr<Information_Model::Device> device);
 

@@ -21,7 +21,8 @@ protected:
       : NamedElement(REF_ID, NAME, DESC) {}
 
 public:
-  virtual DeviceElementGroup *getDeviceElementGroup() = 0;
+  virtual std::shared_ptr<Information_Model::DeviceElementGroup>
+  getDeviceElementGroup() = 0;
 };
 } // namespace Information_Model
 
