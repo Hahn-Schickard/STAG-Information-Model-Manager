@@ -49,7 +49,7 @@ target_include_directories(${THIS} INTERFACE
 if(CLANG_TIDY_EXE)               
     set_target_properties(
                         ${THIS} PROPERTIES
-                        CXX_CLANG_TIDY ${CMAKE_CXX_CLANG_TIDY}
+                        CMAKE_CXX_CLANG_TIDY "${CMAKE_CXX_CLANG_TIDY}"
                         )
 endif()    
                            
