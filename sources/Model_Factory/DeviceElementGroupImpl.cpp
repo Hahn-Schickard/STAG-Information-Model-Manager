@@ -81,7 +81,7 @@ DeviceElementGroupImpl::getSubelements() {
   return v_subelements;
 }
 
-void DeviceElementGroupImpl::incrementElementId() { this->elementId++; }
+void DeviceElementGroupImpl::incrementElementId() { elementId++; }
 
 unsigned int DeviceElementGroupImpl::getNumericElementId() { return elementId; }
 
