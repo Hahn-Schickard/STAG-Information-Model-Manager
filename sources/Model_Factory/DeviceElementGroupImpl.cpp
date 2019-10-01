@@ -31,7 +31,14 @@ string DeviceElementGroupImpl::addDeviceElement(const std::string NAME,
   case ElementType::Observable:
   case ElementType::Writable:
   case ElementType::Readonly:
-  case ElementType::Function: 
+  case ElementType::Function: {
+      //@TODO remove at once Readonly when it is implemented
+	   pair<string, shared_ptr<DeviceElement>> elPair(
+       REF_ID,
+	   shared_ptr<DeviceElement>(new Model_Factory::DeviceElementBuilder(
+	            REF_ID, NAME, DESC, ELEMENT_TYPE)));
+	    subelements.insert(elPair);
+	  }; break;
   default: {}
   }
   return REF_ID;
