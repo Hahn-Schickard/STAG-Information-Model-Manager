@@ -43,22 +43,6 @@ public:
                 const std::string DESC);
 
   /**
-   * @brief This calls DeviceImpl::addDeviceElementGroup() method, whcih sets a
-   * single instance of Information_Model::DeviceElementGroup within. This
-   * method
-   * should be only called once per device construction!
-   *
-   * If called more than once, it will override the previous instance of
-   * DeviceImpl: DeviceImpl::device_element_group
-   * If you want to add DeviceElementGroup instances, you need to call
-   * DeviceBuilder::addDeviceElement()
-   *
-   * @param NAME
-   * @param DESC
-   * @return std::string Reference ID of DeviceImpl:
-   * DeviceImpl::device_element_group
-   */
-  /**
   * @brief This method calls DeviceElementGroupImpl::addDeviceElement() method
   * to
   * create an instance of Information_Model:DeviceElement class
