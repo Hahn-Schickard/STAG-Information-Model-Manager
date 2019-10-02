@@ -96,8 +96,6 @@ TEST(DeviceBuilder, AddSubGroup_ReturnsCorrectGroupRefId) {
   // Arrange
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  builder->addDeviceElement("BaseGroup", "This is BaseGroup",
-                            ElementType::Group);
 
   // Act
   builder->addDeviceElement("Subgroup1", "A Subgroup", ElementType::Group);
@@ -105,7 +103,9 @@ TEST(DeviceBuilder, AddSubGroup_ReturnsCorrectGroupRefId) {
   // Assert
   std::unique_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
+
   auto group = device->getDeviceElementGroup();
+
   auto subElements = group->getSubelements();
 
   std::shared_ptr<DeviceElementGroup> subgroup;
@@ -116,7 +116,7 @@ TEST(DeviceBuilder, AddSubGroup_ReturnsCorrectGroupRefId) {
     }
   }
 
-  ASSERT_EQ(2, subElements.size());
+  ASSERT_EQ(1, subElements.size());
   ASSERT_NE(nullptr, subgroup);
   ASSERT_EQ("123:0", subgroup->getElementRefId());
 }
@@ -125,8 +125,6 @@ TEST(DeviceBuilder, AaddDeviceElement_GROUP_CorrectGroupRefId) {
   // Arrange
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  builder->addDeviceElement("BaseGroup", "This is BaseGroup",
-                            ElementType::Group);
 
   // Act
   builder->addDeviceElement("Subgroup1", "A Subgroup", ElementType::Group);
@@ -145,7 +143,7 @@ TEST(DeviceBuilder, AaddDeviceElement_GROUP_CorrectGroupRefId) {
     }
   }
 
-  ASSERT_EQ(2, subElements.size());
+  ASSERT_EQ(1, subElements.size());
   ASSERT_NE(nullptr, subgroup);
   // Assert
   ASSERT_EQ("123:0", subgroup->getElementRefId());
@@ -155,8 +153,6 @@ TEST(DeviceBuilder, AddDeviceElement_GROUP_ElementTypeIsGroup) {
   // Arrange
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  builder->addDeviceElement("BaseGroup", "This is BaseGroup",
-                            ElementType::Group);
 
   // Act
   auto refId =
@@ -169,7 +165,7 @@ TEST(DeviceBuilder, AddDeviceElement_GROUP_ElementTypeIsGroup) {
   ASSERT_EQ(ElementType::Group, aGroup->getElementType());
 
   auto aSubelements = aGroup->getSubelements();
-  ASSERT_EQ(2, aSubelements.size());
+  ASSERT_EQ(1, aSubelements.size());
 
   auto aSubgroup = aSubelements[0];
   EXPECT_EQ(ElementType::Group, aSubgroup->getElementType());
@@ -206,44 +202,41 @@ TEST(DeviceBuilder, Adding_Metric_To_Two_Subgroups_ReturnsCorrectRefIds) {
   // Arrange
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  builder->addDeviceElement("BaseGroup", "This is BaseGroup",
-                            ElementType::Group);
-
+  // builder->addDeviceElement("BaseGroup", "This is BaseGroup",
+  //                          ElementType::Group);
   // Act
   auto subgroupRefId =
       builder->addDeviceElement("Subgroup1", "A Subgroup", ElementType::Group);
   auto addedObservableRefId = builder->addDeviceElement(
       subgroupRefId, "Observable Metric",
       "An observable Metric added to a subgroup", ElementType::Observable);
-  EXPECT_EQ("123:1.0", addedObservableRefId);
+  EXPECT_EQ("123:0.0", addedObservableRefId);
 
   auto anotherSubgroupRefId = builder->addDeviceElement(
       "Subgroup2", "Another Subgroup", ElementType::Group);
   auto addedWritableRefId = builder->addDeviceElement(
       anotherSubgroupRefId, "Writable Metric",
       "An writable Metric added to a subgroup", ElementType::Writable);
-  EXPECT_EQ("123:2.0", addedWritableRefId);
+  EXPECT_EQ("123:1.0", addedWritableRefId);
 
   // Assert
   std::unique_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
 
   auto observableRefId = device->getDeviceElementGroup()
-                             ->getSubelement("123:1.0")
+                             ->getSubelement("123:0.0")
                              ->getElementRefId();
   auto writeableRefId = device->getDeviceElementGroup()
-                            ->getSubelement("123:2.0")
+                            ->getSubelement("123:1.0")
                             ->getElementRefId();
-  EXPECT_EQ("123:1.0", observableRefId);
-  EXPECT_EQ("123:2.0", writeableRefId);
+  EXPECT_EQ("123:0.0", observableRefId);
+  EXPECT_EQ("123:1.0", writeableRefId);
 }
 
 TEST(DeviceBuilder, Adding_Two_Metrics_To_One_Subgroup_ReturnsCorrectRefIds) {
   // Arrange
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  builder->addDeviceElement("BaseGroup", "This is BaseGroup",
-                            ElementType::Group);
 
   // Act
   auto subgroupRefId =
@@ -269,22 +262,22 @@ TEST(DeviceBuilder, Adding_Two_Metrics_To_One_Subgroup_ReturnsCorrectRefIds) {
   delete builder;
 
   auto observableRefId1 = device->getDeviceElementGroup()
-                              ->getSubelement("123:1.0")
+                              ->getSubelement("123:0.0")
                               ->getElementRefId();
   auto writeableRefId1 = device->getDeviceElementGroup()
-                             ->getSubelement("123:1.1")
+                             ->getSubelement("123:0.1")
                              ->getElementRefId();
   auto observableRefId2 = device->getDeviceElementGroup()
-                              ->getSubelement("123:2.0")
+                              ->getSubelement("123:1.0")
                               ->getElementRefId();
   auto writeableRefId2 = device->getDeviceElementGroup()
-                             ->getSubelement("123:2.1")
+                             ->getSubelement("123:1.1")
                              ->getElementRefId();
 
-  EXPECT_EQ("123:1.0", observableRefId1);
-  EXPECT_EQ("123:1.1", writeableRefId1);
-  EXPECT_EQ("123:2.0", observableRefId2);
-  EXPECT_EQ("123:2.1", writeableRefId2);
+  EXPECT_EQ("123:0.0", observableRefId1);
+  EXPECT_EQ("123:0.1", writeableRefId1);
+  EXPECT_EQ("123:1.0", observableRefId2);
+  EXPECT_EQ("123:1.1", writeableRefId2);
 }
 
 TEST(DeviceBuilder,
@@ -292,8 +285,6 @@ TEST(DeviceBuilder,
   // Arrange
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  builder->addDeviceElement("BaseGroup", "This is BaseGroup",
-                            ElementType::Group);
 
   // Act
   auto subgroupRefId =
@@ -325,30 +316,30 @@ TEST(DeviceBuilder,
   delete builder;
 
   auto observableRefId1 = device->getDeviceElementGroup()
-                              ->getSubelement("123:1.0")
+                              ->getSubelement("123:0.0")
                               ->getElementRefId();
   auto writeableRefId1 = device->getDeviceElementGroup()
-                             ->getSubelement("123:1.1")
+                             ->getSubelement("123:0.1")
                              ->getElementRefId();
   auto subgroupRefId1 = device->getDeviceElementGroup()
-                            ->getSubelement("123:1.2")
+                            ->getSubelement("123:0.2")
                             ->getElementRefId();
   auto observableRefId2 = device->getDeviceElementGroup()
-                              ->getSubelement("123:2.0")
+                              ->getSubelement("123:1.0")
                               ->getElementRefId();
   auto writeableRefId2 = device->getDeviceElementGroup()
-                             ->getSubelement("123:2.1")
+                             ->getSubelement("123:1.1")
                              ->getElementRefId();
   auto subgroupRefId2 = device->getDeviceElementGroup()
-                            ->getSubelement("123:2.2")
+                            ->getSubelement("123:1.2")
                             ->getElementRefId();
 
-  EXPECT_EQ("123:1.0", observableRefId1);
-  EXPECT_EQ("123:1.1", writeableRefId1);
-  EXPECT_EQ("123:1.2", subgroupRefId1);
-  EXPECT_EQ("123:2.0", observableRefId2);
-  EXPECT_EQ("123:2.1", writeableRefId2);
-  EXPECT_EQ("123:2.2", subgroupRefId2);
+  EXPECT_EQ("123:0.0", observableRefId1);
+  EXPECT_EQ("123:0.1", writeableRefId1);
+  EXPECT_EQ("123:0.2", subgroupRefId1);
+  EXPECT_EQ("123:1.0", observableRefId2);
+  EXPECT_EQ("123:1.1", writeableRefId2);
+  EXPECT_EQ("123:1.2", subgroupRefId2);
 }
 
 TEST(DeviceBuilder,
@@ -356,8 +347,6 @@ TEST(DeviceBuilder,
   // Arrange
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  builder->addDeviceElement("BaseGroup", "This is BaseGroup",
-                            ElementType::Group);
 
   // Act
   auto subgroupRefId =
@@ -389,22 +378,22 @@ TEST(DeviceBuilder,
   delete builder;
 
   auto observableRefId1 = device->getDeviceElementGroup()
-                              ->getSubelement("123:1.0")
+                              ->getSubelement("123:0.0")
                               ->getElementName();
   auto writeableRefId1 = device->getDeviceElementGroup()
-                             ->getSubelement("123:1.1")
+                             ->getSubelement("123:0.1")
                              ->getElementName();
   auto subgroupRefId1 = device->getDeviceElementGroup()
-                            ->getSubelement("123:1.2")
+                            ->getSubelement("123:0.2")
                             ->getElementName();
   auto observableRefId2 = device->getDeviceElementGroup()
-                              ->getSubelement("123:2.0")
+                              ->getSubelement("123:1.0")
                               ->getElementName();
   auto writeableRefId2 = device->getDeviceElementGroup()
-                             ->getSubelement("123:2.1")
+                             ->getSubelement("123:1.1")
                              ->getElementName();
   auto subgroupRefId2 = device->getDeviceElementGroup()
-                            ->getSubelement("123:2.2")
+                            ->getSubelement("123:1.2")
                             ->getElementName();
 
   EXPECT_EQ("TestDevice", device->getElementName());
@@ -423,4 +412,38 @@ TEST(DeviceBuilder,
   EXPECT_EQ("Observable Metric 2", observableRefId2);
   EXPECT_EQ("Writable Metric 2", writeableRefId2);
   EXPECT_EQ("Subgroup2a", subgroupRefId2);
+}
+
+TEST(DeviceBuilder, CallingRecursiveSubgroupReturnsCorrectRefID) {
+  // Arrange
+  auto builder =
+      new DeviceBuilder("TestDevice", "123", "A device for testing only");
+  builder->addDeviceElement("BaseGroup", "This is BaseGroup",
+                            ElementType::Group);
+  string FirstLevelREFID = builder->addDeviceElement(
+      "FirstSubGroup", "First Level Subgroup", ElementType::Group);
+  string SecondLevelREFID =
+      builder->addDeviceElement(FirstLevelREFID, "SecondSubGroup",
+                                "Second Level Subgroup", ElementType::Group);
+  string SecondLevelItemREFID = builder->addDeviceElement(
+      SecondLevelREFID, "SecondLevelItemREFID",
+      "Item within Second Level Subgroup", ElementType::Observable);
+
+  auto device = builder->getDevice();
+
+  // Act
+  auto group = device->getDeviceElementGroup()->getSubelements();
+
+  for (auto firstelement : group) {
+    if (firstelement->getElementType() == ElementType::Group) {
+      auto subgroup = static_pointer_cast<DeviceElementGroup>(firstelement);
+      for (auto secondelement : subgroup->getSubelements()) {
+        auto SecondLevelSubgroup =
+            static_pointer_cast<DeviceElementGroup>(secondelement);
+        for (auto thirdelement : SecondLevelSubgroup->getSubelements()) {
+          EXPECT_EQ(SecondLevelItemREFID, thirdelement->getElementRefId());
+        }
+      }
+    }
+  }
 }
