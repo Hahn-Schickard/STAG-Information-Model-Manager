@@ -77,8 +77,8 @@ public:
 unique_ptr<Device> makeTestDevice() {
   DeviceBuilder *builder =
       new DeviceBuilder("TestDevice", "1234", "This is a TestDevice");
-  std::string basegroupID =
-      builder->addDeviceElementGroup("BaseGroup", "This is BaseGroup");
+  std::string basegroupID = builder->addDeviceElement(
+      "BaseGroup", "This is BaseGroup", ElementType::Group);
   builder->addDeviceElement(basegroupID, "SubTestDevice",
                             "This is the first Subelement",
                             ElementType::Readonly);
