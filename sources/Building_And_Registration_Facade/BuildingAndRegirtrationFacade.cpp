@@ -14,8 +14,6 @@ void BuildingAndRegirtrationFacade::buildDeviceBase(const string UNIQUE_ID,
                                                     const string NAME,
                                                     const string DESC) {
   builder_ = new DeviceBuilder(NAME, UNIQUE_ID, DESC);
-  builder_->addDeviceElementGroup(
-      "Root Group", "Holds all of the elements within this device.");
 }
 
 string BuildingAndRegirtrationFacade::buildDeviceElement(const string NAME,
