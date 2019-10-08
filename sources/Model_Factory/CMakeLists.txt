@@ -3,13 +3,12 @@ cmake_minimum_required(VERSION 3.6)
 set(THIS Model_Factory)
 
 list(APPEND PUBLIC_INCLUDES_DIRS
-            ${PROJECT_SOURCE_DIR}/includes/Model_Factory
+            ${INCLUDES_DIR}/Model_Factory
 )
 
 file(GLOB sources_list "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
 
-INCLUDE_DIRS_AND_FILES(PUBLIC_INCLUDES_DIRS PUBLIC_INCLUDES)
-PRINT_MODULE_FILES(${THIS} "${sources_list}" "${PUBLIC_INCLUDES}")
+INCLUDE_DIRS_AND_FILES("${PUBLIC_INCLUDES_DIRS}" PUBLIC_INCLUDES)
 
 add_library(${THIS} SHARED
                     ${PUBLIC_INCLUDES}
@@ -20,7 +19,7 @@ target_sources(${THIS} PRIVATE
 )
 
 target_link_libraries(${THIS} PUBLIC
-            Information_Modeler::Information_Model_Interface
+                        Information_Modeler::Information_Model_Interface
 )
         
 if (UNIX)
@@ -29,24 +28,21 @@ if (UNIX)
     )
 endif ()
 
-PRINT_TARGET_LIBS(${THIS})
-
 target_include_directories(${THIS} INTERFACE
                            $<BUILD_INTERFACE:${INCLUDES_DIR}/Model_Factory/>
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-                           $<INSTALL_INTERFACE:${THIS_PACKAGE_NAME}/${INCLUDES_DEST}/Model_Factory>
-                           $<INSTALL_INTERFACE:${THIS_PACKAGE_NAME}/${LIBS_DEST}>
+                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Model_Factory>
 )
-
-set_target_properties(${THIS} PROPERTIES LINKER_LANGUAGE CXX)
 
 if(CLANG_TIDY_EXE)               
     set_target_properties(
-        ${THIS} PROPERTIES
-        CMAKE_CXX_CLANG_TIDY "${CMAKE_CXX_CLANG_TIDY}"
-)
-endif() 
-                           
+                        ${THIS} PROPERTIES
+                        CMAKE_CXX_CLANG_TIDY "${CMAKE_CXX_CLANG_TIDY}"
+    )
+endif()    
+
+PRINT_TARGET_PROPERTIES(${THIS})
+
 add_custom_command(TARGET ${THIS} POST_BUILD 
                     COMMAND ${CMAKE_COMMAND} -E make_directory 
                         ${CMAKE_BINARY_DIR}/bin
@@ -58,15 +54,12 @@ add_custom_command(TARGET ${THIS} POST_BUILD
 )
 
 install(
-    TARGETS ${THIS} 
-    EXPORT ${PROJECT_NAME}
-    ARCHIVE DESTINATION ${LIBS_DEST}
-    LIBRARY DESTINATION ${LIBS_DEST}
-    COMPONENT libraries
+    TARGETS ${THIS}
+    EXPORT ${PROJECT_NAME}Targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
 install(
     DIRECTORY ${PUBLIC_INCLUDES_DIRS}
-    DESTINATION ${INCLUDES_DEST}
-    COMPONENT headers
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
