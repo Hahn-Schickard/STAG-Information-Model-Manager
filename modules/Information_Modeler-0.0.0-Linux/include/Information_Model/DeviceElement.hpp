@@ -1,5 +1,5 @@
-#ifndef DEVICE_ELEMENT_HPP
-#define DEVICE_ELEMENT_HPP
+#ifndef _I_DEVICE_ELEMENT_HPP
+#define _I_DEVICE_ELEMENT_HPP
 
 #include "NamedElement.hpp"
 #include <string>
@@ -29,4 +29,4 @@ public:
 };
 } // namespace Information_Model
 
-#endif // DEVICE_ELEMENT_HPP
+#endif //_I_DEVICE_ELEMENT_HPP
