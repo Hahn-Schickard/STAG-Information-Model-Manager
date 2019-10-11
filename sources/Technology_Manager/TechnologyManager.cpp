@@ -5,9 +5,10 @@ using namespace std;
 using namespace Information_Access_Manager;
 
 vector<shared_ptr<TechnologyAdapter>>::iterator
-ModelManager::findTechnologyAdapter(shared_ptr<TechnologyAdapter> adapter) {
-  return auto iterator = find(technology_adapters_.begin(),
-                              technology_adapters_.end(), adapter);
+TechnologyManager::findTechnologyAdapter(
+    shared_ptr<TechnologyAdapter> adapter) {
+  return find(technology_adapters_.begin(), technology_adapters_.end(),
+              adapter);
 }
 
 bool TechnologyManager::registerTechnologyAdapter(
@@ -27,3 +28,12 @@ bool TechnologyManager::deregisterTechnologyAdapter(
     technology_adapters_.erase(iterator);
   }
 }
+
+TechnologyManager *TechnologyManager::getInstance() {
+  if (!instance_) {
+    instance_ = new TechnologyManager();
+  }
+  return instance_;
+}
+
+TechnologyManager *TechnologyManager::instance_ = 0;

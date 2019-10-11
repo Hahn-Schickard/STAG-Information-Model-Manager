@@ -8,16 +8,20 @@
 namespace Information_Access_Manager {
 class TechnologyManager : public TechnologyManagerInterface {
 public:
+  static TechnologyManager *getInstance();
   bool
   registerTechnologyAdapter(std::shared_ptr<TechnologyAdapter> adapter) final;
   bool
   deregisterTechnologyAdapter(std::shared_ptr<TechnologyAdapter> adapter) final;
+  ~TechnologyManager();
 
 private:
+  TechnologyManager();
   std::vector<std::shared_ptr<TechnologyAdapter>>::iterator
   findTechnologyAdapter(std::shared_ptr<TechnologyAdapter> adapter);
 
   std::vector<std::shared_ptr<TechnologyAdapter>> technology_adapters_;
+  static TechnologyManager *instance_;
 };
 } // namespace Information_Access_Manager
 
