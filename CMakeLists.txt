@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 
 #@+ ========================== User configuration ===========================
-set(THIS Information_Access_Manager)
+set(THIS Information_Model_Manager)
 #@- ===================== END OF USER CONFIGURATION =========================
 
 set(CMAKE_VERBOSE_MAKEFILE on)
