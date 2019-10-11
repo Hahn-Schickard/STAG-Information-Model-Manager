@@ -70,21 +70,6 @@ run_unit_tests:
  except: 
   - /Release.*/
 
-test_for_memory_leaks: 
- stage: analyze
- variables: 
-  GIT_STRATEGY: none
- script: 
-  - "./.run_valgrind.sh -e $VALGRIND_EXECUTABLE -a $VALGRIND_EXECUTABLE_ARGS"
- artifacts:                                                           
-  name: "valgrind_results"
-  paths:
-  - valgrind-results.log
- only: 
-  variables: 
-   - $RUN_VALGRIND == "true" 
- allow_failure: true
-
 check_code_coverage: 
  stage: analyze 
  variables: 
@@ -99,6 +84,21 @@ check_code_coverage:
   - code_coverage_report/
  except: 
    - /Release.*/
+ allow_failure: true
+ 
+test_for_memory_leaks: 
+ stage: analyze
+ variables: 
+  GIT_STRATEGY: none
+ script: 
+  - "./.run_valgrind.sh -e $VALGRIND_EXECUTABLE -a $VALGRIND_EXECUTABLE_ARGS"
+ artifacts:                                                           
+  name: "valgrind_results"
+  paths:
+  - valgrind-results.log
+ only: 
+  variables: 
+   - $RUN_VALGRIND == "true" 
  allow_failure: true
  
 generate_documentation: 
@@ -131,8 +131,7 @@ package_tgz:
  only: 
   - /Release.*/
  allow_failure: true
- 
- 
+  
 deploy_coverage_report:
  stage: deploy
  dependencies:
@@ -152,7 +151,7 @@ deploy_coverage_report:
 update_versioning: 
  stage: trigger
  script: 
-  - ./.update_versioning.sh $CI_REPOSITORY_URL $TRIGGER_RELEASE $RELEASE_TYPE
+  - ./.update_versioning.sh $CI_REPOSITORY_URL
  only: 
   - master
  except: 
