@@ -23,5 +23,5 @@ macro(check_required_components _NAME)
 endmacro()
 
 #################################################################################### 
-include("${CMAKE_CURRENT_LIST_DIR}/Technology_Adapter_InterfaceTarget.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/Technology_Adapter_InterfaceTargets.cmake")
 check_required_components("Technology_Adapter_Interface")
