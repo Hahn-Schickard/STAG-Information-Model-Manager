@@ -13,7 +13,7 @@ public:
           building_and_registration_interface);
 
 protected:
-  void buildNewDevice(const std::string UNIQUE_ID, const std::string NAME,
+  bool buildNewDevice(const std::string UNIQUE_ID, const std::string NAME,
                       const std::string DESC);
   std::string addDeviceElement(const std::string NAME, const std::string DESC,
                                Information_Model::ElementType type);

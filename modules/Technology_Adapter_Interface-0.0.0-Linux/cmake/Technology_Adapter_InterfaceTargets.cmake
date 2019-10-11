@@ -61,6 +61,7 @@ add_library(Technology_Adapter_Interface::Technology_Manager_Interface INTERFACE
 
 set_target_properties(Technology_Adapter_Interface::Technology_Manager_Interface PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/Technology_Manager_Interface"
+  INTERFACE_LINK_LIBRARIES "Technology_Adapter_Interface::Technology_Adapter"
 )
 
 if(CMAKE_VERSION VERSION_LESS 3.0.0)
