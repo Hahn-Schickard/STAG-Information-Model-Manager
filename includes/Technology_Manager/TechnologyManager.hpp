@@ -2,14 +2,23 @@
 #define _TECHNOLOGY_MANAGER_HPP
 
 #include "TechnologyManagerInterface.hpp"
+#include <memory>
+#include <vector>
 
-namespace Infromation_Access_Manager {
+namespace Information_Access_Manager {
 class TechnologyManager : public TechnologyManagerInterface {
-  bool registerTechnologyAdapter(
-      std::shared_ptr<TechnologyAdapter> adapter) const final;
-  bool deregisterTechnologyAdapter(
-      std::shared_ptr<TechnologyAdapter> adapter) const final;
+public:
+  bool
+  registerTechnologyAdapter(std::shared_ptr<TechnologyAdapter> adapter) final;
+  bool
+  deregisterTechnologyAdapter(std::shared_ptr<TechnologyAdapter> adapter) final;
+
+private:
+  std::vector<std::shared_ptr<TechnologyAdapter>>::iterator
+  findTechnologyAdapter(std::shared_ptr<TechnologyAdapter> adapter);
+
+  std::vector<std::shared_ptr<TechnologyAdapter>> technology_adapters_;
 };
-} // namespace Infromation_Access_Manager
+} // namespace Information_Access_Manager
 
 #endif //_TECHNOLOGY_MANAGER_HPP

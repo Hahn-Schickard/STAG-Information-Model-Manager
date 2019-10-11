@@ -19,7 +19,7 @@ target_sources(${THIS} PRIVATE
 )
 
 target_link_libraries(${THIS} PUBLIC
-                              Technology_Adapter_Interface::Technology_Manager
+                              Technology_Adapter_Interface::Technology_Manager_Interface
 )
 
 if (UNIX)
