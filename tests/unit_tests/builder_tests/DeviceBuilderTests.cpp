@@ -1,7 +1,7 @@
 #include "Device.hpp"
 #include "DeviceBuilder.hpp"
 #include "InformationModelExceptions.hpp"
-#include "MakeUnique.hpp"
+//#include "MakeUnique.hpp" //bearbeitet
 #include "gtest/gtest.h"
 #include <string>
 
@@ -15,7 +15,9 @@ TEST(DeviceBuilder, Create_NameRefIdAndDescription_ReturnsCorrectElementName) {
   // Act
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // //bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
 
   // Assert
@@ -28,7 +30,9 @@ TEST(DeviceBuilder, Create_NameRefIdAndDescription_ReturnsCorrectElementRefId) {
   // Act
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // //bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
 
   // Assert
@@ -42,7 +46,9 @@ TEST(DeviceBuilder,
   // Act
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
 
   // Assert
@@ -56,7 +62,9 @@ TEST(DeviceBuilder, AddDeviceElementGroup_ReturnsCorrectGroupName) {
   // Act
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
   auto group = device->getDeviceElementGroup();
 
@@ -70,7 +78,9 @@ TEST(DeviceBuilder, AddDeviceElementGroup_ReturnsCorrectGroupDescription) {
   // Act
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
   auto group = device->getDeviceElementGroup();
 
@@ -84,7 +94,9 @@ TEST(DeviceBuilder, AddDeviceElementGroup_ReturnsCorrectGroupRefId) {
   // Act
   auto builder =
       new DeviceBuilder("TestDevice", "123", "A device for testing only");
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
   auto group = device->getDeviceElementGroup();
 
@@ -101,7 +113,9 @@ TEST(DeviceBuilder, AddSubGroup_ReturnsCorrectGroupRefId) {
   builder->addDeviceElement("Subgroup1", "A Subgroup", ElementType::Group);
 
   // Assert
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
 
   auto group = device->getDeviceElementGroup();
@@ -130,7 +144,9 @@ TEST(DeviceBuilder, AaddDeviceElement_GROUP_CorrectGroupRefId) {
   builder->addDeviceElement("Subgroup1", "A Subgroup", ElementType::Group);
 
   // Assert
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
   auto group = device->getDeviceElementGroup();
   auto subElements = group->getSubelements();
@@ -159,7 +175,9 @@ TEST(DeviceBuilder, AddDeviceElement_GROUP_ElementTypeIsGroup) {
       builder->addDeviceElement("Subgroup1", "A Subgroup", ElementType::Group);
 
   // Assert
-  std::unique_ptr<Information_Model::Device> aDevice = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> aDevice = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> aDevice = builder->getDevice();
   delete builder;
   auto aGroup = aDevice->getDeviceElementGroup();
   ASSERT_EQ(ElementType::Group, aGroup->getElementType());
@@ -188,7 +206,9 @@ TEST(DeviceBuilder,
       ElementType::Observable);
 
   // Assert
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
 
   auto actualRefId = static_pointer_cast<DeviceElementGroup>(
@@ -220,7 +240,9 @@ TEST(DeviceBuilder, Adding_Metric_To_Two_Subgroups_ReturnsCorrectRefIds) {
   EXPECT_EQ("123:1.0", addedWritableRefId);
 
   // Assert
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
 
   auto observableRefId = device->getDeviceElementGroup()
@@ -258,7 +280,9 @@ TEST(DeviceBuilder, Adding_Two_Metrics_To_One_Subgroup_ReturnsCorrectRefIds) {
                             ElementType::Writable);
 
   // Assert
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
 
   auto observableRefId1 = device->getDeviceElementGroup()
@@ -312,7 +336,9 @@ TEST(DeviceBuilder,
                             ElementType::Group);
 
   // Assert
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
 
   auto observableRefId1 = device->getDeviceElementGroup()
@@ -374,7 +400,9 @@ TEST(DeviceBuilder,
                             ElementType::Group);
 
   // Assert
-  std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // std::unique_ptr<Information_Model::Device> device = builder->getDevice();
+  // // bearbeitet
+  std::shared_ptr<Information_Model::Device> device = builder->getDevice();
   delete builder;
 
   auto observableRefId1 = device->getDeviceElementGroup()

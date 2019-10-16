@@ -74,8 +74,7 @@ public:
   }
 };
 
-unique_ptr<Device> makeTestDevice() {
-  DeviceBuilder *builder =
+/*unique_ptr<Device> makeTestDevice() {  //bearbeitet
       new DeviceBuilder("TestDevice", "1234", "This is a TestDevice");
   std::string basegroupID = builder->addDeviceElement(
       "BaseGroup", "This is BaseGroup", ElementType::Group);
@@ -92,6 +91,26 @@ unique_ptr<Device> makeTestDevice() {
 
   delete builder;
   return move(device);
+}*/
+
+shared_ptr<Device> makeTestDevice() {
+  DeviceBuilder *builder =
+      new DeviceBuilder("TestDevice", "1234", "This is a TestDevice");
+  std::string basegroupID = builder->addDeviceElement(
+      "BaseGroup", "This is BaseGroup", ElementType::Group);
+  builder->addDeviceElement(basegroupID, "SubTestDevice",
+                            "This is the first Subelement",
+                            ElementType::Readonly);
+  std::string subgroupID = builder->addDeviceElement(
+      "TestGroup", "This is a synthetic test for device element group.",
+      ElementType::Group);
+  builder->addDeviceElement(subgroupID, "Sub2TestDevice",
+                            "This is the second Subelement",
+                            ElementType::Readonly);
+  shared_ptr<Device> device = builder->getDevice();
+
+  delete builder;
+  return move(device);
 }
 
 int main() {
@@ -99,7 +118,8 @@ int main() {
   shared_ptr<Model_Event_Handler::Listener> this_listener(new SimpelListener());
   model_manager->registerListener(this_listener);
 
-  unique_ptr<Device> local_scope_device = makeTestDevice();
+  // unique_ptr<Device> local_scope_device = makeTestDevice(); //bearbeitet
+  shared_ptr<Device> local_scope_device = makeTestDevice();
   model_manager->registerDevice(move(local_scope_device));
 
   exit(0);

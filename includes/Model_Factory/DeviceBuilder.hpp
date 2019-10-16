@@ -23,7 +23,8 @@ namespace Model_Factory {
  */
 class DeviceBuilder {
 private:
-  std::unique_ptr<Information_Model::Device> device;
+  // std::unique_ptr<Information_Model::Device> device;  //bearbeitet
+  std::shared_ptr<Information_Model::Device> device;
   std::shared_ptr<Model_Factory::DeviceElementGroupImpl>
   getDeviceElementGroup();
   std::string addDeviceElementToSubgroup(
@@ -68,7 +69,8 @@ public:
    *
    * @return std::unique_ptr<Information_Model::Device>
    */
-  std::unique_ptr<Information_Model::Device> getDevice();
+  // std::unique_ptr<Information_Model::Device> getDevice();  //bearbeitet
+  std::shared_ptr<Information_Model::Device> getDevice();
 };
 } // namespace Model_Factory
 

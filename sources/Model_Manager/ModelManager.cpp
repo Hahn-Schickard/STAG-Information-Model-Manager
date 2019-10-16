@@ -6,7 +6,22 @@ using namespace Model_Manager;
 using namespace Information_Model;
 using namespace Model_Event_Handler;
 
-bool ModelManager::registerDevice(std::unique_ptr<Device> device) {
+/*bool ModelManager::registerDevice(std::unique_ptr<Device> device) {
+  if (deviceExists(device->getElementRefId())) {
+    pair<string, Device *> device_pair(
+        device->getElementRefId(),
+        device.get()); //@TODO: check if ths causes problems
+    devices.insert(device_pair);
+    NotifierEvent *event = new NotifierEvent(
+        NotifierEventType::NEW_DEVICE_REGISTERED, device.get());
+    notifyListeners(event);
+    return true;
+  } else {
+    return false;
+  }
+}*/
+
+bool ModelManager::registerDevice(std::shared_ptr<Device> device) {
   if (deviceExists(device->getElementRefId())) {
     pair<string, Device *> device_pair(
         device->getElementRefId(),
