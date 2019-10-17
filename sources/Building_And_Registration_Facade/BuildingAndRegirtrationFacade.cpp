@@ -29,13 +29,24 @@ string BuildingAndRegirtrationFacade::buildDeviceElement(const string GROUP_ID,
   return builder_->addDeviceElement(GROUP_ID, NAME, DESC, type);
 }
 
-unique_ptr<Device> BuildingAndRegirtrationFacade::getDevice() {
+/*unique_ptr<Device> BuildingAndRegirtrationFacade::getDevice() {  //bearbeitet
   unique_ptr<Device> device = builder_->getDevice();
+  delete builder_;
+  return move(device);
+}*/
+
+shared_ptr<Device> BuildingAndRegirtrationFacade::getDevice() {
+  shared_ptr<Device> device = builder_->getDevice();
   delete builder_;
   return move(device);
 }
 
-bool BuildingAndRegirtrationFacade::registerDevice(unique_ptr<Device> device) {
+/*bool BuildingAndRegirtrationFacade::registerDevice(unique_ptr<Device> device)
+//bearbeitet
+{
+  return manager_->registerDevice(move(device));
+}*/
+bool BuildingAndRegirtrationFacade::registerDevice(shared_ptr<Device> device) {
   return manager_->registerDevice(move(device));
 }
 

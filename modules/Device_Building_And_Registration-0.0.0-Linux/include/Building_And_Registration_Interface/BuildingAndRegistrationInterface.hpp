@@ -59,7 +59,9 @@ public:
    *
    * @return std::unique_ptr<Information_Model::Device>
    */
-  virtual std::unique_ptr<Information_Model::Device> getDevice() = 0;
+  // virtual std::unique_ptr<Information_Model::Device> getDevice() = 0;
+  // //bearbeitet
+  virtual std::shared_ptr<Information_Model::Device> getDevice() = 0;
 
   /**
    * @brief This method takes ownership of a given Device instance and registers
@@ -74,7 +76,9 @@ public:
    * @return false - registration failled
    */
   virtual bool
-  registerDevice(std::unique_ptr<Information_Model::Device> device) = 0;
+  registerDevice(std::shared_ptr<Information_Model::Device> device) = 0;
+  // registerDevice(std::unique_ptr<Information_Model::Device> device) = 0;
+  // //bearbeitet
 
   /**
    * @brief This method deletes a given Device, identified by its ID.

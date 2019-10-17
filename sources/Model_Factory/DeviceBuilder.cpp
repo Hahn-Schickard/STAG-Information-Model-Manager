@@ -13,7 +13,9 @@ DeviceBuilder::DeviceBuilder(const std::string NAME, const std::string REF_ID,
 
   device_ptr->addDeviceElementGroup(
       "Root Group " + NAME, "This is a Root Group Element"); // bearbeitet
-  device = unique_ptr<Device>(dynamic_cast<Device *>(device_ptr));
+  // device = unique_ptr<Device>(dynamic_cast<Device *>(device_ptr));//
+  // bearbeitet
+  device = shared_ptr<Device>(dynamic_cast<Device *>(device_ptr));
 }
 
 string DeviceBuilder::addDeviceElement(const std::string NAME,
@@ -100,6 +102,10 @@ std::shared_ptr<DeviceElementGroupImpl> DeviceBuilder::findElementGroup(
   return nullptr;
 }
 
-unique_ptr<Information_Model::Device> DeviceBuilder::getDevice() {
+/*unique_ptr<Information_Model::Device> DeviceBuilder::getDevice() {
+  return move(device);
+}*/
+
+shared_ptr<Information_Model::Device> DeviceBuilder::getDevice() {
   return move(device);
 }

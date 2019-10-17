@@ -9,7 +9,9 @@
 namespace Model_Manager {
 class ModelManager : public Model_Event_Handler::Notifier {
 public:
-  bool registerDevice(std::unique_ptr<Information_Model::Device> device);
+  // bool registerDevice(std::unique_ptr<Information_Model::Device>
+  // device);//bearbeitet
+  bool registerDevice(std::shared_ptr<Information_Model::Device> device);
   bool deregisterDevice(const std::string &DEVICE_ID);
 
 private:
