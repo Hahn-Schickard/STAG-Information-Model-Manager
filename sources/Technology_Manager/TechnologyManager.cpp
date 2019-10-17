@@ -24,10 +24,15 @@ bool TechnologyManager::registerTechnologyAdapter(
 
   auto iterator = findTechnologyAdapter(adapter);
   if (iterator == technology_adapters_.end()) {
-    adapter->setBuildingAndRegistrationInterface(
-        building_and_registration_facade_);
-    technology_adapters_.push_back(adapter);
-    return true;
+    if (adapter->setBuildingAndRegistrationInterface(
+            building_and_registration_facade_)) {
+      technology_adapters_.push_back(adapter);
+      return true;
+    } else {
+      // @TODO: Log smtnhg
+      return false;
+    }
+
   } else {
     //@TODO: Add logging/exception throwing here
     return false;
