@@ -17,6 +17,10 @@ bool TechnologyManager::registerTechnologyAdapter(
   auto iterator = findTechnologyAdapter(adapter);
   if (iterator == technology_adapters_.end()) {
     technology_adapters_.push_back(adapter);
+    return true;
+  } else {
+    //@TODO: Add logging/exception throwing here
+    return false;
   }
 }
 
@@ -26,6 +30,10 @@ bool TechnologyManager::deregisterTechnologyAdapter(
 
   if (iterator != technology_adapters_.end()) {
     technology_adapters_.erase(iterator);
+    return true;
+  } else {
+    //@TODO: Add logging/exception throwing here
+    return false;
   }
 }
 
