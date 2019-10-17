@@ -29,9 +29,9 @@ if (UNIX)
 endif ()
 
 target_include_directories(${THIS} INTERFACE
-                           $<BUILD_INTERFACE:${INCLUDES_DIR}/Building_And_Registration_Facade/>
+                           $<BUILD_INTERFACE:${INCLUDES_DIR}/Technology_Manager/>
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Building_And_Registration_Facade>
+                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Technology_Manager>
 )
 
 if(CLANG_TIDY_EXE)               
