@@ -18,7 +18,8 @@ private:
   bool deviceExists(const std::string &DEVICE_ID);
 
 private:
-  std::unordered_map<std::string, Information_Model::Device *> devices;
+  std::unordered_map<std::string, std::shared_ptr<Information_Model::Device>>
+      devices;
 };
 } // namespace Model_Manager
 
