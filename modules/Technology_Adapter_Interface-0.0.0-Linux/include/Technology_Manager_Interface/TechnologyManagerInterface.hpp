@@ -6,6 +6,7 @@
 
 namespace Information_Access_Manager {
 class TechnologyManagerInterface {
+public:
   virtual bool
   registerTechnologyAdapter(std::shared_ptr<TechnologyAdapter> adapter) = 0;
   virtual bool
