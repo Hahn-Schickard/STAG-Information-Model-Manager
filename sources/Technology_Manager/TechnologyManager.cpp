@@ -4,6 +4,8 @@
 using namespace std;
 using namespace Information_Access_Manager;
 
+TechnologyManager::TechnologyManager() {}
+
 vector<shared_ptr<TechnologyAdapter>>::iterator
 TechnologyManager::findTechnologyAdapter(
     shared_ptr<TechnologyAdapter> adapter) {
@@ -43,5 +45,7 @@ TechnologyManager *TechnologyManager::getInstance() {
   }
   return instance_;
 }
+
+TechnologyManager::~TechnologyManager() { technology_adapters_.clear(); }
 
 TechnologyManager *TechnologyManager::instance_ = 0;
