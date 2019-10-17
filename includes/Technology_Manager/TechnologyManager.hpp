@@ -1,6 +1,7 @@
 #ifndef _TECHNOLOGY_MANAGER_HPP
 #define _TECHNOLOGY_MANAGER_HPP
 
+#include "BuildingAndRegistrationInterface.hpp"
 #include "TechnologyManagerInterface.hpp"
 #include <memory>
 #include <vector>
@@ -21,6 +22,9 @@ private:
   findTechnologyAdapter(std::shared_ptr<TechnologyAdapter> adapter);
 
   std::vector<std::shared_ptr<TechnologyAdapter>> technology_adapters_;
+  std::shared_ptr<
+      Information_Model_Static_Part::BuildingAndRegistrationInterface>
+      building_and_registration_facade_;
   static TechnologyManager *instance_;
 };
 } // namespace Information_Access_Manager
