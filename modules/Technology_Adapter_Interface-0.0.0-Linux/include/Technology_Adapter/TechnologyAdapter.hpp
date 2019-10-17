@@ -20,10 +20,6 @@ protected:
   std::string addDeviceElement(const std::string GROUP_ID,
                                const std::string NAME, const std::string DESC,
                                Information_Model::ElementType type);
-  // std::unique_ptr<Information_Model::Device> getDeviceFromBuilder();
-  // //bearbeitet
-  // bool registerDeviceToModel(std::unique_ptr<Information_Model::Device>
-  // device); //bearbeitet
   std::shared_ptr<Information_Model::Device> getDeviceFromBuilder();
   bool registerDeviceToModel(std::shared_ptr<Information_Model::Device> device);
   bool deregisterDeviceFromModel(const std::string DEVICE_ID);
