@@ -14,17 +14,17 @@ class BuildingAndRegirtrationFacade
 public:
   BuildingAndRegirtrationFacade();
   void buildDeviceBase(const std::string &UNIQUE_ID, const std::string &NAME,
-                       const std::string &DESC);
+                       const std::string &DESC) final;
   std::string buildDeviceElement(const std::string &NAME,
                                  const std::string &DESC,
-                                 Information_Model::ElementType type);
+                                 Information_Model::ElementType type) final;
   std::string buildDeviceElement(const std::string &GROUP_ID,
                                  const std::string &NAME,
                                  const std::string &DESC,
-                                 Information_Model::ElementType type);
-  std::shared_ptr<Information_Model::Device> getDevice();
-  bool registerDevice(std::shared_ptr<Information_Model::Device> device);
-  bool deregisterDevice(const std::string &DEVICE_ID);
+                                 Information_Model::ElementType type) final;
+  std::shared_ptr<Information_Model::Device> getDevice() final;
+  bool registerDevice(std::shared_ptr<Information_Model::Device> device) final;
+  bool deregisterDevice(const std::string &DEVICE_ID) final;
 
 private:
   std::shared_ptr<Model_Manager::ModelManager> manager_;
