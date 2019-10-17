@@ -20,9 +20,9 @@ namespace Information_Model_Static_Part {
  */
 class BuildingAndRegistrationInterface {
 public:
-  virtual void buildDeviceBase(const std::string UNIQUE_ID,
-                               const std::string NAME,
-                               const std::string DESC) = 0;
+  virtual void buildDeviceBase(const std::string &UNIQUE_ID,
+                               const std::string &NAME,
+                               const std::string &DESC) = 0;
 
   /**
    * @brief Primary method for device element creation. Elementes created by
@@ -34,7 +34,7 @@ public:
    * @return std::string - ID of this element.
    */
   virtual std::string
-  buildDeviceElement(const std::string NAME, const std::string DESC,
+  buildDeviceElement(const std::string &NAME, const std::string &DESC,
                      Information_Model::ElementType type) = 0;
   /**
    * @brief This method allows the caller to add nested device elements.
@@ -47,8 +47,8 @@ public:
    * @return std::string - ID of this element.
    */
   virtual std::string
-  buildDeviceElement(const std::string GROUP_ID, const std::string NAME,
-                     const std::string DESC,
+  buildDeviceElement(const std::string &GROUP_ID, const std::string &NAME,
+                     const std::string &DESC,
                      Information_Model::ElementType type) = 0;
 
   /**
@@ -83,7 +83,7 @@ public:
    * @return true - deletion succeeded
    * @return false - deletion failled
    */
-  virtual bool deregisterDevice(const std::string DEVICE_ID) = 0;
+  virtual bool deregisterDevice(const std::string &DEVICE_ID) = 0;
 
   virtual ~BuildingAndRegistrationInterface() = default;
 };
