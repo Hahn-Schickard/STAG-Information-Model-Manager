@@ -27,17 +27,12 @@ set(PACKAGE_PATCH_VER "0" CACHE STRING "Major version number of the release pack
 set(THIS_PACKAGE_NAME "${PROJECT_NAME}-${PACKAGE_MAJOR_VER}.${PACKAGE_MINOR_VER}.${PACKAGE_PATCH_VER}-${CMAKE_SYSTEM_NAME}")
 set(CLANG_OUTPUT "${PROJECT_SOURCE_DIR}/clang-tidy-suggested-fixes.yml")
 set(INCLUDES_DIR "${PROJECT_SOURCE_DIR}/includes")
-set(MODULES_DEST "modules/")
 
 #@+ ========================== User configuration ===========================
 find_package(Information_Modeler REQUIRED PATHS "./modules")
-install(DIRECTORY ${Information_Modeler_DIR} DESTINATION ${MODULES_DEST})
 find_package(Model_Event_Handler REQUIRED PATHS "./modules")
-install(DIRECTORY ${Model_Event_Handler_DIR} DESTINATION ${MODULES_DEST})
 find_package(Device_Building_And_Registration REQUIRED PATHS "./modules")
-install(DIRECTORY ${Device_Building_And_Registration_DIR} DESTINATION ${MODULES_DEST})
 find_package(Technology_Adapter_Interface REQUIRED PATHS "./modules")
-install(DIRECTORY ${Technology_Adapter_Interface_DIR} DESTINATION ${MODULES_DEST})
 #@- ===================== END OF USER CONFIGURATION =========================
 
 set(CMAKE_CONFIGURATION_TYPES "DEBUG" CACHE STRING "Configs" FORCE)
