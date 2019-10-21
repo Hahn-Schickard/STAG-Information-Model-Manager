@@ -13,6 +13,7 @@ public:
           building_and_registration_interface);
 
 protected:
+  TechnologyAdapter(std::string name) { adapter_name_ = name; }
   bool buildNewDevice(const std::string &UNIQUE_ID, const std::string &NAME,
                       const std::string &DESC);
   std::string addDeviceElement(const std::string &NAME, const std::string &DESC,
@@ -25,11 +26,10 @@ protected:
   bool deregisterDeviceFromModel(const std::string &DEVICE_ID);
 
 private:
-  bool isBuildingAndRegistrationInterface();
-
   std::shared_ptr<
       Information_Model_Static_Part::BuildingAndRegistrationInterface>
       model_interface_;
+  std::string adapter_name_;
 };
 } // namespace Information_Access_Manager
 
