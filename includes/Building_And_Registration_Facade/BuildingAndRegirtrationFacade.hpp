@@ -27,7 +27,7 @@ public:
   bool deregisterDevice(const std::string &DEVICE_ID) final;
 
 private:
-  std::shared_ptr<Model_Manager::ModelManager> manager_;
+  Model_Manager::ModelManager *manager_;
   Model_Factory::DeviceBuilder *builder_;
 };
 } // namespace Information_Access_Manager

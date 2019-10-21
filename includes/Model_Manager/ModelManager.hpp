@@ -9,17 +9,19 @@
 namespace Model_Manager {
 class ModelManager : public Model_Event_Handler::Notifier {
 public:
-  // bool registerDevice(std::unique_ptr<Information_Model::Device>
-  // device);//bearbeitet
+  static ModelManager *getInstance();
   bool registerDevice(std::shared_ptr<Information_Model::Device> device);
   bool deregisterDevice(const std::string &DEVICE_ID);
+  ~ModelManager();
 
 private:
+  ModelManager();
   bool deviceExists(const std::string &DEVICE_ID);
 
-private:
   std::unordered_map<std::string, std::shared_ptr<Information_Model::Device>>
       devices;
+
+  static ModelManager *instance_;
 };
 } // namespace Model_Manager
 

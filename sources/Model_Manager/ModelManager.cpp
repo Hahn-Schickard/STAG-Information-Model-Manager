@@ -6,8 +6,11 @@ using namespace Model_Manager;
 using namespace Information_Model;
 using namespace Model_Event_Handler;
 
+ModelManager::ModelManager() {}
+ModelManager::~ModelManager() { devices.clear(); }
+
 bool ModelManager::registerDevice(shared_ptr<Device> device) {
-  if (deviceExists(device->getElementRefId())) {
+  if (!deviceExists(device->getElementRefId())) {
     pair<string, shared_ptr<Device>> device_pair(device->getElementRefId(),
                                                  device);
     devices.insert(device_pair);
@@ -39,3 +42,12 @@ bool ModelManager::deviceExists(const string &DEVICE_ID) {
     return true;
   }
 }
+
+ModelManager *ModelManager::getInstance() {
+  if (!instance_) {
+    instance_ = new ModelManager();
+  }
+  return instance_;
+}
+
+ModelManager *ModelManager::instance_ = 0;

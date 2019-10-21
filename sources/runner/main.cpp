@@ -95,7 +95,7 @@ shared_ptr<Device> makeTestDevice() {
 }
 
 int main() {
-  ModelManager *model_manager = new ModelManager();
+  ModelManager *model_manager = model_manager->getInstance();
   shared_ptr<Model_Event_Handler::Listener> this_listener(new SimpelListener());
   model_manager->registerListener(this_listener);
 

@@ -7,7 +7,7 @@ using namespace Model_Manager;
 using namespace Information_Model;
 
 BuildingAndRegirtrationFacade::BuildingAndRegirtrationFacade() {
-  manager_ = make_shared<ModelManager>(ModelManager());
+  manager_ = manager_->getInstance();
 }
 
 void BuildingAndRegirtrationFacade::buildDeviceBase(const string &UNIQUE_ID,
