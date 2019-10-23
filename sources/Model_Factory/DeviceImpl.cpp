@@ -6,8 +6,8 @@ using namespace std;
 using namespace Model_Factory;
 using namespace Information_Model;
 
-string DeviceImpl::addDeviceElementGroup(const std::string NAME,
-                                         const std::string DESC) {
+string DeviceImpl::addDeviceElementGroup(const string &NAME,
+                                         const string &DESC) {
   const string REF_ID = this->getElementRefId() + ":";
   shared_ptr<DeviceElementGroupImpl> group_ptr(
       new DeviceElementGroupImpl(REF_ID, NAME, DESC));

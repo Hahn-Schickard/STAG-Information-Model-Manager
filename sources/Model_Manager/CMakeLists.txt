@@ -2,57 +2,48 @@ cmake_minimum_required(VERSION 3.6)
 
 set(THIS Model_Manager)
 
+list(APPEND PUBLIC_INCLUDES_DIRS
+            ${INCLUDES_DIR}/Model_Manager
+)
+
 file(GLOB sources_list "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
-file(GLOB includes_list "${PROJECT_SOURCE_DIR}/includes/Model_Manager/*.hpp")
 
-PRINT_MODULE_FILES(${THIS} "${sources_list}" "${includes_list}")
-
-include_directories(${PROJECT_SOURCE_DIR}/includes/Model_Manager/)
+INCLUDE_DIRS_AND_FILES("${PUBLIC_INCLUDES_DIRS}" PUBLIC_INCLUDES)
 
 add_library(${THIS} SHARED
-            ${sources_list}
-            ${includes_list}
-           )
+                    ${PUBLIC_INCLUDES}
+)
 
-if (WIN32)
-    target_link_libraries(${THIS} PUBLIC
-                                  
-                                  Model_Factory
-                                  Information_Modeler::Information_Model_Interface
-                                  Notifier
-                         )
-elseif (UNIX)
+target_sources(${THIS} PRIVATE 
+                       ${sources_list}
+)
+
+target_link_libraries(${THIS} PUBLIC
+                              Model_Factory
+                              Model_Event_Handler::Notifier
+)
+
+if (UNIX)
     target_link_libraries(${THIS} PUBLIC 
                                   gcov
-                                  
-                                  Model_Factory
-                                  Information_Modeler::Information_Model_Interface
-                                  Notifier
-                         )
-else ()
-    target_link_libraries(${THIS} PUBLIC
-                                  
-                                  Model_Factory
-                                  Information_Modeler::Information_Model_Interface
-                                  Notifier
-                         )
-    message(WARNING "Please configure your linking for your operating system for target ${THIS}")
+    )
 endif ()
-                           
+
 target_include_directories(${THIS} INTERFACE
                            $<BUILD_INTERFACE:${INCLUDES_DIR}/Model_Manager/>
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-                           $<INSTALL_INTERFACE:${INCLUDES_DEST}>
-                           $<INSTALL_INTERFACE:${LIBS_DEST}>
-                          )
+                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Model_Manager>
+)
 
 if(CLANG_TIDY_EXE)               
     set_target_properties(
                         ${THIS} PROPERTIES
                         CMAKE_CXX_CLANG_TIDY "${CMAKE_CXX_CLANG_TIDY}"
-                        )
+    )
 endif()    
-                           
+
+PRINT_TARGET_PROPERTIES(${THIS})
+
 add_custom_command(TARGET ${THIS} POST_BUILD 
                     COMMAND ${CMAKE_COMMAND} -E make_directory 
                         ${CMAKE_BINARY_DIR}/bin
@@ -61,18 +52,15 @@ add_custom_command(TARGET ${THIS} POST_BUILD
                         "${CMAKE_BINARY_DIR}/bin"
                     COMMENT "Copying shared library files from ${CMAKE_CURRENT_BINARY_DIR} directory to ${CMAKE_BINARY_DIR}/bin directory."
                         VERBATIM
-                  )
-
-install(
-    TARGETS ${THIS} 
-    EXPORT ${PROJECT_NAME}
-    ARCHIVE DESTINATION ${LIBS_DEST}
-    LIBRARY DESTINATION ${LIBS_DEST}
-    COMPONENT libraries
 )
 
 install(
-    FILES ${includes_list}
-    DESTINATION ${INCLUDES_DEST}
-    COMPONENT headers
+    TARGETS ${THIS}
+    EXPORT ${PROJECT_NAME}Targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+install(
+    DIRECTORY ${PUBLIC_INCLUDES_DIRS}
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )

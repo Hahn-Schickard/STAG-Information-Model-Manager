@@ -23,11 +23,11 @@ private:
       subelements;
   unsigned int elementId;
   std::shared_ptr<Information_Model::DeviceElement>
-  findSubelement(const std::string REF_ID);
+  findSubelement(const std::string &REF_ID);
 
 public:
-  DeviceElementGroupImpl(const std::string refId, const std::string name,
-                         const std::string desc);
+  DeviceElementGroupImpl(const std::string &refId, const std::string &name,
+                         const std::string &desc);
   /**
    * @brief This method creates an instance of Information_Model:DeviceElement
    * class and
@@ -40,18 +40,13 @@ public:
    * @return std::string Reference ID of DeviceElement within
    * DeviceElementGroupImpl: DeviceElementGroupImpl::subelements vector
    */
-  std::string addDeviceElement(const std::string name, const std::string desc,
+  std::string addDeviceElement(const std::string &name, const std::string &desc,
                                Information_Model::ElementType type);
 
-  std::vector<std::shared_ptr<Information_Model::DeviceElement>>
-  getSubelements();
-  std::shared_ptr<Information_Model::DeviceElement>
-  getSubelement(const std::string refId);
-
+  std::vector<std::shared_ptr<DeviceElement>> getSubelements();
+  std::shared_ptr<DeviceElement> getSubelement(const std::string REF_ID);
   void incrementElementId();
-
   std::string generate_Reference_ID();
-
   unsigned int getNumericElementId();
 
   virtual ~DeviceElementGroupImpl() = default;

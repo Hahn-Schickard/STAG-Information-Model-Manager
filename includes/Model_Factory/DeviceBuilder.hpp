@@ -23,41 +23,41 @@ namespace Model_Factory {
  */
 class DeviceBuilder {
 private:
-  std::unique_ptr<Information_Model::Device> device;
+  std::shared_ptr<Information_Model::Device> device;
   std::shared_ptr<Model_Factory::DeviceElementGroupImpl>
   getDeviceElementGroup();
   std::string addDeviceElementToSubgroup(
       std::shared_ptr<Model_Factory::DeviceElementGroupImpl> parentGroup,
-      const std::string GROUP_REFID, const std::string NAME,
-      const std::string DESC, Information_Model::ElementType type);
+      const std::string &GROUP_REFID, const std::string &NAME,
+      const std::string &DESC, Information_Model::ElementType type);
   std::shared_ptr<Model_Factory::DeviceElementGroupImpl> getSubelementGroup(
       std::shared_ptr<Model_Factory::DeviceElementGroupImpl> deviceElementGroup,
-      std::string REFID);
+      const std::string &REFID);
   std::shared_ptr<Model_Factory::DeviceElementGroupImpl>
-  findElementGroup(std::string RefId,
+  findElementGroup(const std::string &REFID,
                    std::shared_ptr<Model_Factory::DeviceElementGroupImpl>
                        deviceElementGroup);
 
 public:
-  DeviceBuilder(const std::string NAME, const std::string REF_ID,
-                const std::string DESC);
+  DeviceBuilder(const std::string &NAME, const std::string &REF_ID,
+                const std::string &DESC);
 
   /**
-  * @brief This method calls DeviceElementGroupImpl::addDeviceElement() method
-  * to
-  * create an instance of Information_Model:DeviceElement class
-  *
-  * @param NAME
-  * @param DESC
-  * @param type
-  * @return std::string Reference ID of  Information_Model:DeviceElement
-  * instance
-  */
-  std::string addDeviceElement(const std::string NAME, const std::string DESC,
+   * @brief This method calls DeviceElementGroupImpl::addDeviceElement() method
+   * to
+   * create an instance of Information_Model:DeviceElement class
+   *
+   * @param NAME
+   * @param DESC
+   * @param type
+   * @return std::string Reference ID of  Information_Model:DeviceElement
+   * instance
+   */
+  std::string addDeviceElement(const std::string &NAME, const std::string &DESC,
                                Information_Model::ElementType type);
 
-  std::string addDeviceElement(const std::string GROUP_REFID,
-                               const std::string NAME, const std::string DESC,
+  std::string addDeviceElement(const std::string &GROUP_REFID,
+                               const std::string &NAME, const std::string &DESC,
                                Information_Model::ElementType type);
 
   /**
@@ -68,7 +68,8 @@ public:
    *
    * @return std::unique_ptr<Information_Model::Device>
    */
-  std::unique_ptr<Information_Model::Device> getDevice();
+  // std::unique_ptr<Information_Model::Device> getDevice();  //bearbeitet
+  std::shared_ptr<Information_Model::Device> getDevice();
 };
 } // namespace Model_Factory
 

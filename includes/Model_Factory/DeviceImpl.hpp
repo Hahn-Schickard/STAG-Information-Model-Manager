@@ -22,8 +22,8 @@ private:
   std::shared_ptr<Information_Model::DeviceElementGroup> device_element_group;
 
 public:
-  DeviceImpl(const std::string REF_ID, const std::string NAME,
-             const std::string DESC)
+  DeviceImpl(const std::string &REF_ID, const std::string &NAME,
+             const std::string &DESC)
       : Information_Model::Device(REF_ID, NAME, DESC) {}
 
   /**
@@ -37,8 +37,8 @@ public:
    * @return std::string Reference ID of DeviceImpl:
    * DeviceImpl::device_element_group
    */
-  std::string addDeviceElementGroup(const std::string NAME,
-                                    const std::string DESC);
+  std::string addDeviceElementGroup(const std::string &NAME,
+                                    const std::string &DESC);
   std::shared_ptr<Information_Model::DeviceElementGroup>
   getDeviceElementGroup();
 };

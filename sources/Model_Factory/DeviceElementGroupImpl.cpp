@@ -9,15 +9,15 @@ using namespace std;
 using namespace Model_Factory;
 using namespace Information_Model;
 
-DeviceElementGroupImpl::DeviceElementGroupImpl(const string REF_ID,
-                                               const string NAME,
-                                               const string DESC)
+DeviceElementGroupImpl::DeviceElementGroupImpl(const string &REF_ID,
+                                               const string &NAME,
+                                               const string &DESC)
     : DeviceElementGroup(REF_ID, NAME, DESC) {
   elementId = 0;
 }
 
-string DeviceElementGroupImpl::addDeviceElement(const std::string NAME,
-                                                const std::string DESC,
+string DeviceElementGroupImpl::addDeviceElement(const string &NAME,
+                                                const string &DESC,
                                                 ElementType ELEMENT_TYPE) {
   const string REF_ID = generate_Reference_ID();
 
@@ -25,27 +25,27 @@ string DeviceElementGroupImpl::addDeviceElement(const std::string NAME,
   case ElementType::Group: {
     pair<string, shared_ptr<DeviceElementGroup>> elPair(
         REF_ID, shared_ptr<DeviceElementGroup>(
-                    new Model_Factory::DeviceGroupBuilder(REF_ID, NAME, DESC)));
+                    new DeviceGroupBuilder(REF_ID, NAME, DESC)));
     subelements.insert(elPair);
   }; break;
   case ElementType::Observable:
   case ElementType::Writable:
   case ElementType::Readonly:
   case ElementType::Function: {
-      //@TODO remove at once Readonly when it is implemented
-	   pair<string, shared_ptr<DeviceElement>> elPair(
-       REF_ID,
-	   shared_ptr<DeviceElement>(new Model_Factory::DeviceElementBuilder(
-	            REF_ID, NAME, DESC, ELEMENT_TYPE)));
-	    subelements.insert(elPair);
-	  }; break;
+    //@TODO remove at once Readonly when it is implemented
+    pair<string, shared_ptr<DeviceElement>> elPair(
+        REF_ID,
+        shared_ptr<DeviceElement>(new Model_Factory::DeviceElementBuilder(
+            REF_ID, NAME, DESC, ELEMENT_TYPE)));
+    subelements.insert(elPair);
+  }; break;
   default: {}
   }
   return REF_ID;
 }
 
 std::shared_ptr<Information_Model::DeviceElement>
-DeviceElementGroupImpl::findSubelement(const std::string REF_ID) {
+DeviceElementGroupImpl::findSubelement(const string &REF_ID) {
   if (subelements.find(REF_ID) != subelements.end())
     return subelements.at(REF_ID);
 
@@ -64,7 +64,7 @@ DeviceElementGroupImpl::findSubelement(const std::string REF_ID) {
 }
 
 std::shared_ptr<Information_Model::DeviceElement>
-DeviceElementGroupImpl::getSubelement(const std::string REF_ID) {
+DeviceElementGroupImpl::getSubelement(const string REF_ID) {
   auto el = findSubelement(REF_ID);
   if (el != nullptr)
     return el;

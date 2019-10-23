@@ -27,7 +27,7 @@ string elementType_str(ElementType elementType) {
   return to_string(elementType);
 }
 
-void printElement(DeviceElement *element) {
+void printElement(const shared_ptr<DeviceElement> &element) {
   cout << "Element: " << element->getElementName()
        << " has a ref_id: " << element->getElementRefId()
        << ", is of type: " << elementType_str(element->getElementType())
@@ -36,11 +36,11 @@ void printElement(DeviceElement *element) {
 
 void printSubelements(vector<shared_ptr<DeviceElement>> elements) {
   cout << "It has " << elements.size() << " elements" << endl;
-  for (auto element : elements) {
-    printElement(element.get());
+  for (auto const &element : elements) {
+    printElement(element);
   }
 
-  for (auto element : elements) {
+  for (auto const &element : elements) {
     if (element->getElementType() == Group) {
       cout << "\n\n==== SUBGROUP: " << element->getElementName() << " >>>\n"
            << endl;
@@ -54,7 +54,7 @@ void printSubelements(vector<shared_ptr<DeviceElement>> elements) {
   }
 }
 
-void printDevice(Device *device) {
+void printDevice(const shared_ptr<Device> &device) {
   cout << "Device: " << device->getElementName()
        << " has a ref_id: " << device->getElementRefId()
        << " and is described as: " << device->getElementDescription() << endl;
@@ -64,12 +64,17 @@ void printDevice(Device *device) {
   printSubelements(elements);
 }
 
-class SimpelListener : public Notifier::Listener {
+class SimpelListener : public Model_Event_Handler::Listener {
 public:
-  void handleEvent(Device *device) { printDevice(device); }
+  void handleEvent(Model_Event_Handler::NotifierEvent *event) {
+    if (event->getEventType() ==
+        Model_Event_Handler::NotifierEventType::NEW_DEVICE_REGISTERED) {
+      printDevice(event->getEvent()->device);
+    }
+  }
 };
 
-unique_ptr<Device> makeTestDevice() {
+shared_ptr<Device> makeTestDevice() {
   DeviceBuilder *builder =
       new DeviceBuilder("TestDevice", "1234", "This is a TestDevice");
   std::string basegroupID = builder->addDeviceElement(
@@ -83,18 +88,18 @@ unique_ptr<Device> makeTestDevice() {
   builder->addDeviceElement(subgroupID, "Sub2TestDevice",
                             "This is the second Subelement",
                             ElementType::Readonly);
-  unique_ptr<Device> device = builder->getDevice();
+  shared_ptr<Device> device = builder->getDevice();
 
   delete builder;
   return move(device);
 }
 
 int main() {
-  ModelManager *model_manager = new ModelManager();
-  SimpelListener *this_listemer = new SimpelListener();
-  model_manager->registerListener(this_listemer);
+  ModelManager *model_manager = model_manager->getInstance();
+  shared_ptr<Model_Event_Handler::Listener> this_listener(new SimpelListener());
+  model_manager->registerListener(this_listener);
 
-  unique_ptr<Device> local_scope_device = makeTestDevice();
+  shared_ptr<Device> local_scope_device = makeTestDevice();
   model_manager->registerDevice(move(local_scope_device));
 
   exit(0);

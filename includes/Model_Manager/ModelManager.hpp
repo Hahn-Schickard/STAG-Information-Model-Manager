@@ -7,12 +7,21 @@
 #include <unordered_map>
 
 namespace Model_Manager {
-class ModelManager : public Notifier::Notifier {
+class ModelManager : public Model_Event_Handler::Notifier {
 public:
-  void registerDevice(std::unique_ptr<Information_Model::Device> device);
+  static ModelManager *getInstance();
+  bool registerDevice(std::shared_ptr<Information_Model::Device> device);
+  bool deregisterDevice(const std::string &DEVICE_ID);
+  ~ModelManager();
 
 private:
-  std::unordered_map<std::string, Information_Model::Device *> devices;
+  ModelManager();
+  bool deviceExists(const std::string &DEVICE_ID);
+
+  std::unordered_map<std::string, std::shared_ptr<Information_Model::Device>>
+      devices;
+
+  static ModelManager *instance_;
 };
 } // namespace Model_Manager
 
