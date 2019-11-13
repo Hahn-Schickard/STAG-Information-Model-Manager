@@ -1,5 +1,3 @@
-#ifndef DEVICEELEMENTGROUPTEST_HPP
-#define DEVICEELEMENTGROUPTEST_HPP
 #include "Device.hpp"
 #include "DeviceElementBuilder.hpp"
 #include "DeviceElementGroupImpl.hpp"
@@ -107,5 +105,3 @@ TEST_F(DeviceElementGroupTest,
         << "provided: " << testedElement << std::endl;
   }
 }
-
-#endif
