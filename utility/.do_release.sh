@@ -1,5 +1,7 @@
-#!/bin/bash 
+#!/bin/bash
 BUILD_DIR=$1
+CROSSCOMPILE_FLAG=$2
+EXTRA_ARGS=$3
 RELEASE_TAG=""
 VERSION=""
 MAJOR_VER="0"
@@ -57,7 +59,13 @@ check_build_dir() {
 
 create_build_config() {
     cd $BUILD_DIR 
-    cmake -DCMAKE_BUILD_TYPE="Release" -DPACKAGE_MAJOR_VER=$MAJOR_VER -DPACKAGE_MINOR_VER=$MINOR_VER -DPACKAGE_PATCH_VER=$PATCH_VER ..
+    if [[ "${CROSSCOMPILE_FLAG,,}" =~ "y" ]];
+    then
+        TOOLCHAIN="cmake/crosscompiler-toolchain.cmake"
+    else
+        TOOLCHAIN="cmake/native-toolchain.cmake"
+    fi
+    cmake -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN} -DCMAKE_BUILD_TYPE="Release" -DPACKAGE_MAJOR_VER=$MAJOR_VER -DPACKAGE_MINOR_VER=$MINOR_VER -DPACKAGE_PATCH_VER=$PATCH_VER ${EXTRA_ARGS} ..
 }
 
 do_release
