@@ -2,8 +2,8 @@
 #define _DEVICE_FACTORY_HPP
 
 #include "DeviceElement.hpp"
-
 #include "DeviceImpl.hpp"
+
 #include <memory>
 
 /**
@@ -15,34 +15,38 @@
  */
 namespace Model_Factory {
 
-/**
+  /**
  * @brief This class constructs an instance of Model_Factory::DevicImpl as a
  * Infromation_Model::Device
  * @author Dovydas Girdvainis
  * @date 18.07.2019
  */
-class DeviceBuilder {
-private:
-  std::shared_ptr<Information_Model::Device> device;
-  std::shared_ptr<Model_Factory::DeviceElementGroupImpl>
-  getDeviceElementGroup();
-  std::string addDeviceElementToSubgroup(
-      std::shared_ptr<Model_Factory::DeviceElementGroupImpl> parentGroup,
-      const std::string &GROUP_REFID, const std::string &NAME,
-      const std::string &DESC, Information_Model::ElementType type);
-  std::shared_ptr<Model_Factory::DeviceElementGroupImpl> getSubelementGroup(
-      std::shared_ptr<Model_Factory::DeviceElementGroupImpl> deviceElementGroup,
-      const std::string &REFID);
-  std::shared_ptr<Model_Factory::DeviceElementGroupImpl>
-  findElementGroup(const std::string &REFID,
-                   std::shared_ptr<Model_Factory::DeviceElementGroupImpl>
-                       deviceElementGroup);
+  class DeviceBuilder {
+   private:
+    std::shared_ptr<Information_Model::Device> device;
+    std::shared_ptr<Model_Factory::DeviceElementGroupImpl>
+    getDeviceElementGroup();
+    std::string addDeviceElementToSubgroup(
+        std::shared_ptr<Model_Factory::DeviceElementGroupImpl> parentGroup,
+        const std::string& GROUP_REFID,
+        const std::string& NAME,
+        const std::string& DESC,
+        Information_Model::ElementType type);
+    std::shared_ptr<Model_Factory::DeviceElementGroupImpl> getSubelementGroup(
+        std::shared_ptr<Model_Factory::DeviceElementGroupImpl>
+            deviceElementGroup,
+        const std::string& REFID);
+    std::shared_ptr<Model_Factory::DeviceElementGroupImpl> findElementGroup(
+        const std::string& REFID,
+        std::shared_ptr<Model_Factory::DeviceElementGroupImpl>
+            deviceElementGroup);
 
-public:
-  DeviceBuilder(const std::string &NAME, const std::string &REF_ID,
-                const std::string &DESC);
+   public:
+    DeviceBuilder(const std::string& NAME,
+        const std::string& REF_ID,
+        const std::string& DESC);
 
-  /**
+    /**
    * @brief This method calls DeviceElementGroupImpl::addDeviceElement() method
    * to
    * create an instance of Information_Model:DeviceElement class
@@ -53,14 +57,16 @@ public:
    * @return std::string Reference ID of  Information_Model:DeviceElement
    * instance
    */
-  std::string addDeviceElement(const std::string &NAME, const std::string &DESC,
-                               Information_Model::ElementType type);
+    std::string addDeviceElement(const std::string& NAME,
+        const std::string& DESC,
+        Information_Model::ElementType type);
 
-  std::string addDeviceElement(const std::string &GROUP_REFID,
-                               const std::string &NAME, const std::string &DESC,
-                               Information_Model::ElementType type);
+    std::string addDeviceElement(const std::string& GROUP_REFID,
+        const std::string& NAME,
+        const std::string& DESC,
+        Information_Model::ElementType type);
 
-  /**
+    /**
    * @brief This method returns a pointer with full ownership rights.
    * @attention If this pointer is not saved by the caller, it will be cleaned
    * up by the
@@ -68,9 +74,9 @@ public:
    *
    * @return std::unique_ptr<Information_Model::Device>
    */
-  // std::unique_ptr<Information_Model::Device> getDevice();  //bearbeitet
-  std::shared_ptr<Information_Model::Device> getDevice();
-};
-} // namespace Model_Factory
+    // std::unique_ptr<Information_Model::Device> getDevice();  //bearbeitet
+    std::shared_ptr<Information_Model::Device> getDevice();
+  };
+}   // namespace Model_Factory
 
-#endif //_DEVICE_FACTORY_HPP
+#endif   //_DEVICE_FACTORY_HPP
