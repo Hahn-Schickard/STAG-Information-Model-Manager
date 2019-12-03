@@ -1,0 +1,12 @@
+digraph "Information_Access_Manager::TechnologyAdapter"
+{
+  edge [fontname="Sans",fontsize="10",labelfontname="Sans",labelfontsize="10"];
+  node [fontname="Sans",fontsize="10",shape=record];
+  Node2 [label="Information_Access\l_Manager::TechnologyAdapter",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" abstraction_factory_" ,fontname="Sans"];
+  Node3 [label="Information_Access\l_Manager::AbstractionFactory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/dda/classInformation__Access__Manager_1_1AbstractionFactory.html"];
+  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" adapter_name_" ,fontname="Sans"];
+  Node4 [label="std::string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip="STL class. "];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Sans"];
+  Node5 [label="std::basic_string\<\l char \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip="STL class. "];
+}

@@ -1,0 +1,9 @@
+digraph "Information_Access_Manager::TechnologyAdapter::isRunning"
+{
+  edge [fontname="Sans",fontsize="10",labelfontname="Sans",labelfontsize="10"];
+  node [fontname="Sans",fontsize="10",shape=record];
+  rankdir="LR";
+  Node15 [label="Information_Access\l_Manager::TechnologyAdapter\l::isRunning",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node15 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Sans"];
+  Node16 [label="Information_Access\l_Manager::TechnologyAdapter\l::TechnologyAdapter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/de9/classInformation__Access__Manager_1_1TechnologyAdapter.html#aaa9c45424214353ecbf503c3475d23bc"];
+}
