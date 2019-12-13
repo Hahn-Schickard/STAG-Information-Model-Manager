@@ -20,6 +20,8 @@ target_sources(${THIS} PRIVATE
 
 target_link_libraries(${THIS} PUBLIC
                         Information_Modeler::Information_Model_Interface
+                        PRIVATE
+                        HaSLL::Loggers
 )
         
 if (UNIX)
