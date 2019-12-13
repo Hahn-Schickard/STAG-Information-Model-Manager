@@ -20,7 +20,7 @@ namespace Information_Access_Manager {
    private:
     TechnologyManager();
     std::vector<std::shared_ptr<TechnologyAdapter>>::iterator
-    findTechnologyAdapter(std::shared_ptr<TechnologyAdapter> adapter);
+    findTechnologyAdapter(const std::shared_ptr<TechnologyAdapter>& adapter);
 
     std::vector<std::shared_ptr<TechnologyAdapter>> technology_adapters_;
     std::shared_ptr<

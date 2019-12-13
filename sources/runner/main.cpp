@@ -12,17 +12,17 @@ using namespace Model_Factory;
 
 string elementType_str(ElementType elementType) {
   switch(elementType) {
-    case ElementType::Undefined:
+    case ElementType::UNDEFINED:
       return "Undefined";
-    case ElementType::Group:
+    case ElementType::GROUP:
       return "Group";
-    case ElementType::Readonly:
+    case ElementType::READABLE:
       return "Readonly";
-    case ElementType::Observable:
+    case ElementType::OBSERVABLE:
       return "Observable";
-    case ElementType::Writable:
+    case ElementType::WRITABLE:
       return "Writable";
-    case ElementType::Function:
+    case ElementType::FUNCTION:
       return "Function";
   }
   return to_string(elementType);
@@ -42,14 +42,14 @@ void printSubelements(vector<shared_ptr<DeviceElement>> elements) {
   }
 
   for(auto const& element : elements) {
-    if(element->getElementType() == Group) {
+    if(element->getElementType() == GROUP) {
       cout << "\n\n==== SUBGROUP: " << element->getElementName() << " >>>\n"
            << endl;
-      DeviceElementGroup* groupElement
+      DeviceElementGroup* group_element
           = static_cast<DeviceElementGroup*>(element.get());
-      auto subElements = groupElement->getSubelements();
-      if(subElements.size() > 0)
-	printSubelements(subElements);
+      auto sub_elements = group_element->getSubelements();
+      if(sub_elements.size() > 0)
+	printSubelements(sub_elements);
       cout << "\n<<< SUBGROUP: " << element->getElementName() << "\n" << endl;
     }
   }
@@ -78,19 +78,19 @@ class SimpelListener : public Model_Event_Handler::Listener {
 shared_ptr<Device> makeTestDevice() {
   DeviceBuilder* builder
       = new DeviceBuilder("TestDevice", "1234", "This is a TestDevice");
-  std::string basegroupID = builder->addDeviceElement(
-      "BaseGroup", "This is BaseGroup", ElementType::Group);
-  builder->addDeviceElement(basegroupID,
+  string basegroup_id = builder->addDeviceElement(
+      "BaseGroup", "This is BaseGroup", ElementType::GROUP);
+  builder->addDeviceElement(basegroup_id,
       "SubTestDevice",
       "This is the first Subelement",
-      ElementType::Readonly);
-  std::string subgroupID = builder->addDeviceElement("TestGroup",
+      ElementType::READABLE);
+  string subgroup_id = builder->addDeviceElement("TestGroup",
       "This is a synthetic test for device element group.",
-      ElementType::Group);
-  builder->addDeviceElement(subgroupID,
+      ElementType::GROUP);
+  builder->addDeviceElement(subgroup_id,
       "Sub2TestDevice",
       "This is the second Subelement",
-      ElementType::Readonly);
+      ElementType::READABLE);
   shared_ptr<Device> device = builder->getDevice();
 
   delete builder;

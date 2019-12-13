@@ -10,23 +10,23 @@ BuildingAndRegirtrationFacade::BuildingAndRegirtrationFacade() {
   manager_ = manager_->getInstance();
 }
 
-void BuildingAndRegirtrationFacade::buildDeviceBase(const string &UNIQUE_ID,
-                                                    const string &NAME,
-                                                    const string &DESC) {
-  builder_ = new DeviceBuilder(NAME, UNIQUE_ID, DESC);
+void BuildingAndRegirtrationFacade::buildDeviceBase(const string& unique_Id,
+    const string& name,
+    const string& desc) {
+  builder_ = new DeviceBuilder(name, unique_Id, desc);
 }
 
-string BuildingAndRegirtrationFacade::buildDeviceElement(const string &NAME,
-                                                         const string &DESC,
-                                                         ElementType type) {
-  return builder_->addDeviceElement(NAME, DESC, type);
+string BuildingAndRegirtrationFacade::buildDeviceElement(const string& name,
+    const string& desc,
+    ElementType type) {
+  return builder_->addDeviceElement(name, desc, type);
 }
 
-string BuildingAndRegirtrationFacade::buildDeviceElement(const string &GROUP_ID,
-                                                         const string &NAME,
-                                                         const string &DESC,
-                                                         ElementType type) {
-  return builder_->addDeviceElement(GROUP_ID, NAME, DESC, type);
+string BuildingAndRegirtrationFacade::buildDeviceElement(const string& group_Id,
+    const string& name,
+    const string& desc,
+    ElementType type) {
+  return builder_->addDeviceElement(group_Id, name, desc, type);
 }
 
 shared_ptr<Device> BuildingAndRegirtrationFacade::getDevice() {
@@ -39,6 +39,6 @@ bool BuildingAndRegirtrationFacade::registerDevice(shared_ptr<Device> device) {
   return manager_->registerDevice(move(device));
 }
 
-bool BuildingAndRegirtrationFacade::deregisterDevice(const string &DEVICE_ID) {
-  return manager_->deregisterDevice(DEVICE_ID);
+bool BuildingAndRegirtrationFacade::deregisterDevice(const string& device_id) {
+  return manager_->deregisterDevice(device_id);
 }
