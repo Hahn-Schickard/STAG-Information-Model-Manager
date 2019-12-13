@@ -1,61 +1,88 @@
 #include "DeviceElementGroupImpl.hpp"
+
 #include "DeviceElement.hpp"
 #include "DeviceElementBuilder.hpp"
 #include "DeviceGroupBuilder.hpp"
-#include "InformationModelExceptions.hpp"
+#include "LoggerRepository.hpp"
+
+#include <exception>
 #include <memory>
 
 using namespace std;
+using namespace HaSLL;
 using namespace Model_Factory;
 using namespace Information_Model;
 
-DeviceElementGroupImpl::DeviceElementGroupImpl(const string &REF_ID,
-                                               const string &NAME,
-                                               const string &DESC)
-    : DeviceElementGroup(REF_ID, NAME, DESC) {
+DeviceElementGroupImpl::DeviceElementGroupImpl(const string& ref_Id,
+    const string& name,
+    const string& desc)
+    : DeviceElementGroup(ref_Id, name, desc)
+    , logger_(LoggerRepository::getInstance().registerTypedLoger(this)) {
   elementId = 0;
 }
 
-string DeviceElementGroupImpl::addDeviceElement(const string &NAME,
-                                                const string &DESC,
-                                                ElementType ELEMENT_TYPE) {
+string DeviceElementGroupImpl::addDeviceElement(const string& name,
+    const string& desc,
+    ElementType element_Type) {
   const string REF_ID = generate_Reference_ID();
 
-  switch (ELEMENT_TYPE) {
-  case ElementType::Group: {
-    pair<string, shared_ptr<DeviceElementGroup>> elPair(
-        REF_ID, shared_ptr<DeviceElementGroup>(
-                    new DeviceGroupBuilder(REF_ID, NAME, DESC)));
-    subelements.insert(elPair);
-  }; break;
-  case ElementType::Observable:
-  case ElementType::Writable:
-  case ElementType::Readonly:
-  case ElementType::Function: {
-    //@TODO remove at once Readonly when it is implemented
-    pair<string, shared_ptr<DeviceElement>> elPair(
-        REF_ID,
-        shared_ptr<DeviceElement>(new Model_Factory::DeviceElementBuilder(
-            REF_ID, NAME, DESC, ELEMENT_TYPE)));
-    subelements.insert(elPair);
-  }; break;
-  default: {}
+  switch(element_Type) {
+    case ElementType::GROUP: {
+      pair<string, shared_ptr<DeviceElementGroup>> element_pair(REF_ID,
+          shared_ptr<DeviceElementGroup>(
+              new DeviceGroupBuilder(REF_ID, name, desc)));
+      subelements.insert(element_pair);
+    }; break;
+    case ElementType::OBSERVABLE:
+    case ElementType::WRITABLE:
+    case ElementType::READABLE: {
+      break;
+    }
+    case ElementType::FUNCTION: {
+      //@TODO remove at once Readonly when it is implemented
+      pair<string, shared_ptr<DeviceElement>> element_pair(REF_ID,
+          shared_ptr<DeviceElement>(new Model_Factory::DeviceElementBuilder(
+              REF_ID, name, desc, element_Type)));
+      subelements.insert(element_pair);
+    }; break;
+    default: {}
   }
   return REF_ID;
 }
 
-std::shared_ptr<Information_Model::DeviceElement>
-DeviceElementGroupImpl::findSubelement(const string &REF_ID) {
-  if (subelements.find(REF_ID) != subelements.end())
-    return subelements.at(REF_ID);
+string DeviceElementGroupImpl::addSubgroup(const string& name,
+    const string& desc) {
+  const string REF_ID = generate_Reference_ID();
 
-  for (auto el = subelements.begin(); el != subelements.end(); ++el) {
-    if (el->second->getElementType() == ElementType::Group) {
-      auto groupElement =
-          static_cast<DeviceElementGroupImpl *>(el->second.get());
-      auto subEl = groupElement->findSubelement(REF_ID);
-      if (subEl != nullptr) {
-        return subEl;
+  logger_->log(SeverityLevel::TRACE,
+      "Building a subgroup element: {} with id {}.",
+      name,
+      REF_ID);
+  pair<string, shared_ptr<DeviceElement>> element_pair(
+      REF_ID, make_shared<DeviceGroupBuilder>(REF_ID, name, desc));
+  subelements.insert(element_pair);
+
+  return REF_ID;
+}
+
+string DeviceElementGroupImpl::addFunction(const string& name,
+    const string& desc) {
+  logger_->log(SeverityLevel::ERROR, "Function build is not implemented!");
+  return nullptr;
+}
+
+shared_ptr<Information_Model::DeviceElement>
+DeviceElementGroupImpl::findSubelement(const string& ref_Id) {
+  if(subelements.find(ref_Id) != subelements.end())
+    return subelements.at(ref_Id);
+
+  for(auto el = subelements.begin(); el != subelements.end(); ++el) {
+    if(el->second->getElementType() == ElementType::GROUP) {
+      auto group_element
+          = static_cast<DeviceElementGroupImpl*>(el->second.get());
+      auto subelement = group_element->findSubelement(ref_Id);
+      if(subelement != nullptr) {
+	return subelement;
       }
     }
   }
@@ -63,37 +90,42 @@ DeviceElementGroupImpl::findSubelement(const string &REF_ID) {
   return nullptr;
 }
 
-std::shared_ptr<Information_Model::DeviceElement>
-DeviceElementGroupImpl::getSubelement(const string REF_ID) {
-  auto el = findSubelement(REF_ID);
-  if (el != nullptr)
+shared_ptr<Information_Model::DeviceElement>
+DeviceElementGroupImpl::getSubelement(const string& ref_Id) {
+  auto el = findSubelement(ref_Id);
+  if(el != nullptr)
     return el;
   else
-    throw InvalidReferenceIdException("RefId " + REF_ID + " not found.");
+    throw runtime_error("RefId " + ref_Id + " not found.");
 }
 
-vector<std::shared_ptr<Information_Model::DeviceElement>>
+vector<shared_ptr<Information_Model::DeviceElement>>
 DeviceElementGroupImpl::getSubelements() {
   vector<shared_ptr<Information_Model::DeviceElement>> v_subelements;
-  for (auto el : subelements) {
-    v_subelements.push_back(el.second);
+  //NOLINTNEXTLINE
+  for(auto elelement : subelements) {
+    v_subelements.push_back(elelement.second);
   }
   return v_subelements;
 }
 
-void DeviceElementGroupImpl::incrementElementId() { elementId++; }
+void DeviceElementGroupImpl::incrementElementId() {
+  elementId++;
+}
 
-unsigned int DeviceElementGroupImpl::getNumericElementId() { return elementId; }
+unsigned int DeviceElementGroupImpl::getNumericElementId() {
+  return elementId;
+}
 
 string DeviceElementGroupImpl::generate_Reference_ID() {
   const string BASE_ID = this->getElementRefId();
-  string element_id = "";
-  auto elId = getNumericElementId();
+  string element_id    = "";
+  auto elemen_id_int   = getNumericElementId();
 
-  if (BASE_ID.back() == ':')
-    element_id = to_string(elId);
+  if(BASE_ID.back() == ':')
+    element_id = to_string(elemen_id_int);
   else
-    element_id = "." + to_string(elId);
+    element_id = "." + to_string(elemen_id_int);
   incrementElementId();
   return BASE_ID + element_id;
 }
