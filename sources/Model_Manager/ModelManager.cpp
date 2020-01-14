@@ -17,9 +17,8 @@ bool ModelManager::registerDevice(shared_ptr<Device> device) {
     pair<string, shared_ptr<Device>> device_pair(
         device->getElementRefId(), device);
     devices.insert(device_pair);
-    NotifierEvent* event
-        = new NotifierEvent(NotifierEventType::NEW_DEVICE_REGISTERED, device);
-    notifyListeners(event);
+    notifyListeners(make_shared<NotifierEvent>(
+        NotifierEventType::NEW_DEVICE_REGISTERED, device));
     return true;
   } else {
     return false;
@@ -28,9 +27,8 @@ bool ModelManager::registerDevice(shared_ptr<Device> device) {
 
 bool ModelManager::deregisterDevice(const string& device_id) {
   if(deviceExists(device_id)) {
-    NotifierEvent* event
-        = new NotifierEvent(NotifierEventType::DEVICE_REMOVED, device_id);
-    notifyListeners(event);
+    notifyListeners(make_shared<NotifierEvent>(
+        NotifierEventType::DEVICE_REMOVED, device_id));
     devices.erase(device_id);
     return true;
   } else {

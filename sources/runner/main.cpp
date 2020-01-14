@@ -67,7 +67,7 @@ void printDevice(const shared_ptr<Device>& device) {
 
 class SimpelListener : public Model_Event_Handler::Listener {
  public:
-  void handleEvent(Model_Event_Handler::NotifierEvent* event) {
+  void handleEvent(shared_ptr<Model_Event_Handler::NotifierEvent> event) {
     if(event->getEventType()
         == Model_Event_Handler::NotifierEventType::NEW_DEVICE_REGISTERED) {
       printDevice(event->getEvent()->device);
@@ -99,11 +99,12 @@ shared_ptr<Device> makeTestDevice() {
 
 int main() {
   ModelManager* model_manager = model_manager->getInstance();
-  shared_ptr<Model_Event_Handler::Listener> this_listener(new SimpelListener());
-  model_manager->registerListener(this_listener);
+  model_manager->registerListener(
+      static_pointer_cast<Model_Event_Handler::Listener>(
+          make_shared<SimpelListener>()));
+  model_manager->registerDevice(move(makeTestDevice()));
 
-  shared_ptr<Device> local_scope_device = makeTestDevice();
-  model_manager->registerDevice(move(local_scope_device));
+  delete model_manager;
 
   exit(0);
 }
