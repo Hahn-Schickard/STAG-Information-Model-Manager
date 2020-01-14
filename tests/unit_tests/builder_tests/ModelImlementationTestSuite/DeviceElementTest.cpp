@@ -1,19 +1,9 @@
-#include "Device.hpp"
 #include "DeviceBuilder.hpp"
-#include "DeviceElementBuilder.hpp"
-#include "DeviceElementGroupImpl.hpp"
-#include "DeviceImpl.hpp"
-
-#include <gtest/gtest.h>
-#include <string>
-
-using namespace std;
-using namespace Model_Factory;
-using namespace Information_Model;
+#include "ModelImplementantionTestSuite.hpp"
 
 TEST(DeviceElementTest, DeviceElementTypeUndefIsCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder("1234",
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>("1234",
       "TestDevice",
       "A hardcoded deviceelement",
       ElementType::UNDEFINED);
@@ -28,7 +18,7 @@ TEST(DeviceElementTest, DeviceElementTypeUndefIsCorrect) {
 
 TEST(DeviceElementTest, DeviceElementTypeUndefIsNotCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder("1234",
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>("1234",
       "TestDevice",
       "A hardcoded deviceelement",
       ElementType::UNDEFINED);
@@ -43,7 +33,7 @@ TEST(DeviceElementTest, DeviceElementTypeUndefIsNotCorrect) {
 
 TEST(DeviceElementTest, DeviceElementTypeGroupIsCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder(
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>(
       "1234", "TestDevice", "A hardcoded deviceelement", ElementType::GROUP);
   // Act
   ElementType tested_element = element->getElementType();
@@ -56,7 +46,7 @@ TEST(DeviceElementTest, DeviceElementTypeGroupIsCorrect) {
 
 TEST(DeviceElementTest, DeviceElementTypeGroupIsNotCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder(
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>(
       "1234", "TestDevice", "A hardcoded deviceelement", ElementType::GROUP);
   // Act
   ElementType tested_element = element->getElementType();
@@ -69,7 +59,7 @@ TEST(DeviceElementTest, DeviceElementTypeGroupIsNotCorrect) {
 
 TEST(DeviceElementTest, DeviceElementTypeReadOnlyIsCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder(
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>(
       "1234", "TestDevice", "A hardcoded deviceelement", ElementType::READABLE);
   // Act
   ElementType tested_element = element->getElementType();
@@ -82,7 +72,7 @@ TEST(DeviceElementTest, DeviceElementTypeReadOnlyIsCorrect) {
 
 TEST(DeviceElementTest, DeviceElementTypeReadOnlyIsNotCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder(
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>(
       "1234", "TestDevice", "A hardcoded deviceelement", ElementType::READABLE);
   // Act
   ElementType tested_element = element->getElementType();
@@ -95,7 +85,7 @@ TEST(DeviceElementTest, DeviceElementTypeReadOnlyIsNotCorrect) {
 
 TEST(DeviceElementTest, DeviceElementTypeObservableIsCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder("1234",
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>("1234",
       "TestDevice",
       "A hardcoded deviceelement",
       ElementType::OBSERVABLE);
@@ -110,7 +100,7 @@ TEST(DeviceElementTest, DeviceElementTypeObservableIsCorrect) {
 
 TEST(DeviceElementTest, DeviceElementTypeObservableIsNotCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder("1234",
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>("1234",
       "TestDevice",
       "A hardcoded deviceelement",
       ElementType::OBSERVABLE);
@@ -125,7 +115,7 @@ TEST(DeviceElementTest, DeviceElementTypeObservableIsNotCorrect) {
 
 TEST(DeviceElementTest, DeviceElementTypeWritableIsCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder(
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>(
       "1234", "TestDevice", "A hardcoded deviceelement", ElementType::WRITABLE);
   // Act
   ElementType tested_element = element->getElementType();
@@ -138,7 +128,7 @@ TEST(DeviceElementTest, DeviceElementTypeWritableIsCorrect) {
 
 TEST(DeviceElementTest, DeviceElementTypeWritableIsNotCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder(
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>(
       "1234", "TestDevice", "A hardcoded deviceelement", ElementType::WRITABLE);
   // Act
   ElementType tested_element = element->getElementType();
@@ -151,7 +141,7 @@ TEST(DeviceElementTest, DeviceElementTypeWritableIsNotCorrect) {
 
 TEST(DeviceElementTest, DeviceElementTypeFunctionIsCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder(
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>(
       "1234", "TestDevice", "A hardcoded deviceelement", ElementType::FUNCTION);
   // Act
   ElementType tested_element = element->getElementType();
@@ -164,7 +154,7 @@ TEST(DeviceElementTest, DeviceElementTypeFunctionIsCorrect) {
 
 TEST(DeviceElementTest, DeviceElementTypeFunctionIsNotCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder(
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>(
       "1234", "TestDevice", "A hardcoded deviceelement", ElementType::FUNCTION);
   // Act
   ElementType tested_element = element->getElementType();

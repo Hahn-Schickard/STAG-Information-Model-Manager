@@ -1,19 +1,9 @@
-#include "Device.hpp"
-#include "DeviceElementBuilder.hpp"
-#include "DeviceElementGroupImpl.hpp"
-#include "DeviceImpl.hpp"
-
-#include <gtest/gtest.h>
-#include <string>
-
-using namespace std;
-using namespace Model_Factory;
-using namespace Information_Model;
+#include "ModelImplementantionTestSuite.hpp"
 
 TEST(RefIdTests, DeviceRefIdIsCorrect) {
   // Arrange
-  Device* element
-      = new DeviceImpl("1234", "TestDevice", "A hardcoded deviceelement");
+  shared_ptr<Device> element = make_shared<DeviceImpl>(
+      "1234", "TestDevice", "A hardcoded deviceelement");
 
   // Act
   string tested_element = element->getElementRefId();
@@ -27,8 +17,8 @@ TEST(RefIdTests, DeviceRefIdIsCorrect) {
 
 TEST(RefIdTests, DeviceRefIdIsNotCorrect) {
   // Arrange
-  Device* element
-      = new DeviceImpl("1234", "TestDevice", "A hardcoded deviceelement");
+  shared_ptr<Device> element = make_shared<DeviceImpl>(
+      "1234", "TestDevice", "A hardcoded deviceelement");
 
   // Act
   string tested_element = element->getElementRefId();
@@ -41,7 +31,7 @@ TEST(RefIdTests, DeviceRefIdIsNotCorrect) {
 
 TEST(RefIdTests, DeviceElementRefIdIsCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder(
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>(
       "1234", "TestDevice", "A hardcoded deviceelement", ElementType::GROUP);
 
   // Act
@@ -55,7 +45,7 @@ TEST(RefIdTests, DeviceElementRefIdIsCorrect) {
 
 TEST(RefIdTests, DeviceElementRefIdIsNotCorrect) {
   // Arrange
-  DeviceElement* element = new DeviceElementBuilder(
+  shared_ptr<DeviceElement> element = make_shared<DeviceElementBuilder>(
       "1234", "TestDevice", "A hardcoded deviceelement", ElementType::GROUP);
 
   // Act
@@ -69,7 +59,7 @@ TEST(RefIdTests, DeviceElementRefIdIsNotCorrect) {
 
 TEST(RefIdTests, DeviceElementGroupRefIdIsCorrect) {
   // Arrange
-  DeviceElementGroup* element = new DeviceElementGroupImpl(
+  shared_ptr<DeviceElementGroup> element = make_shared<DeviceElementGroupImpl>(
       "1234", "TestDevice", "A hardcoded deviceelement");
 
   // Act
@@ -83,7 +73,7 @@ TEST(RefIdTests, DeviceElementGroupRefIdIsCorrect) {
 
 TEST(RefIdTests, DeviceElementGroupRefIdIsNotCorrect) {
   // Arrange
-  DeviceElementGroup* element = new DeviceElementGroupImpl(
+  shared_ptr<DeviceElementGroup> element = make_shared<DeviceElementGroupImpl>(
       "1234", "TestDevice", "A hardcoded deviceelement");
 
   // Act

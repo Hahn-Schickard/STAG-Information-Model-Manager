@@ -1,13 +1,18 @@
 cmake_minimum_required(VERSION 3.6)
 
-set (THIS InfoModel_Test_Suite)
+set(THIS Model_Manager_Test_Suite)
 
 include_directories(${PROJECT_SOURCE_DIR}/includes/Utilities/)
 
-file(GLOB Test_Suite "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
-file(GLOB Test_Cases "${CMAKE_CURRENT_LIST_DIR}/*.hpp")
+file(GLOB Model_Implementation_Test_Suite "${CMAKE_CURRENT_LIST_DIR}/ModelImlementationTestSuite/*")
+file(GLOB Device_Builder_Test_Suite "${CMAKE_CURRENT_LIST_DIR}/DeviceBuilderTestSuite/*")
+file(GLOB Model_Manager_Test_Suite_HEADERS "${CMAKE_CURRENT_LIST_DIR}/*.hpp")
 
-add_executable(${THIS} ${Test_Suite} ${Test_Cases} )
+add_executable(${THIS} 
+               ${Model_Implementation_Test_Suite}
+               ${Device_Builder_Test_Suite}
+               ${Model_Manager_Test_Suite_HEADERS}
+)
 
 target_link_libraries(${THIS} PUBLIC    
                               Information_Modeler::Information_Model_Interface

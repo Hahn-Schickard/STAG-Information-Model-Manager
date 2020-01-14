@@ -1,26 +1,17 @@
-#include "Device.hpp"
-#include "DeviceElementBuilder.hpp"
-#include "DeviceElementGroupImpl.hpp"
-#include "DeviceImpl.hpp"
-
-#include <gtest/gtest.h>
-#include <iostream>
-
-using namespace std;
-using namespace Model_Factory;
-using namespace Information_Model;
+#include "ModelImplementantionTestSuite.hpp"
 
 class DeviceElementGroupTest : public ::testing::Test {
  public:
-  Device* device;
-  shared_ptr<Information_Model::DeviceElementGroup> group;
+  shared_ptr<Device> device;
+  shared_ptr<DeviceElementGroup> group;
   vector<shared_ptr<DeviceElement>> elements;
 
   DeviceElementGroupTest() {}
 
   void SetUp() {
-    device = new DeviceImpl("1234", "TestDevice", "A hardcoded deviceelement");
-    DeviceImpl* tmp_device = dynamic_cast<DeviceImpl*>(device);
+    device = make_shared<DeviceImpl>(
+        "1234", "TestDevice", "A hardcoded deviceelement");
+    auto tmp_device = static_pointer_cast<DeviceImpl>(device);
     tmp_device->addDeviceElementGroup(
         "TestGroup", "This is a synthetic test for device element group.");
     group          = device->getDeviceElementGroup();
@@ -28,10 +19,6 @@ class DeviceElementGroupTest : public ::testing::Test {
     tmp_group->addDeviceElement(
         "SubTestDevice", "This is the first Subelement", ElementType::READABLE);
     elements = group->getSubelements();
-  }
-
-  void TearDown() {
-    delete device;
   }
 };
 
