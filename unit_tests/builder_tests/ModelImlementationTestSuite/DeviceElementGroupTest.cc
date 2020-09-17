@@ -1,7 +1,7 @@
 #include "ModelImplementantionTestSuite.hpp"
 
 class DeviceElementGroupTest : public ::testing::Test {
- public:
+public:
   shared_ptr<Device> device;
   shared_ptr<DeviceElementGroup> group;
   vector<shared_ptr<DeviceElement>> elements;
@@ -9,15 +9,15 @@ class DeviceElementGroupTest : public ::testing::Test {
   DeviceElementGroupTest() {}
 
   void SetUp() {
-    device = make_shared<DeviceImpl>(
-        "1234", "TestDevice", "A hardcoded deviceelement");
+    device = make_shared<DeviceImpl>("1234", "TestDevice",
+                                     "A hardcoded deviceelement");
     auto tmp_device = static_pointer_cast<DeviceImpl>(device);
     tmp_device->addDeviceElementGroup(
         "TestGroup", "This is a synthetic test for device element group.");
-    group          = device->getDeviceElementGroup();
+    group = device->getDeviceElementGroup();
     auto tmp_group = static_pointer_cast<DeviceElementGroupImpl>(group);
-    tmp_group->addDeviceElement(
-        "SubTestDevice", "This is the first Subelement", ElementType::READABLE);
+    tmp_group->addDeviceElement("SubTestDevice", "This is the first Subelement",
+                                ElementType::READABLE);
     elements = group->getSubelements();
   }
 };
@@ -25,7 +25,7 @@ class DeviceElementGroupTest : public ::testing::Test {
 TEST_F(DeviceElementGroupTest, DeviceElementGroupSubelementIDIsCorrect) {
   // Act
   // NOLINTNEXTLINE
-  for(auto element : elements) {
+  for (auto element : elements) {
     string tested_element = element->getElementRefId();
     // Assert
     string expected_result = "1234:0";
@@ -38,7 +38,7 @@ TEST_F(DeviceElementGroupTest, DeviceElementGroupSubelementIDIsCorrect) {
 TEST_F(DeviceElementGroupTest, DeviceElementGroupSubelementIDIsNotCorrect) {
   // Act
   // NOLINTNEXTLINE
-  for(auto element : elements) {
+  for (auto element : elements) {
     string tested_element = element->getElementRefId();
     // Assert
     string expected_result = "1234:1";
@@ -51,7 +51,7 @@ TEST_F(DeviceElementGroupTest, DeviceElementGroupSubelementIDIsNotCorrect) {
 TEST_F(DeviceElementGroupTest, DeviceElementGroupSubelementNameIsCorrect) {
   // Act
   // NOLINTNEXTLINE
-  for(auto element : elements) {
+  for (auto element : elements) {
     string tested_element = element->getElementName();
     // Assert
     string expected_result = "SubTestDevice";
@@ -64,7 +64,7 @@ TEST_F(DeviceElementGroupTest, DeviceElementGroupSubelementNameIsCorrect) {
 TEST_F(DeviceElementGroupTest, DeviceElementGroupSubelementNameIsNotCorrect) {
   // Act
   // NOLINTNEXTLINE
-  for(auto element : elements) {
+  for (auto element : elements) {
     string tested_element = element->getElementName();
     // Assert
     string expected_result = "SubTestDevice2";
@@ -75,10 +75,10 @@ TEST_F(DeviceElementGroupTest, DeviceElementGroupSubelementNameIsNotCorrect) {
 }
 
 TEST_F(DeviceElementGroupTest,
-    DeviceElementGroupSubelementDescriptionIsCorrect) {
+       DeviceElementGroupSubelementDescriptionIsCorrect) {
   // Act
   // NOLINTNEXTLINE
-  for(auto element : elements) {
+  for (auto element : elements) {
     string tested_element = element->getElementDescription();
     // Assert
     string expected_result = "This is the first Subelement";
@@ -89,10 +89,10 @@ TEST_F(DeviceElementGroupTest,
 }
 
 TEST_F(DeviceElementGroupTest,
-    DeviceElementGroupSubelementDescriptionIsNotCorrect) {
+       DeviceElementGroupSubelementDescriptionIsNotCorrect) {
   // Act
   // NOLINTNEXTLINE
-  for(auto element : elements) {
+  for (auto element : elements) {
     string tested_element = element->getElementDescription();
     // Assert
     string expected_result = "This is not the first Subelement";

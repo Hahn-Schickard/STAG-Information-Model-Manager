@@ -36,6 +36,7 @@ string DeviceElementGroupImpl::addDeviceElement(const string& name,
     case ElementType::OBSERVABLE:
     case ElementType::WRITABLE:
     case ElementType::READABLE: {
+      addReadableMetric(name, desc);
       break;
     }
     case ElementType::FUNCTION: {

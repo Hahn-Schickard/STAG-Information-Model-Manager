@@ -33,7 +33,8 @@ namespace Model_Factory {
         const std::string& GROUP_REFID,
         const std::string& NAME,
         const std::string& DESC,
-        Information_Model::ElementType type);
+        Information_Model::ElementType type,
+        Information_Model::DataType data_type);
     std::shared_ptr<Model_Factory::DeviceElementGroupImpl> getSubelementGroup(
         std::shared_ptr<Model_Factory::DeviceElementGroupImpl>
             deviceElementGroup,
@@ -62,7 +63,8 @@ namespace Model_Factory {
    */
     std::string addDeviceElement(const std::string& NAME,
         const std::string& DESC,
-        Information_Model::ElementType type);
+        Information_Model::ElementType element_type,
+        Information_Model::DataType data_type);
 
     /**
    * @brief This method calls DeviceElementGroupImpl::addDeviceElement() method
@@ -79,7 +81,8 @@ namespace Model_Factory {
     std::string addDeviceElement(const std::string& GROUP_REFID,
         const std::string& NAME,
         const std::string& DESC,
-        Information_Model::ElementType type);
+        Information_Model::ElementType type,
+        Information_Model::DataType data_type);
 
     /**
      * @brief This method creates an instance of a polymorfed Information_Model:ReadableMetric 
