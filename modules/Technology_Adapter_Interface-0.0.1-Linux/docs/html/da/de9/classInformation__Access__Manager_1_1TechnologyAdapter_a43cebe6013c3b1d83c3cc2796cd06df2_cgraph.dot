@@ -1,9 +1,0 @@
-digraph "Information_Access_Manager::TechnologyAdapter::setBuildingAndRegistrationInterface"
-{
-  edge [fontname="Sans",fontsize="10",labelfontname="Sans",labelfontsize="10"];
-  node [fontname="Sans",fontsize="10",shape=record];
-  rankdir="LR";
-  Node17 [label="Information_Access\l_Manager::TechnologyAdapter\l::setBuildingAndRegistrationInterface",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node17 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Sans"];
-  Node18 [label="Information_Access\l_Manager::TechnologyAdapter\l::BuildingAndRegistrationInterface\lWasSet",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/de9/classInformation__Access__Manager_1_1TechnologyAdapter.html#a3456f14171cac5be9eff1ef157041bc2"];
-}

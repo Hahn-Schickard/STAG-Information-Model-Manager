@@ -1,7 +1,0 @@
-var searchData=
-[
-  ['abstraction_5ffactory_5f',['abstraction_factory_',['../da/de9/classInformation__Access__Manager_1_1TechnologyAdapter.html#a2da10b2e130dfcebde1638b09e1c3bba',1,'Information_Access_Manager::TechnologyAdapter']]],
-  ['abstractionfactory',['AbstractionFactory',['../d7/dda/classInformation__Access__Manager_1_1AbstractionFactory.html',1,'Information_Access_Manager::AbstractionFactory'],['../d7/dda/classInformation__Access__Manager_1_1AbstractionFactory.html#a16061fe22883a260c4f31f227c592f9d',1,'Information_Access_Manager::AbstractionFactory::AbstractionFactory()']]],
-  ['adapter_5fname_5f',['adapter_name_',['../da/de9/classInformation__Access__Manager_1_1TechnologyAdapter.html#ac49b4183d36a561e530cee84504994cc',1,'Information_Access_Manager::TechnologyAdapter']]],
-  ['adddeviceelement',['addDeviceElement',['../d7/dda/classInformation__Access__Manager_1_1AbstractionFactory.html#a24ef6b40ca93959273419d4d36877048',1,'Information_Access_Manager::AbstractionFactory::addDeviceElement(const std::string &amp;NAME, const std::string &amp;DESC, Information_Model::ElementType type)'],['../d7/dda/classInformation__Access__Manager_1_1AbstractionFactory.html#acf4d6aaa278ef22a54fd7412258ab87c',1,'Information_Access_Manager::AbstractionFactory::addDeviceElement(const std::string &amp;GROUP_ID, const std::string &amp;NAME, const std::string &amp;DESC, Information_Model::ElementType type)']]]
-];
