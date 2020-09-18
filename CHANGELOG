@@ -1,0 +1,24 @@
+## [0.1.0] - 2020.09.17
+### Removed
+ - modules
+ - runner 
+ 
+### Changed
+ - test case soruce file extentions
+ - CMakeLists.txt to use Cmake 3.x best practices 
+ - auto generated doc style
+ - utility scripts to use python
+ - clang-format rules
+ - tests into unit_tests
+ - cmake modules
+ 
+### Added 
+ - conan package configuration
+ - License
+ - Notice
+ - Authors
+ - Contributing
+ - conan dependency handling
+ - conan packaging
+ - conan package integration test
+ - Device Builder dependency

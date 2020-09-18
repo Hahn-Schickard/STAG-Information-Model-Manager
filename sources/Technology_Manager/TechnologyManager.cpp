@@ -1,10 +1,12 @@
 #include "TechnologyManager.hpp"
+
 #include "BuildingAndRegirtrationFacade.hpp"
+
 #include <algorithm>
 
 using namespace std;
 using namespace Information_Access_Manager;
-using namespace Information_Model_Static_Part;
+using namespace Technology_Adapter;
 
 TechnologyManager::TechnologyManager() {
   building_and_registration_facade_ =
@@ -14,14 +16,13 @@ TechnologyManager::TechnologyManager() {
 
 vector<shared_ptr<TechnologyAdapter>>::iterator
 TechnologyManager::findTechnologyAdapter(
-    shared_ptr<TechnologyAdapter> adapter) {
+    const shared_ptr<TechnologyAdapter> &adapter) {
   return find(technology_adapters_.begin(), technology_adapters_.end(),
               adapter);
 }
 
 bool TechnologyManager::registerTechnologyAdapter(
     shared_ptr<TechnologyAdapter> adapter) {
-
   auto iterator = findTechnologyAdapter(adapter);
   if (iterator == technology_adapters_.end()) {
     if (adapter->setBuildingAndRegistrationInterface(
@@ -61,4 +62,5 @@ TechnologyManager *TechnologyManager::getInstance() {
 
 TechnologyManager::~TechnologyManager() { technology_adapters_.clear(); }
 
+// NOLINTNEXTLINE
 TechnologyManager *TechnologyManager::instance_ = 0;

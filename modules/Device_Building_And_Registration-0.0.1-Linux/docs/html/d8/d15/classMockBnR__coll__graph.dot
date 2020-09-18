@@ -1,8 +1,0 @@
-digraph "MockBnR"
-{
-  edge [fontname="Sans",fontsize="10",labelfontname="Sans",labelfontsize="10"];
-  node [fontname="Sans",fontsize="10",shape=record];
-  Node2 [label="MockBnR",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Sans"];
-  Node3 [label="Information_Model_Static\l_Part::BuildingAndRegistration\lInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d8b/classInformation__Model__Static__Part_1_1BuildingAndRegistrationInterface.html",tooltip="This Interface is the main entry point for Device modellign and registration for various Technology a..."];
-}
