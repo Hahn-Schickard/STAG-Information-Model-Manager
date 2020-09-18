@@ -25,6 +25,7 @@ list(APPEND DEPENDENCIES_LIST
             HaSLL
             Information_Model
             Model_Event_Handler
+            Device_Builder
             Device_Building_And_Registration
             Technology_Interface
             Threads

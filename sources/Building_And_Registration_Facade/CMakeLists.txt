@@ -20,7 +20,7 @@ target_sources(${THIS} PRIVATE
 target_link_libraries(${THIS} PUBLIC
                               Device_Building_And_Registration::Device_Building_And_Registration
                               Information_Model::Information_Model
-                              Model_Factory
+                              Device_Builder::Device_Builder
                               Model_Manager
 )
 

@@ -18,7 +18,6 @@ target_sources(${THIS} PRIVATE
 )
 
 target_link_libraries(${THIS} PUBLIC
-                              Model_Factory
                               Model_Event_Handler::Model_Event_Handler
 )
 
