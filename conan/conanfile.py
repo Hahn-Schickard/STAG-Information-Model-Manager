@@ -8,14 +8,30 @@ class PackageConan(ConanFile):
     license = "Apache 2.0"
     topics = ("conan", "stag", "modelling")
     build_requires = "gtest/1.10.0"
-    requires = "HaSLL/0.2.2@hahn-schickard/stable", "Information_Model/0.1.0@hahn-schickard/stable", "Model_Event_Handler/0.1.0@hahn-schickard/stable", "Device_Builder/0.1.0@hahn-schickard/stable", "Device_Building_And_Registration/0.1.0@hahn-schickard/stable", "Technology_Interface/0.1.0@hahn-schickard/stable"
+    requires = [
+        "HaSLL/0.2.2@hahn-schickard/stable",
+        "Information_Model/0.1.0@hahn-schickard/stable",
+        "Model_Event_Handler/0.1.0@hahn-schickard/stable",
+        "Device_Builder/0.1.0@hahn-schickard/stable",
+        "Device_Building_And_Registration/0.1.0@hahn-schickard/stable",
+        "Technology_Adapter_Interface/0.1.0@hahn-schickard/stable"
+    ]
     settings = "cppstd", "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False],
                "fPIC": [True, False]}
     default_options = {"shared": True,
                        "fPIC": True}
     default_user = "Hahn-Schickard"
-    exports_sources = "../*", "!../conan/*", "!../build/*", "!../.vscode/*", "!../.gitlab/*", "!../log/*",
+    exports_sources = [
+        "../*",
+        "!../conan/*",
+        "!../build/*",
+        "!../.vscode/*",
+        "!../.gitlab/*",
+        "!../log/*",
+        "!../utility/*",
+        "!../docs/*",
+    ]
     _cmake = None
 
     def set_name(self):
