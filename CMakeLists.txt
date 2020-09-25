@@ -27,7 +27,7 @@ list(APPEND DEPENDENCIES_LIST
             Model_Event_Handler
             Device_Builder
             Device_Building_And_Registration
-            Technology_Interface
+            Technology_Adapter_Interface
             Threads
 )
 #@- ========================= END OF USER CONFIGURATION ============================

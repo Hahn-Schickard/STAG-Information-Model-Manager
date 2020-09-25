@@ -18,7 +18,7 @@ target_sources(${THIS} PRIVATE
 )
 
 target_link_libraries(${THIS} PUBLIC
-                              Technology_Interface::Technology_Interface
+                              Technology_Adapter_Interface::Technology_Adapter_Interface
                               Device_Building_And_Registration::Device_Building_And_Registration
                               Building_And_Registration_Facade
 )

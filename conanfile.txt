@@ -5,7 +5,7 @@ Information_Model/0.1.0@hahn-schickard/stable
 Model_Event_Handler/0.1.0@hahn-schickard/stable
 Device_Builder/0.1.0@hahn-schickard/stable
 Device_Building_And_Registration/0.1.0@hahn-schickard/stable
-Technology_Interface/0.1.0@hahn-schickard/stable
+Technology_Adapter_Interface/0.1.0@hahn-schickard/stable
 
 [generators]
 cmake_paths
