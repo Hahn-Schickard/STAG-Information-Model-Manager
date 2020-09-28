@@ -1,3 +1,22 @@
+## [0.1.1] - 2020.09.28
+### Removed
+ - builder_tests directory from unit_tests
+ - ModelImlementationTestSuite
+ - DeviceBuilderTestSuite
+
+### Changed
+ - Information Model to 0.1.1
+ - Model Event Handler to 0.1.1
+ - Device Builder to 0.1.1
+ - Device Building And Registration to 0.1.1
+ - Technology Adapter Interface to 0.1.1
+ - getElementRefId() to getElementId()
+
+### Added
+ - TechnologyManagerTestSuite placeholder directory
+ - ModelManagerTestSuite placeholder directory
+ - BuildingAndRegistrationFacadeTestSuite placeholder directory
+
 ## [0.1.0] - 2020.09.17
 ### Removed
  - modules

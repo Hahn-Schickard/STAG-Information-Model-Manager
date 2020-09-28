@@ -8,14 +8,12 @@ using namespace Information_Model;
 using namespace Model_Event_Handler;
 
 ModelManager::ModelManager() {}
-ModelManager::~ModelManager() {
-  devices.clear();
-}
+ModelManager::~ModelManager() { devices.clear(); }
 
 bool ModelManager::registerDevice(shared_ptr<Device> device) {
-  if(!deviceExists(device->getElementRefId())) {
-    pair<string, shared_ptr<Device>> device_pair(
-        device->getElementRefId(), device);
+  if (!deviceExists(device->getElementId())) {
+    pair<string, shared_ptr<Device>> device_pair(device->getElementId(),
+                                                 device);
     devices.insert(device_pair);
     notifyListeners(make_shared<NotifierEvent>(
         NotifierEventType::NEW_DEVICE_REGISTERED, device));
@@ -25,8 +23,8 @@ bool ModelManager::registerDevice(shared_ptr<Device> device) {
   }
 }
 
-bool ModelManager::deregisterDevice(const string& device_id) {
-  if(deviceExists(device_id)) {
+bool ModelManager::deregisterDevice(const string &device_id) {
+  if (deviceExists(device_id)) {
     notifyListeners(make_shared<NotifierEvent>(
         NotifierEventType::DEVICE_REMOVED, device_id));
     devices.erase(device_id);
@@ -36,20 +34,20 @@ bool ModelManager::deregisterDevice(const string& device_id) {
   }
 }
 
-bool ModelManager::deviceExists(const string& device_id) {
-  if(devices.find(device_id) == devices.end()) {
+bool ModelManager::deviceExists(const string &device_id) {
+  if (devices.find(device_id) == devices.end()) {
     return false;
   } else {
     return true;
   }
 }
 
-ModelManager* ModelManager::getInstance() {
-  if(!instance_) {
+ModelManager *ModelManager::getInstance() {
+  if (!instance_) {
     instance_ = new ModelManager();
   }
   return instance_;
 }
 
 // NOLINTNEXTLINE
-ModelManager* ModelManager::instance_ = 0;
+ModelManager *ModelManager::instance_ = 0;
