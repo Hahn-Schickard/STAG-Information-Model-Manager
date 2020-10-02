@@ -1,3 +1,12 @@
+## [0.1.2] - 2020.10.02
+### Changed 
+ - Information_Model to 0.1.2
+ - Model_Event_Handler to 0.1.2
+ - Device_Builder to 0.1.2
+ - Device_Building_And_Registration to 0.1.2
+ - Technology_Adapter_Interface to 0.1.2
+ - Building and Registration Facade to use optional parameters for addDeviceElement()
+
 ## [0.1.1] - 2020.09.28
 ### Removed
  - builder_tests directory from unit_tests

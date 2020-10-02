@@ -29,32 +29,28 @@ string BuildingAndRegirtrationFacade::addDeviceElementGroup(
 
 string BuildingAndRegirtrationFacade::addReadableMetric(
     const string &name, const string &desc,
-    Information_Model::DataType data_type,
-    function<Information_Model::DataVariant()> read_cb) {
+    Information_Model::DataType data_type, ReadFunctor read_cb) {
   return builder_->addReadableMetric(name, desc, data_type, read_cb);
 }
 
 string BuildingAndRegirtrationFacade::addReadableMetric(
     const string &group_refid, const string &name, const string &desc,
-    Information_Model::DataType data_type,
-    function<Information_Model::DataVariant()> read_cb) {
+    Information_Model::DataType data_type, ReadFunctor read_cb) {
   return builder_->addReadableMetric(group_refid, name, desc, data_type,
                                      read_cb);
 }
 
 string BuildingAndRegirtrationFacade::addWritableMetric(
     const string &name, const string &desc,
-    Information_Model::DataType data_type,
-    function<Information_Model::DataVariant()> read_cb,
-    function<void(Information_Model::DataVariant)> write_cb) {
+    Information_Model::DataType data_type, ReadFunctor read_cb,
+    WriteFunctor write_cb) {
   return builder_->addWritableMetric(name, desc, data_type, read_cb, write_cb);
 }
 
 string BuildingAndRegirtrationFacade::addWritableMetric(
     const string &group_refid, const string &name, const string &desc,
-    Information_Model::DataType data_type,
-    function<Information_Model::DataVariant()> read_cb,
-    function<void(Information_Model::DataVariant)> write_cb) {
+    Information_Model::DataType data_type, ReadFunctor read_cb,
+    WriteFunctor write_cb) {
   return builder_->addWritableMetric(group_refid, name, desc, data_type,
                                      read_cb, write_cb);
 }
@@ -62,10 +58,9 @@ string BuildingAndRegirtrationFacade::addWritableMetric(
 string BuildingAndRegirtrationFacade::addDeviceElement(
     const string &group_refid, const string &name, const string &desc,
     Information_Model::ElementType type, Information_Model::DataType data_type,
-    function<Information_Model::DataVariant()> read_cb,
-    function<void(Information_Model::DataVariant)> write_cb) {
+    optional<ReadFunctor> read_cb, optional<WriteFunctor> write_cb) {
   return builder_->addDeviceElement(group_refid, name, desc, type, data_type,
-                                    read_cb, write_cb);
+                                    *read_cb, *write_cb);
 }
 
 shared_ptr<Information_Model::Device>

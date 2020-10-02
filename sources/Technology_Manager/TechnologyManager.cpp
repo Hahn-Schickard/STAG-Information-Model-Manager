@@ -10,8 +10,7 @@ using namespace Technology_Adapter;
 
 TechnologyManager::TechnologyManager() {
   building_and_registration_facade_ =
-      shared_ptr<BuildingAndRegistrationInterface>(
-          new BuildingAndRegirtrationFacade());
+      shared_ptr<BuildingAndRegirtrationFacade>();
 }
 
 vector<shared_ptr<TechnologyAdapter>>::iterator

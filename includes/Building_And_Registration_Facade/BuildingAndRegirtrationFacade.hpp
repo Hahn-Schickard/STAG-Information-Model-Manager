@@ -6,6 +6,7 @@
 #include "ModelManager.hpp"
 
 #include <memory>
+#include <optional>
 #include <string>
 
 namespace Information_Access_Manager {
@@ -22,31 +23,33 @@ public:
   std::string addDeviceElementGroup(const std::string &group_refid,
                                     const std::string &name,
                                     const std::string &desc) final;
-  std::string addReadableMetric(
-      const std::string &name, const std::string &desc,
-      Information_Model::DataType data_type,
-      std::function<Information_Model::DataVariant()> read_cb) final;
-  std::string addReadableMetric(
-      const std::string &group_refid, const std::string &name,
-      const std::string &desc, Information_Model::DataType data_type,
-      std::function<Information_Model::DataVariant()> read_cb) final;
-  std::string addWritableMetric(
-      const std::string &name, const std::string &desc,
-      Information_Model::DataType data_type,
-      std::function<Information_Model::DataVariant()> read_cb,
-      std::function<void(Information_Model::DataVariant)> write_cb) final;
-  std::string addWritableMetric(
-      const std::string &group_refid, const std::string &name,
-      const std::string &desc, Information_Model::DataType data_type,
-      std::function<Information_Model::DataVariant()> read_cb,
-      std::function<void(Information_Model::DataVariant)> write_cb) final;
+  std::string addReadableMetric(const std::string &name,
+                                const std::string &desc,
+                                Information_Model::DataType data_type,
+                                ReadFunctor read_cb) final;
+  std::string addReadableMetric(const std::string &group_refid,
+                                const std::string &name,
+                                const std::string &desc,
+                                Information_Model::DataType data_type,
+                                ReadFunctor read_cb) final;
+  std::string addWritableMetric(const std::string &name,
+                                const std::string &desc,
+                                Information_Model::DataType data_type,
+                                ReadFunctor read_cb,
+                                WriteFunctor write_cb) final;
+  std::string addWritableMetric(const std::string &group_refid,
+                                const std::string &name,
+                                const std::string &desc,
+                                Information_Model::DataType data_type,
+                                ReadFunctor read_cb,
+                                WriteFunctor write_cb) final;
 
-  std::string addDeviceElement(
-      const std::string &group_refid, const std::string &name,
-      const std::string &desc, Information_Model::ElementType type,
-      Information_Model::DataType data_type,
-      std::function<Information_Model::DataVariant()> read_cb,
-      std::function<void(Information_Model::DataVariant)> write_cb) final;
+  std::string addDeviceElement(const std::string &group_refid,
+                               const std::string &name, const std::string &desc,
+                               Information_Model::ElementType type,
+                               Information_Model::DataType data_type,
+                               std::optional<ReadFunctor> read_cb,
+                               std::optional<WriteFunctor> write_cb) final;
 
   std::shared_ptr<Information_Model::Device> getResult() final;
 
