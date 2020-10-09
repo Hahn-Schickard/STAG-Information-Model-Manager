@@ -1,0 +1,27 @@
+#ifndef __MODEL_BUILDER_WRITABLE_METRIC_IMPLEMENTATION_HPP_
+#define __MODEL_BUILDER_WRITABLE_METRIC_IMPLEMENTATION_HPP_
+
+#include "MetricImplementation.hpp"
+#include "WritableMetric.hpp"
+
+namespace Infromation_Model_Manager {
+
+class WritableMetricImplementation : public Information_Model::WritableMetric {
+  MetricImplementation readadble_part_;
+  std::function<void(Information_Model::DataVariant)> write_cb_;
+
+public:
+  WritableMetricImplementation(
+      const std::string &ref_id, const std::string &name,
+      const std::string &desc, Information_Model::DataType data_type,
+      std::function<Information_Model::DataVariant()> read_cb,
+      std::function<void(Information_Model::DataVariant)> write_cb);
+
+  void setMetricValue(Information_Model::DataVariant value);
+  Information_Model::DataVariant getMetricValue();
+  Information_Model::DataType getDataType();
+};
+
+} // namespace Infromation_Model_Manager
+
+#endif //__MODEL_BUILDER_WRITABLE_METRIC_IMPLEMENTATION_HPP_

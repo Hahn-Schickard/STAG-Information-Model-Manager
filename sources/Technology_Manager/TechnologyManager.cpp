@@ -1,48 +1,33 @@
 #include "TechnologyManager.hpp"
-
-#include "BuildingAndRegirtrationFacade.hpp"
-
 #include <algorithm>
 
 using namespace std;
-using namespace Information_Access_Manager;
+using namespace Infromation_Model_Manager;
 using namespace Technology_Adapter;
 
-TechnologyManager::TechnologyManager() {
-  building_and_registration_facade_ =
-      shared_ptr<BuildingAndRegirtrationFacade>();
-}
+namespace Information_Access_Manager {
+TechnologyManager::TechnologyManager() : builder_(), registry_() {}
 
-vector<shared_ptr<TechnologyAdapter>>::iterator
-TechnologyManager::findTechnologyAdapter(
-    const shared_ptr<TechnologyAdapter> &adapter) {
+TechnologyManager::TechnologyAdaptersList::iterator
+TechnologyManager::findTechnologyAdapter(const TechnologyAdapterPtr &adapter) {
   return find(technology_adapters_.begin(), technology_adapters_.end(),
               adapter);
 }
 
 bool TechnologyManager::registerTechnologyAdapter(
-    shared_ptr<TechnologyAdapter> adapter) {
-  auto iterator = findTechnologyAdapter(adapter);
-  if (iterator == technology_adapters_.end()) {
-    if (adapter->setBuildingAndRegistrationInterface(
-            building_and_registration_facade_)) {
-      technology_adapters_.push_back(adapter);
-      return true;
-    } else {
-      // @TODO: Log smtnhg
-      return false;
-    }
-
+    TechnologyAdapterPtr adapter) {
+  if (findTechnologyAdapter(adapter) == technology_adapters_.end()) {
+    adapter->setInterfaces(builder_, registry_);
+    technology_adapters_.push_back(adapter);
+    return true;
   } else {
     //@TODO: Add logging/exception throwing here
     return false;
   }
 }
-
 bool TechnologyManager::deregisterTechnologyAdapter(
-    shared_ptr<TechnologyAdapter> adapter) {
+    TechnologyAdapterPtr adapter) {
   auto iterator = findTechnologyAdapter(adapter);
-
   if (iterator != technology_adapters_.end()) {
     technology_adapters_.erase(iterator);
     return true;
@@ -51,15 +36,4 @@ bool TechnologyManager::deregisterTechnologyAdapter(
     return false;
   }
 }
-
-TechnologyManager *TechnologyManager::getInstance() {
-  if (!instance_) {
-    instance_ = new TechnologyManager();
-  }
-  return instance_;
-}
-
-TechnologyManager::~TechnologyManager() { technology_adapters_.clear(); }
-
-// NOLINTNEXTLINE
-TechnologyManager *TechnologyManager::instance_ = 0;
+} // namespace Information_Access_Manager

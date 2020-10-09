@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.6) 
 
-set(THIS Building_And_Registration_Facade)
+set(THIS Model_Registry)
 
 list(APPEND THIS_INCLUDES_DIRS
-            ${INCLUDES_DIR}/Building_And_Registration_Facade
+            ${INCLUDES_DIR}/Model_Registry
 )
 
 file(GLOB sources_list "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
@@ -18,16 +18,14 @@ target_sources(${THIS} PRIVATE
 )
 
 target_link_libraries(${THIS} PUBLIC
-                              Device_Building_And_Registration::Device_Building_And_Registration
-                              Information_Model::Information_Model
-                              Device_Builder::Device_Builder
-                              Model_Manager
+                              Technology_Adapter_Interface::Technology_Adapter_Interface
+                              Model_Event_Handler::Model_Event_Handler
 )
 
 target_include_directories(${THIS} INTERFACE
-                           $<BUILD_INTERFACE:${INCLUDES_DIR}/Building_And_Registration_Facade/>
+                           $<BUILD_INTERFACE:${INCLUDES_DIR}/Model_Registry/>
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Building_And_Registration_Facade>
+                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Model_Registry>
 )
 
 target_compile_features(${THIS} PUBLIC cxx_std_17)

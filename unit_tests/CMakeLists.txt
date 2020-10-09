@@ -2,26 +2,19 @@ cmake_minimum_required(VERSION 3.6)
 
 set(THIS Unit_Tests_Runner)
 
-file(GLOB BuildingAndRegistrationFacadeTestSuite "${CMAKE_CURRENT_LIST_DIR}/DeviceBuilderTestSuite/*")
-file(GLOB ModelManagerTestSuite "${CMAKE_CURRENT_LIST_DIR}/DeviceBuilderTestSuite/*")
-file(GLOB TechnologyManagerTestSuite "${CMAKE_CURRENT_LIST_DIR}/ModelImlementationTestSuite/*")
+file(GLOB Device_Test_Suite "${CMAKE_CURRENT_LIST_DIR}/Device_Tests/*")
 
 find_package(GTest REQUIRED)
 
 add_executable(${THIS})
 target_sources(${THIS} PRIVATE 
                        "testRunner.cpp"
-                       ${BuildingAndRegistrationFacadeTestSuite}
-                       ${ModelManagerTestSuite}
-                       ${TechnologyManagerTestSuite}
+                       ${Device_Test_Suite}
 )
 
 target_link_libraries(${THIS} PUBLIC
                               GTest::GTest
-                              Information_Model::Information_Model
-                              Building_And_Registration_Facade
-                              Model_Manager
-                              Technology_Manager
+                              Device_Builder
 )
 
 add_test(

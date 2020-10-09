@@ -1,7 +1,8 @@
 #ifndef _TECHNOLOGY_MANAGER_HPP
 #define _TECHNOLOGY_MANAGER_HPP
 
-#include "BuildingAndRegistrationInterface.hpp"
+#include "DeviceBuilder.hpp"
+#include "ModelRegistry.hpp"
 #include "TechnologyManagerInterface.hpp"
 
 #include <memory>
@@ -9,24 +10,28 @@
 
 namespace Information_Access_Manager {
 class TechnologyManager : public TechnologyManagerInterface {
-  std::vector<std::shared_ptr<Technology_Adapter::TechnologyAdapter>>
-      technology_adapters_;
-  std::shared_ptr<Information_Access_Manager::BuildingAndRegistrationInterface>
-      building_and_registration_facade_;
-  static TechnologyManager *instance_;
+  using TechnologyAdaptersList =
+      std::vector<std::shared_ptr<Technology_Adapter::TechnologyAdapter>>;
+  using DeviceBuilderPtr =
+      std::shared_ptr<Infromation_Model_Manager::DeviceBuilder>;
+  using ModelRegistryPtr =
+      std::shared_ptr<Infromation_Model_Manager::ModelRegistry>;
 
-  TechnologyManager();
-  std::vector<std::shared_ptr<Technology_Adapter::TechnologyAdapter>>::iterator
-  findTechnologyAdapter(
+  TechnologyAdaptersList technology_adapters_;
+  DeviceBuilderPtr builder_;
+  ModelRegistryPtr registry_;
+
+  TechnologyAdaptersList::iterator findTechnologyAdapter(
       const std::shared_ptr<Technology_Adapter::TechnologyAdapter> &adapter);
 
 public:
-  static TechnologyManager *getInstance();
-  bool registerTechnologyAdapter(
-      std::shared_ptr<Technology_Adapter::TechnologyAdapter> adapter) final;
-  bool deregisterTechnologyAdapter(
-      std::shared_ptr<Technology_Adapter::TechnologyAdapter> adapter) final;
-  ~TechnologyManager();
+  using TechnologyAdapterPtr =
+      std::shared_ptr<Technology_Adapter::TechnologyAdapter>;
+
+  TechnologyManager();
+
+  bool registerTechnologyAdapter(TechnologyAdapterPtr adapter) final;
+  bool deregisterTechnologyAdapter(TechnologyAdapterPtr adapter) final;
 };
 } // namespace Information_Access_Manager
 

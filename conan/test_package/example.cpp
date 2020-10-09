@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-  auto manager = Model_Manager::ModelManager::getInstance();
+  auto manager = Infromation_Model_Manager::ModelManager::getInstance();
 
   exit(EXIT_SUCCESS);
 }
