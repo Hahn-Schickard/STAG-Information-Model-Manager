@@ -1,16 +1,17 @@
 #ifndef __MODEL_MANAGER_HPP
 #define __MODEL_MANAGER_HPP
 
+#include "DataConsumerAdapterInterface.hpp"
 #include "Device.hpp"
 #include "ModelRegistryInterface.hpp"
-#include "Notifier.hpp"
 
 #include <memory>
 #include <unordered_map>
 
 namespace Infromation_Model_Manager {
-class ModelRegistry : public Technology_Adapter::ModelRegistryInterface,
-                      public Model_Event_Handler::Notifier {
+class ModelRegistry
+    : public Technology_Adapter::ModelRegistryInterface,
+      public Event_Model::EventSource<DCAI::ModelRegistryEvent> {
   using DevicesMap =
       std::unordered_map<std::string,
                          std::shared_ptr<Information_Model::Device>>;

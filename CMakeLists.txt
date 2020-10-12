@@ -23,7 +23,7 @@ execute_conan_install()
 #@+ ======================== User PACKAGES configuration ===========================
 list(APPEND DEPENDENCIES_LIST 
             HaSLL
-            Model_Event_Handler
+            Data_Consumer_Adapter_Interface
             Technology_Adapter_Interface
             Threads
 )

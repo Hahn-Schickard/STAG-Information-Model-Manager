@@ -3,16 +3,20 @@
  - Concrete implementation of DeviceBuilder
  - DeviceImplementationBuilder
  - DeviceImplementationBuilder unit tests
+ - Data_Consumer_Adapter_Interface v0.1.3 dependency
 
 ### Removed 
  - Device_Builder dependency
  - Device_Building_And_Registration dependency
  - Direct Information_Model dependency
+ - Model_Event_Handler dependency
 
 ### Changed 
  - ModelManager to Model Registry
  - Technolgoy Manager implementation to fit with 0.1.4 declaration
  - Class member field ordering for Device_Builder class definitions
+ - Model Registry to implement EventSource for Data_Consumer_Adapter_Interface 
+ - Integration test to load proper symbols
 
 ## [0.1.2] - 2020.10.02
 ### Changed 

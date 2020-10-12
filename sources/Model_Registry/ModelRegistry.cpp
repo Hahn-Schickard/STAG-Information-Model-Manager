@@ -1,19 +1,16 @@
 #include "ModelRegistry.hpp"
 
-#include "Notifier_Event.hpp"
-
 using namespace std;
-using namespace Infromation_Model_Manager;
 using namespace Information_Model;
-using namespace Model_Event_Handler;
+using namespace DCAI;
 
+namespace Infromation_Model_Manager {
 bool ModelRegistry::registerDevice(shared_ptr<Device> device) {
   if (!deviceExists(device->getElementId())) {
     pair<string, shared_ptr<Device>> device_pair(device->getElementId(),
                                                  device);
     devices_.insert(device_pair);
-    notifyListeners(make_shared<NotifierEvent>(
-        NotifierEventType::NEW_DEVICE_REGISTERED, device));
+    notify(make_shared<ModelRegistryEvent>(device));
     return true;
   } else {
     return false;
@@ -22,8 +19,7 @@ bool ModelRegistry::registerDevice(shared_ptr<Device> device) {
 
 bool ModelRegistry::deregisterDevice(const string &device_id) {
   if (deviceExists(device_id)) {
-    notifyListeners(make_shared<NotifierEvent>(
-        NotifierEventType::DEVICE_REMOVED, device_id));
+    notify(make_shared<ModelRegistryEvent>(device_id));
     devices_.erase(device_id);
     return true;
   } else {
@@ -38,3 +34,4 @@ bool ModelRegistry::deviceExists(const string &device_id) {
     return true;
   }
 }
+} // namespace Infromation_Model_Manager
