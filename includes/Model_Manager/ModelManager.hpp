@@ -28,8 +28,8 @@ class ModelManager
 public:
   using TechnologyAdapterPtr =
       std::shared_ptr<Technology_Adapter::TechnologyAdapter>;
-  using ModelEventSourcePtr =
-      std::shared_ptr<Event_Model::EventSource<DCAI::ModelRegistryEvent>>;
+  using ModelEventSourcePtr = std::shared_ptr<
+      Event_Model::EventSourceInterface<DCAI::ModelRegistryEvent>>;
 
   ModelManager();
 
