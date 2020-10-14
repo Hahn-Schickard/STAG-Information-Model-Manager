@@ -1,9 +1,10 @@
-## [0.1.3] - unreleased
+## [0.1.3] - 2020.10.14
 ### Added
  - Concrete implementation of DeviceBuilder
  - DeviceImplementationBuilder
  - DeviceImplementationBuilder unit tests
  - Data_Consumer_Adapter_Interface v0.1.3 dependency
+ - getModelEventSource() method 
 
 ### Removed 
  - Device_Builder dependency
@@ -17,6 +18,7 @@
  - Class member field ordering for Device_Builder class definitions
  - Model Registry to implement EventSource for Data_Consumer_Adapter_Interface 
  - Integration test to load proper symbols
+ - TechnologyManager to ModelManager
 
 ## [0.1.2] - 2020.10.02
 ### Changed 

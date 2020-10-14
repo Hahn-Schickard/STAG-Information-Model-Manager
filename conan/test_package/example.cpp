@@ -1,9 +1,9 @@
 #include "LoggerRepository.hpp"
-#include "TechnologyManager.hpp"
+#include "ModelManager.hpp"
 
 using namespace HaSLL;
 using namespace std;
-using namespace Information_Access_Manager;
+using namespace Information_Model_Manager;
 
 int main() {
   try {
@@ -12,7 +12,7 @@ int main() {
         SeverityLevel::TRACE, false, 8192, 2, 25, 100, 1);
     LoggerRepository::initialise(config);
 
-    auto technology_manager = TechnologyManager();
+    auto technology_manager = ModelManager();
   } catch (const exception &ex) {
     exit(EXIT_FAILURE);
   }

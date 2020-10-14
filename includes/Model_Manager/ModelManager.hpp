@@ -1,5 +1,5 @@
-#ifndef _TECHNOLOGY_MANAGER_HPP
-#define _TECHNOLOGY_MANAGER_HPP
+#ifndef __INFORMATION_MODEL_MANAGER_HPP
+#define __INFORMATION_MODEL_MANAGER_HPP
 
 #include "DeviceBuilder.hpp"
 #include "ModelRegistry.hpp"
@@ -8,8 +8,9 @@
 #include <memory>
 #include <vector>
 
-namespace Information_Access_Manager {
-class TechnologyManager : public TechnologyManagerInterface {
+namespace Information_Model_Manager {
+class ModelManager
+    : public Information_Access_Manager::TechnologyManagerInterface {
   using TechnologyAdaptersList =
       std::vector<std::shared_ptr<Technology_Adapter::TechnologyAdapter>>;
   using DeviceBuilderPtr =
@@ -27,12 +28,16 @@ class TechnologyManager : public TechnologyManagerInterface {
 public:
   using TechnologyAdapterPtr =
       std::shared_ptr<Technology_Adapter::TechnologyAdapter>;
+  using ModelEventSourcePtr =
+      std::shared_ptr<Event_Model::EventSource<DCAI::ModelRegistryEvent>>;
 
-  TechnologyManager();
+  ModelManager();
+
+  ModelEventSourcePtr getModelEventSource();
 
   bool registerTechnologyAdapter(TechnologyAdapterPtr adapter) final;
   bool deregisterTechnologyAdapter(TechnologyAdapterPtr adapter) final;
 };
-} // namespace Information_Access_Manager
+} // namespace Information_Model_Manager
 
-#endif //_TECHNOLOGY_MANAGER_HPP
+#endif //__INFORMATION_MODEL_MANAGER_HPP

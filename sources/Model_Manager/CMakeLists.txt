@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.6) 
 
-set(THIS Technology_Manager)
+set(THIS Model_Manager)
 
 list(APPEND THIS_INCLUDES_DIRS
-            ${INCLUDES_DIR}/Technology_Manager
+            ${INCLUDES_DIR}/Model_Manager
 )
 
 file(GLOB sources_list "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
@@ -24,9 +24,9 @@ target_link_libraries(${THIS} PUBLIC
 )
 
 target_include_directories(${THIS} INTERFACE
-                           $<BUILD_INTERFACE:${INCLUDES_DIR}/Technology_Manager/>
+                           $<BUILD_INTERFACE:${INCLUDES_DIR}/Model_Manager/>
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/Technology_Manager>
+                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 target_compile_features(${THIS} PUBLIC cxx_std_17)
