@@ -15,7 +15,7 @@ int main() {
     LoggerRepository::initialise(config);
 
     auto technology_manager = ModelManager();
-    if (!technology_manager->getModelEventSource())
+    if (!technology_manager.getModelEventSource())
       throw runtime_error("Event source can not be null ptr");
   } catch (const exception &ex) {
     exit(EXIT_FAILURE);
