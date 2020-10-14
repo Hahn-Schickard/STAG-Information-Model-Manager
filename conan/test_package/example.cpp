@@ -1,6 +1,8 @@
 #include "LoggerRepository.hpp"
 #include "ModelManager.hpp"
 
+#include <stdexcept>
+
 using namespace HaSLL;
 using namespace std;
 using namespace Information_Model_Manager;
@@ -13,6 +15,8 @@ int main() {
     LoggerRepository::initialise(config);
 
     auto technology_manager = ModelManager();
+    if (!technology_manager->getModelEventSource())
+      throw runtime_error("Event source can not be null ptr");
   } catch (const exception &ex) {
     exit(EXIT_FAILURE);
   }

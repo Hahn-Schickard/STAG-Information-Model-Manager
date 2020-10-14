@@ -9,7 +9,7 @@
 #include <optional>
 #include <string>
 
-namespace Infromation_Model_Manager {
+namespace Information_Model_Manager {
 class DeviceImplementationBuilder {
   using DeviceImplementationPtr = std::shared_ptr<DeviceImplementation>;
   using DeviceGroupImplementation =
@@ -66,6 +66,6 @@ public:
   std::shared_ptr<Information_Model::Device> getResult();
 };
 
-} // namespace Infromation_Model_Manager
+} // namespace Information_Model_Manager
 
 #endif //__MODEL_BUILDER_DEVICE_IMPLEMENTATION_BUILDER_HPP_

@@ -4,7 +4,7 @@ using namespace std;
 using namespace Information_Model;
 using namespace DCAI;
 
-namespace Infromation_Model_Manager {
+namespace Information_Model_Manager {
 bool ModelRegistry::registerDevice(shared_ptr<Device> device) {
   if (!deviceExists(device->getElementId())) {
     pair<string, shared_ptr<Device>> device_pair(device->getElementId(),
@@ -34,4 +34,4 @@ bool ModelRegistry::deviceExists(const string &device_id) {
     return true;
   }
 }
-} // namespace Infromation_Model_Manager
+} // namespace Information_Model_Manager

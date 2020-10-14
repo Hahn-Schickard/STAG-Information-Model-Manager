@@ -4,7 +4,7 @@
 #include "MetricImplementation.hpp"
 #include "WritableMetric.hpp"
 
-namespace Infromation_Model_Manager {
+namespace Information_Model_Manager {
 
 class WritableMetricImplementation : public Information_Model::WritableMetric {
   MetricImplementation readadble_part_;
@@ -22,6 +22,6 @@ public:
   Information_Model::DataType getDataType();
 };
 
-} // namespace Infromation_Model_Manager
+} // namespace Information_Model_Manager
 
 #endif //__MODEL_BUILDER_WRITABLE_METRIC_IMPLEMENTATION_HPP_

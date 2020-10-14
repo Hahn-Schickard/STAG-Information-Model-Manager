@@ -8,7 +8,7 @@
 #include <memory>
 #include <unordered_map>
 
-namespace Infromation_Model_Manager {
+namespace Information_Model_Manager {
 class ModelRegistry
     : public Technology_Adapter::ModelRegistryInterface,
       public Event_Model::EventSource<DCAI::ModelRegistryEvent> {
@@ -24,6 +24,6 @@ public:
   registerDevice(std::shared_ptr<Information_Model::Device> device) override;
   bool deregisterDevice(const std::string &device_id) override;
 };
-} // namespace Infromation_Model_Manager
+} // namespace Information_Model_Manager
 
 #endif //__MODEL_MANAGER_HPP

@@ -6,7 +6,7 @@
 
 #include <memory>
 
-namespace Infromation_Model_Manager {
+namespace Information_Model_Manager {
 class DeviceImplementation : public Information_Model::Device {
   std::shared_ptr<Information_Model::DeviceElementGroup> base_group_;
 
@@ -19,6 +19,6 @@ public:
   std::shared_ptr<Information_Model::DeviceElement>
   getDeviceElement(const std::string &ref_id) final;
 };
-} // namespace Infromation_Model_Manager
+} // namespace Information_Model_Manager
 
 #endif //__MODEL_BUILDER_DEVICE_IMPLEMENTATION_HPP_

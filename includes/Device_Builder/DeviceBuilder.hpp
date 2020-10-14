@@ -4,7 +4,7 @@
 #include "DeviceBuilderInterface.hpp"
 #include "DeviceImplementationBuilder.hpp"
 
-namespace Infromation_Model_Manager {
+namespace Information_Model_Manager {
 class DeviceBuilder : public Technology_Adapter::DeviceBuilderInterface {
   std::unique_ptr<DeviceImplementationBuilder> builder_;
 
@@ -52,6 +52,6 @@ public:
 
   std::shared_ptr<Information_Model::Device> getResult() override;
 };
-} // namespace Infromation_Model_Manager
+} // namespace Information_Model_Manager
 
 #endif //__MODEL_BUILDER_DEVICE_BUILDER_HPP_

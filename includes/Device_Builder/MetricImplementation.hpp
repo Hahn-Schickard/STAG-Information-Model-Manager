@@ -5,7 +5,7 @@
 
 #include <functional>
 
-namespace Infromation_Model_Manager {
+namespace Information_Model_Manager {
 class MetricImplementation : public Information_Model::Metric {
   Information_Model::DataType data_type_;
   std::function<Information_Model::DataVariant()> read_cb_;
@@ -19,6 +19,6 @@ public:
   Information_Model::DataVariant getMetricValue();
   Information_Model::DataType getDataType();
 };
-} // namespace Infromation_Model_Manager
+} // namespace Information_Model_Manager
 
 #endif //__MODEL_BUILDER_METRIC_IMPLEMENTATION_HPP_

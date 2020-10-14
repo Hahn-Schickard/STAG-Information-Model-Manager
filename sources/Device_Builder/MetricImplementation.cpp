@@ -2,8 +2,8 @@
 
 using namespace std;
 using namespace Information_Model;
-using namespace Infromation_Model_Manager;
 
+namespace Information_Model_Manager {
 MetricImplementation::MetricImplementation(const string &ref_id,
                                            const string &name,
                                            const string &desc,
@@ -23,3 +23,4 @@ DataVariant MetricImplementation::getMetricValue() {
 }
 
 DataType MetricImplementation::getDataType() { return data_type_; }
+} // namespace Information_Model_Manager

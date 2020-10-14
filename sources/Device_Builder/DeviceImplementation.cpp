@@ -2,8 +2,8 @@
 
 using namespace std;
 using namespace Information_Model;
-using namespace Infromation_Model_Manager;
 
+namespace Information_Model_Manager {
 DeviceImplementation::DeviceImplementation(const string &ref_id,
                                            const string &name,
                                            const string &desc)
@@ -25,3 +25,4 @@ DeviceImplementation::getDeviceElement(const string &ref_id) {
     return shared_ptr<DeviceElement>();
   }
 }
+} // namespace Information_Model_Manager

@@ -4,7 +4,9 @@
 using namespace std;
 
 namespace Information_Model_Manager {
-ModelManager::ModelManager() : builder_(), registry_() {}
+ModelManager::ModelManager()
+    : builder_(make_shared<DeviceBuilder>()),
+      registry_(make_shared<ModelRegistry>()) {}
 
 ModelManager::TechnologyAdaptersList::iterator
 ModelManager::findTechnologyAdapter(const TechnologyAdapterPtr &adapter) {

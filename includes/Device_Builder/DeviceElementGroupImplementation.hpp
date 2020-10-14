@@ -7,7 +7,7 @@
 
 #include <unordered_map>
 
-namespace Infromation_Model_Manager {
+namespace Information_Model_Manager {
 class DeviceElementGroupImplementation
     : public Information_Model::DeviceElementGroup {
   using DeviceElementsMap =
@@ -43,6 +43,6 @@ public:
       std::function<Information_Model::DataVariant()> read_cb,
       std::function<void(Information_Model::DataVariant)> write_cb);
 };
-} // namespace Infromation_Model_Manager
+} // namespace Information_Model_Manager
 
 #endif //__MODEL_BUILDER_DEVICE_ELEMENT_GROUP_IMPLEMENTATION_HPP_

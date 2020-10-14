@@ -4,8 +4,8 @@
 
 using namespace std;
 using namespace Information_Model;
-using namespace Infromation_Model_Manager;
 
+namespace Information_Model_Manager {
 WritableMetricImplementation::WritableMetricImplementation(
     const string &ref_id, const string &name, const string &desc,
     DataType data_type, function<DataVariant()> read_cb,
@@ -36,3 +36,4 @@ DataVariant WritableMetricImplementation::getMetricValue() {
 DataType WritableMetricImplementation::getDataType() {
   return readadble_part_.getDataType();
 }
+} // namespace Information_Model_Manager

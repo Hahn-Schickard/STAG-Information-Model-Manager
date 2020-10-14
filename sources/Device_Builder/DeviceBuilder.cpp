@@ -4,7 +4,7 @@ using namespace std;
 using namespace Information_Model;
 using namespace Technology_Adapter;
 
-namespace Infromation_Model_Manager {
+namespace Information_Model_Manager {
 void DeviceBuilder::buildDeviceBase(const string &unique_id, const string &name,
                                     const string &desc) {
   builder_ = make_unique<DeviceImplementationBuilder>(unique_id, name, desc);
@@ -63,4 +63,4 @@ shared_ptr<Device> DeviceBuilder::getResult() {
   builder_.reset();
   return move(result);
 }
-} // namespace Infromation_Model_Manager
+} // namespace Information_Model_Manager

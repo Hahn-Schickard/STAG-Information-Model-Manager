@@ -2,7 +2,7 @@
 
 using namespace std;
 using namespace Information_Model;
-namespace Infromation_Model_Manager {
+namespace Information_Model_Manager {
 DeviceImplementationBuilder::DeviceImplementationBuilder(const string &name,
                                                          const string &ref_id,
                                                          const string &desc) {
@@ -103,4 +103,4 @@ DeviceImplementationBuilder::getGroupImplementation(const string &ref_id) {
         device_->getDeviceElementGroup()->getSubelement(ref_id));
   }
 }
-} // namespace Infromation_Model_Manager
+} // namespace Information_Model_Manager

@@ -5,7 +5,8 @@
 
 using namespace std;
 using namespace Information_Model;
-using namespace Infromation_Model_Manager;
+
+namespace Information_Model_Manager {
 
 /**
  * @brief Counts number of occurencies of a given pattern from a given cut of
@@ -174,3 +175,4 @@ string DeviceElementGroupImplementation::generate_Reference_ID() {
   elemenet_count_++;
   return BASE_ID + element_id;
 }
+} // namespace Information_Model_Manager

@@ -6,7 +6,7 @@
 
 using namespace std;
 using namespace Information_Model;
-using namespace Infromation_Model_Manager;
+using namespace Information_Model_Manager;
 
 class DeviceElementSearchTests : public ::testing::Test {
 public:

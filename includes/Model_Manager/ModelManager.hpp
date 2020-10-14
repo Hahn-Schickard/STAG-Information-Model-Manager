@@ -14,9 +14,9 @@ class ModelManager
   using TechnologyAdaptersList =
       std::vector<std::shared_ptr<Technology_Adapter::TechnologyAdapter>>;
   using DeviceBuilderPtr =
-      std::shared_ptr<Infromation_Model_Manager::DeviceBuilder>;
+      std::shared_ptr<Information_Model_Manager::DeviceBuilder>;
   using ModelRegistryPtr =
-      std::shared_ptr<Infromation_Model_Manager::ModelRegistry>;
+      std::shared_ptr<Information_Model_Manager::ModelRegistry>;
 
   TechnologyAdaptersList technology_adapters_;
   DeviceBuilderPtr builder_;
