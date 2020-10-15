@@ -14,9 +14,7 @@ ModelManager::findTechnologyAdapter(const TechnologyAdapterPtr &adapter) {
               adapter);
 }
 
-ModelManager::ModelEventSourcePtr ModelManager::getModelEventSource() {
-  return registry_;
-}
+ModelEventSourcePtr ModelManager::getModelEventSource() { return registry_; }
 
 bool ModelManager::registerTechnologyAdapter(TechnologyAdapterPtr adapter) {
   if (findTechnologyAdapter(adapter) == technology_adapters_.end()) {
