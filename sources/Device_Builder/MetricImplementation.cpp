@@ -4,6 +4,10 @@ using namespace std;
 using namespace Information_Model;
 
 namespace Information_Model_Manager {
+MetricImplementation::MetricImplementation()
+    : MetricImplementation(string(), string(), string(), DataType::UNKNOWN,
+                           nullptr) {}
+
 MetricImplementation::MetricImplementation(const string &ref_id,
                                            const string &name,
                                            const string &desc,

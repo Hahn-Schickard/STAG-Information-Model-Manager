@@ -48,13 +48,15 @@ public:
   std::string addWritableMetric(const std::string &name,
                                 const std::string &desc,
                                 Information_Model::DataType data_type,
-                                ReadFunctor read_cb, WriteFunctor write_cb);
+                                std::optional<ReadFunctor> read_cb,
+                                WriteFunctor write_cb);
 
   std::string addWritableMetric(const std::string &group_refid,
                                 const std::string &name,
                                 const std::string &desc,
                                 Information_Model::DataType data_type,
-                                ReadFunctor read_cb, WriteFunctor write_cb);
+                                std::optional<ReadFunctor> read_cb,
+                                WriteFunctor write_cb);
 
   std::string addDeviceElement(const std::string &group_refid,
                                const std::string &name, const std::string &desc,

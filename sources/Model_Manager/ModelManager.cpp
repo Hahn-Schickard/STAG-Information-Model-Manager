@@ -2,6 +2,7 @@
 #include <algorithm>
 
 using namespace std;
+using namespace Technology_Adapter;
 
 namespace Information_Model_Manager {
 ModelManager::ModelManager()
@@ -26,6 +27,7 @@ bool ModelManager::registerTechnologyAdapter(TechnologyAdapterPtr adapter) {
     return false;
   }
 }
+
 bool ModelManager::deregisterTechnologyAdapter(TechnologyAdapterPtr adapter) {
   auto iterator = findTechnologyAdapter(adapter);
   if (iterator != technology_adapters_.end()) {

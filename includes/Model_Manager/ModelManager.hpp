@@ -12,10 +12,9 @@ using ModelEventSourcePtr = std::shared_ptr<
     Event_Model::EventSourceInterface<DCAI::ModelRegistryEvent>>;
 
 namespace Information_Model_Manager {
-class ModelManager
-    : public Information_Access_Manager::TechnologyManagerInterface {
+class ModelManager : public Technology_Adapter::TechnologyManagerInterface {
   using TechnologyAdaptersList =
-      std::vector<std::shared_ptr<Technology_Adapter::TechnologyAdapter>>;
+      std::vector<Technology_Adapter::TechnologyAdapterPtr>;
   using DeviceBuilderPtr =
       std::shared_ptr<Information_Model_Manager::DeviceBuilder>;
   using ModelRegistryPtr =
@@ -26,18 +25,17 @@ class ModelManager
   ModelRegistryPtr registry_;
 
   TechnologyAdaptersList::iterator findTechnologyAdapter(
-      const std::shared_ptr<Technology_Adapter::TechnologyAdapter> &adapter);
+      const Technology_Adapter::TechnologyAdapterPtr &adapter);
 
 public:
-  using TechnologyAdapterPtr =
-      std::shared_ptr<Technology_Adapter::TechnologyAdapter>;
-
   ModelManager();
 
   ModelEventSourcePtr getModelEventSource();
 
-  bool registerTechnologyAdapter(TechnologyAdapterPtr adapter) final;
-  bool deregisterTechnologyAdapter(TechnologyAdapterPtr adapter) final;
+  bool registerTechnologyAdapter(
+      Technology_Adapter::TechnologyAdapterPtr adapter) final;
+  bool deregisterTechnologyAdapter(
+      Technology_Adapter::TechnologyAdapterPtr adapter) final;
 };
 } // namespace Information_Model_Manager
 

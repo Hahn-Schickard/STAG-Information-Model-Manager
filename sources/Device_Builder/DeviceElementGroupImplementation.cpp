@@ -152,7 +152,8 @@ string DeviceElementGroupImplementation::addReadableMetric(
 
 string DeviceElementGroupImplementation::addWritableMetric(
     const string &name, const string &desc, DataType data_type,
-    function<DataVariant()> read_cb, function<void(DataVariant)> write_cb) {
+    optional<function<DataVariant()>> read_cb,
+    function<void(DataVariant)> write_cb) {
   string ref_id = generate_Reference_ID();
 
   pair<string, shared_ptr<DeviceElement>> element_pair(

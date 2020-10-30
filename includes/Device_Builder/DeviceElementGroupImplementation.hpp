@@ -40,7 +40,7 @@ public:
   std::string addWritableMetric(
       const std::string &name, const std::string &desc,
       Information_Model::DataType data_type,
-      std::function<Information_Model::DataVariant()> read_cb,
+      std::optional<std::function<Information_Model::DataVariant()>> read_cb,
       std::function<void(Information_Model::DataVariant)> write_cb);
 };
 } // namespace Information_Model_Manager

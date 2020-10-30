@@ -11,6 +11,7 @@ class MetricImplementation : public Information_Model::Metric {
   std::function<Information_Model::DataVariant()> read_cb_;
 
 public:
+  MetricImplementation();
   MetricImplementation(const std::string &ref_id, const std::string &name,
                        const std::string &desc,
                        Information_Model::DataType data_type,

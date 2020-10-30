@@ -21,31 +21,32 @@ string DeviceImplementationBuilder::addDeviceElementGroup(
                           DataType::UNKNOWN, nullptr, nullptr);
 }
 
-string DeviceImplementationBuilder::addReadableMetric(
-    const string &name, const string &desc, DataType data_type,
-    function<DataVariant()> read_cb) {
+string DeviceImplementationBuilder::addReadableMetric(const string &name,
+                                                      const string &desc,
+                                                      DataType data_type,
+                                                      ReadFunctor read_cb) {
   return addDeviceElement(string(), name, desc, ElementType::READABLE,
                           data_type, move(read_cb), nullptr);
 }
 
 string DeviceImplementationBuilder::addReadableMetric(
     const string &group_ref_id, const string &name, const string &desc,
-    DataType data_type, function<DataVariant()> read_cb) {
+    DataType data_type, ReadFunctor read_cb) {
   return addDeviceElement(group_ref_id, name, desc, ElementType::READABLE,
                           data_type, move(read_cb), nullptr);
 }
 
 string DeviceImplementationBuilder::addWritableMetric(
     const string &name, const string &desc, DataType data_type,
-    function<DataVariant()> read_cb, function<void(DataVariant)> write_cb) {
+    std::optional<ReadFunctor> read_cb, WriteFunctor write_cb) {
   return addDeviceElement(string(), name, desc, ElementType::WRITABLE,
                           data_type, move(read_cb), move(write_cb));
 }
 
 string DeviceImplementationBuilder::addWritableMetric(
     const string &group_ref_id, const string &name, const string &desc,
-    DataType data_type, function<DataVariant()> read_cb,
-    function<void(DataVariant)> write_cb) {
+    DataType data_type, std::optional<ReadFunctor> read_cb,
+    WriteFunctor write_cb) {
   return addDeviceElement(group_ref_id, name, desc, ElementType::WRITABLE,
                           data_type, move(read_cb), move(write_cb));
 }

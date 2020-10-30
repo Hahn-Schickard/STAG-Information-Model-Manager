@@ -2,7 +2,6 @@
 
 using namespace std;
 using namespace Information_Model;
-using namespace Technology_Adapter;
 
 namespace Information_Model_Manager {
 void DeviceBuilder::buildDeviceBase(const string &unique_id, const string &name,
@@ -36,14 +35,16 @@ string DeviceBuilder::addReadableMetric(const string &group_refid,
 }
 
 string DeviceBuilder::addWritableMetric(const string &name, const string &desc,
-                                        DataType data_type, ReadFunctor read_cb,
+                                        DataType data_type,
+                                        optional<ReadFunctor> read_cb,
                                         WriteFunctor write_cb) {
   return builder_->addWritableMetric(name, desc, data_type, read_cb, write_cb);
 }
 
 string DeviceBuilder::addWritableMetric(const string &group_refid,
                                         const string &name, const string &desc,
-                                        DataType data_type, ReadFunctor read_cb,
+                                        DataType data_type,
+                                        optional<ReadFunctor> read_cb,
                                         WriteFunctor write_cb) {
   return builder_->addWritableMetric(group_refid, name, desc, data_type,
                                      read_cb, write_cb);
