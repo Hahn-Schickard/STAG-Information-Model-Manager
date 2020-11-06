@@ -3,8 +3,8 @@
 using namespace std;
 using namespace Information_Model;
 namespace Information_Model_Manager {
-DeviceImplementationBuilder::DeviceImplementationBuilder(const string &name,
-                                                         const string &ref_id,
+DeviceImplementationBuilder::DeviceImplementationBuilder(const string &ref_id,
+                                                         const string &name,
                                                          const string &desc) {
   device_ = make_shared<DeviceImplementation>(ref_id, name, desc);
 }
@@ -90,9 +90,7 @@ string DeviceImplementationBuilder::addDeviceElement(
   return ref_id;
 }
 
-shared_ptr<Device> DeviceImplementationBuilder::getResult() {
-  return static_pointer_cast<Device>(device_);
-}
+shared_ptr<Device> DeviceImplementationBuilder::getResult() { return device_; }
 
 shared_ptr<DeviceElementGroupImplementation>
 DeviceImplementationBuilder::getGroupImplementation(const string &ref_id) {

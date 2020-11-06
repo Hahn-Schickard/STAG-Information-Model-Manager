@@ -26,7 +26,7 @@ public:
   SimpleWritableDeviceTests() {}
 
   void SetUp() {
-    DeviceImplementationBuilder builder("Simple Writable Device", "1234",
+    DeviceImplementationBuilder builder("1234", "Simple Writable Device",
                                         "Lorem Ipsum");
     metric_id = builder.addWritableMetric(
         "Writable", "This is a writable INTEGER metric", DataType::INTEGER,
@@ -44,7 +44,7 @@ public:
 TEST_F(SimpleWritableDeviceTests, returnsCorrectDeviceID) {
   string tested_element = device->getElementId();
   string expected_result = "1234";
-  EXPECT_STREQ(expected_result.c_str(), tested_element.c_str())
+  EXPECT_EQ(expected_result, tested_element)
       << "expected: " << expected_result << endl
       << "provided: " << tested_element << endl;
 }

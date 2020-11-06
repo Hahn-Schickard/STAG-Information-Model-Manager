@@ -23,9 +23,8 @@ public:
   using ReadFunctor = std::function<Information_Model::DataVariant()>;
   using WriteFunctor = std::function<void(Information_Model::DataVariant)>;
 
-  DeviceImplementationBuilder(const std::string &name,
-                              const std::string &ref_id,
-                              const std::string &desc);
+  DeviceImplementationBuilder(const std::string &ref_id,
+                              const std::string &name, const std::string &desc);
 
   std::string addDeviceElementGroup(const std::string &name,
                                     const std::string &desc);
