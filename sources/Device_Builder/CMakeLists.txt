@@ -23,7 +23,7 @@ target_link_libraries(${THIS} PUBLIC
 
 target_include_directories(${THIS} PUBLIC
                            $<BUILD_INTERFACE:${INCLUDES_DIR}/Device_Builder>
-                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
 )
 
 set_target_properties(${THIS} PROPERTIES
@@ -41,5 +41,5 @@ install(
 
 install(
     FILES ${THIS_INCLUDES}
-    TYPE INCLUDE 
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
 )
