@@ -1,8 +1,8 @@
 #ifndef __MODEL_BUILDER_DEVICE_BUILDER_HPP_
 #define __MODEL_BUILDER_DEVICE_BUILDER_HPP_
 
-#include "DeviceBuilderInterface.hpp"
 #include "DeviceImplementationBuilder.hpp"
+#include "Information_Model/DeviceBuilderInterface.hpp"
 
 namespace Information_Model_Manager {
 class DeviceBuilder : public Information_Model::DeviceBuilderInterface {

@@ -1,7 +1,7 @@
 #ifndef __MODEL_BUILDER_METRIC_IMPLEMENTATION_HPP_
 #define __MODEL_BUILDER_METRIC_IMPLEMENTATION_HPP_
 
-#include "Metric.hpp"
+#include "Information_Model/Metric.hpp"
 
 #include <functional>
 

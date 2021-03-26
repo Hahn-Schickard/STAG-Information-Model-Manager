@@ -1,8 +1,8 @@
 #ifndef __MODEL_BUILDER_WRITABLE_METRIC_IMPLEMENTATION_HPP_
 #define __MODEL_BUILDER_WRITABLE_METRIC_IMPLEMENTATION_HPP_
 
+#include "Information_Model/WritableMetric.hpp"
 #include "MetricImplementation.hpp"
-#include "WritableMetric.hpp"
 
 namespace Information_Model_Manager {
 

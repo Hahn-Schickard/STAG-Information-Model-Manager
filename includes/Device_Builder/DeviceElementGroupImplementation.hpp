@@ -1,7 +1,7 @@
 #ifndef __MODEL_BUILDER_DEVICE_ELEMENT_GROUP_IMPLEMENTATION_HPP_
 #define __MODEL_BUILDER_DEVICE_ELEMENT_GROUP_IMPLEMENTATION_HPP_
 
-#include "DeviceElementGroup.hpp"
+#include "Information_Model/DeviceElementGroup.hpp"
 #include "MetricImplementation.hpp"
 #include "WritableMetricImplementation.hpp"
 

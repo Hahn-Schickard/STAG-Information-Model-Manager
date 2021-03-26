@@ -1,8 +1,8 @@
 #ifndef __MODEL_BUILDER_DEVICE_IMPLEMENTATION_HPP_
 #define __MODEL_BUILDER_DEVICE_IMPLEMENTATION_HPP_
 
-#include "Device.hpp"
 #include "DeviceElementGroupImplementation.hpp"
+#include "Information_Model/Device.hpp"
 
 #include <memory>
 

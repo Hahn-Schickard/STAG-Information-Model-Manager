@@ -3,7 +3,7 @@
 
 #include "DeviceBuilder.hpp"
 #include "ModelRegistry.hpp"
-#include "TechnologyManagerInterface.hpp"
+#include "Technology_Adapter_Interface/TechnologyManagerInterface.hpp"
 
 #include <memory>
 #include <vector>
