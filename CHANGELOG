@@ -1,3 +1,11 @@
+## [0.1.5] - 2021.04.01
+### Changed 
+ - Data_Consumer_Adapter_Interface to 0.1.5
+ - Technology_Adapter_Interface to 0.1.5
+ - Device_Builder CmakeLists.txt to set correct install include path
+ - install include paths to resolve potential header name collisions
+ - uitility/runValgring.py script to correct errour countinting
+
 ## [0.1.4] - 2020.11.16
 ### Changed
  - DeviceImplementationBuilder to set the RefID as RefID and name as name
