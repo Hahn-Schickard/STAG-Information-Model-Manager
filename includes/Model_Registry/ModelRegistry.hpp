@@ -5,6 +5,7 @@
 #include "Event_Model/AsyncEventSource.hpp"
 #include "Information_Model/Device.hpp"
 #include "Technology_Adapter_Interface/ModelRegistryInterface.hpp"
+#include "Logger.hpp"
 
 #include <memory>
 #include <unordered_map>
@@ -17,10 +18,15 @@ class ModelRegistry
       std::unordered_map<std::string,
                          std::shared_ptr<Information_Model::Device>>;
   DevicesMap devices_;
+  std::shared_ptr<HaSLL::Logger> logger_;
 
   bool deviceExists(const std::string &device_id);
+  void logException(const std::exception &ex);
 
 public:
+  ModelRegistry();
+  ~ModelRegistry();
+
   bool
   registerDevice(std::shared_ptr<Information_Model::Device> device) override;
   bool deregisterDevice(const std::string &device_id) override;

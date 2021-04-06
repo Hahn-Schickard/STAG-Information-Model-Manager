@@ -20,6 +20,7 @@ target_sources(${THIS} PRIVATE
 target_link_libraries(${THIS} PUBLIC
                               Technology_Adapter_Interface::Technology_Adapter_Interface
                               Data_Consumer_Adapter_Interface::Data_Consumer_Adapter_Interface
+                              HaSLL::HaSLL
 )
 
 target_include_directories(${THIS} INTERFACE
