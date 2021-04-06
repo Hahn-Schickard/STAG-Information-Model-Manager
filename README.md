@@ -5,6 +5,21 @@
 
 # Information Model Manager
 
+STAG Information Model Manager, provides concrete [Information Model](https://git.hahn-schickard.de/hahn-schickard/software-sollutions/application-engineering/internal/opc_ua_dev_group/gateway-project/information-model) Interface Implementations, as well as concrete [Event_Source](https://git.hahn-schickard.de/hahn-schickard/software-sollutions/application-engineering/internal/cpp-projects/event-model) implementation for [Technology Adapter Interface](https://git.hahn-schickard.de/hahn-schickard/software-sollutions/application-engineering/internal/opc_ua_dev_group/gateway-project/technology-adapter-interface) and [Data Consumer Adapter Interface](https://git.hahn-schickard.de/hahn-schickard/software-sollutions/application-engineering/internal/opc_ua_dev_group/gateway-project/data-consumer-adapter-interface) to hook up to. 
+
+## Dependencies
+### Required
+
+* cmake - build system generator
+* python3 - used by utilities
+* conan - dependnecy handler, see [SSO Wiki](https://ssowiki.hsg.privat/en/Softwareentwicklung/Cpp/Conan_Package_Manager)
+
+### Optional
+
+* clang-format - to use formating tools
+* clang-tidy - to use static code analysis
+* doxygen - to generate documentation from code
+
 ## Visual Studio Code Support
 
 ### Recomended Plugins:
