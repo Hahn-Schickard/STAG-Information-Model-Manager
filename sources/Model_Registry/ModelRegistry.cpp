@@ -60,6 +60,8 @@ bool ModelRegistry::deregisterDevice(const string &device_id) {
 
 bool ModelRegistry::deviceExists(const string &device_id) {
   if (devices_.find(device_id) == devices_.end()) {
+    logger_->log(SeverityLevel::TRACE, "Device with id {} not found!",
+                 device_id);
     return false;
   } else {
     return true;
