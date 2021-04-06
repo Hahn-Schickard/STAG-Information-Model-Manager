@@ -2,7 +2,7 @@
 #define __MODEL_MANAGER_HPP
 
 #include "Data_Consumer_Adapter_Interface/DataConsumerAdapterInterface.hpp"
-#include "Event_Model/EventSource.hpp"
+#include "Event_Model/AsyncEventSource.hpp"
 #include "Information_Model/Device.hpp"
 #include "Technology_Adapter_Interface/ModelRegistryInterface.hpp"
 
@@ -12,7 +12,7 @@
 namespace Information_Model_Manager {
 class ModelRegistry
     : public Technology_Adapter::ModelRegistryInterface,
-      public Event_Model::EventSource<DCAI::ModelRegistryEvent> {
+      public Event_Model::AsyncEventSource<DCAI::ModelRegistryEvent> {
   using DevicesMap =
       std::unordered_map<std::string,
                          std::shared_ptr<Information_Model::Device>>;
