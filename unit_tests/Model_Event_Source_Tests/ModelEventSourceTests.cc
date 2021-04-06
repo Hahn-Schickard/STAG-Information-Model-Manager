@@ -14,38 +14,38 @@ using namespace Information_Model_Manager;
 
 class ModelEventSourceTests : public ::testing::Test {
 public:
-  void SetUp() { event_source = make_shared<ModelRegistry>(); }
+  void SetUp() {
+    event_source = make_shared<ModelRegistry>();
+    event_listener = make_unique<DataConsumerAdapterInterfaceMock>(event_source,
+                                                                   "DCAI_Mock");
+  }
 
   shared_ptr<ModelRegistry> event_source;
   shared_ptr<DataConsumerAdapterInterfaceMock> event_listener;
 };
 
-TEST_F(ModelEventSourceTests, thrrowsOnNullPtr) {
-  EXPECT_THROW(event_listener = make_unique<DataConsumerAdapterInterfaceMock>(
-                   shared_ptr<ModelRegistry>(), "DCAI_Mock"),
+TEST(ModelEventSourceThrowTest, thrrowsOnNullPtr) {
+  auto event_source = make_shared<ModelRegistry>();
+  EXPECT_THROW(auto event_listener =
+                   make_unique<DataConsumerAdapterInterfaceMock>(
+                       shared_ptr<ModelRegistry>(), "DCAI_Mock"),
                Event_Model::EventSourceIsNotInstantiated);
 }
 
-TEST_F(ModelEventSourceTests, canAttachEventSource) {
-  EXPECT_NO_THROW(event_listener =
+TEST(ModelEventSourceThrowTest, canAttachEventSource) {
+  auto event_source = make_shared<ModelRegistry>();
+  EXPECT_NO_THROW(auto event_listener =
                       make_unique<DataConsumerAdapterInterfaceMock>(
                           event_source, "DCAI_Mock"));
 }
 
 TEST_F(ModelEventSourceTests, canStart) {
-  if (!event_listener)
-    event_listener = make_unique<DataConsumerAdapterInterfaceMock>(event_source,
-                                                                   "DCAI_Mock");
   EXPECT_CALL(*event_listener, start()).Times(1);
 
   EXPECT_NO_THROW(event_listener->start());
 }
 
 TEST_F(ModelEventSourceTests, canHandleEvent) {
-  if (!event_listener)
-    event_listener = make_unique<DataConsumerAdapterInterfaceMock>(event_source,
-                                                                   "DCAI_Mock");
-
   EXPECT_CALL(*event_listener, handleEvent(::testing::_)).Times(1);
 
   EXPECT_TRUE(event_source->registerDevice(
@@ -53,9 +53,6 @@ TEST_F(ModelEventSourceTests, canHandleEvent) {
 }
 
 TEST_F(ModelEventSourceTests, canStop) {
-  if (!event_listener)
-    event_listener = make_unique<DataConsumerAdapterInterfaceMock>(event_source,
-                                                                   "DCAI_Mock");
   EXPECT_CALL(*event_listener, stop()).Times(1);
 
   EXPECT_NO_THROW(event_listener->stop());
