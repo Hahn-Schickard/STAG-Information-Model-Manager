@@ -12,7 +12,7 @@ class PackageConan(ConanFile):
     requires = [
         "HaSLL/0.2.2@hahn-schickard/stable",
         "Data_Consumer_Adapter_Interface/0.1.5@hahn-schickard/stable",
-        "Technology_Adapter_Interface/0.1.5@hahn-schickard/stable"
+        "Technology_Adapter_Interface/0.1.6@hahn-schickard/stable"
     ]
     settings = "cppstd", "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False],
