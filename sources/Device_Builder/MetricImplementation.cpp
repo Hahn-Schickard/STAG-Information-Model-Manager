@@ -22,7 +22,7 @@ DataVariant MetricImplementation::getMetricValue() {
   } else {
     throw runtime_error("Readable metric: " + getElementName() + " " +
                         getElementId() +
-                        "called a non exsistan read function!");
+                        "called a non existant read function!");
   }
 }
 

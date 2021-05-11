@@ -22,7 +22,7 @@ ModelRegistry::~ModelRegistry() {
 void ModelRegistry::logException(const std::exception &ex) {
   logger_->log(
       SeverityLevel::ERROR,
-      "Received an exceptio nwhile trying to notify listeners. Exception: {}",
+      "Received an exception while trying to notify listeners. Exception: {}",
       ex.what());
 }
 

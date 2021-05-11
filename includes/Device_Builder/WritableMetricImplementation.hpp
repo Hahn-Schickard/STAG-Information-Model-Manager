@@ -7,7 +7,7 @@
 namespace Information_Model_Manager {
 
 class WritableMetricImplementation : public Information_Model::WritableMetric {
-  MetricImplementation readadble_part_;
+  MetricImplementation readable_part_;
   std::function<void(Information_Model::DataVariant)> write_cb_;
 
 public:

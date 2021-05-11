@@ -50,18 +50,18 @@ size_t getTreeLevel(const string &ref_id) {
  * Based on code from https://stackoverflow.com/a/27668715/4371473
  *
  * @param input
- * @param occurence
+ * @param occurrence
  * @param pattern
  * @return size_t
  */
-size_t findNthSubstring(const string &input, size_t occurence,
+size_t findNthSubstring(const string &input, size_t occurrence,
                         const string &pattern) {
-  if (0 == occurence) {
+  if (0 == occurrence) {
     return string::npos;
   } else {
     size_t position, offset = 0;
     unsigned int i = 0;
-    while (i < occurence) {
+    while (i < occurrence) {
       position = input.find(pattern, offset);
       if (string::npos == position) {
         break;
@@ -76,7 +76,7 @@ size_t findNthSubstring(const string &input, size_t occurence,
 
 /**
  * @brief Returns a parent id of a given level.
- * To find the maximum depth of the current child id usel
+ * To find the maximum depth of the current child id used
  * getTreeLevel(const string &ref_id)
  *
  * @param child_ref_id
@@ -97,8 +97,8 @@ vector<shared_ptr<DeviceElement>>
 DeviceElementGroupImplementation::getSubelements() {
   vector<shared_ptr<DeviceElement>> subelements;
   // NOLINTNEXTLINE
-  for (auto elelement_pair : elements_map_) {
-    subelements.push_back(elelement_pair.second);
+  for (auto element_pair : elements_map_) {
+    subelements.push_back(element_pair.second);
   }
   return subelements;
 }

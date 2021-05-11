@@ -12,8 +12,8 @@ WritableMetricImplementation::WritableMetricImplementation(
     function<void(DataVariant)> write_cb)
     : WritableMetric(ref_id, name, desc), write_cb_(move(write_cb)) {
   if (read_cb.has_value()) {
-    readadble_part_ = MetricImplementation(ref_id, name, desc, data_type,
-                                           move(read_cb.value()));
+    readable_part_ = MetricImplementation(ref_id, name, desc, data_type,
+                                          move(read_cb.value()));
   } else {
     DataVariant value;
     switch (data_type) {
@@ -46,7 +46,7 @@ WritableMetricImplementation::WritableMetricImplementation(
       throw runtime_error("Writable metric must have a known data type!");
     }
     }
-    readadble_part_ = MetricImplementation(
+    readable_part_ = MetricImplementation(
         ref_id, name, desc, data_type, [&]() -> DataVariant { return value; });
   }
 }
@@ -57,19 +57,19 @@ void WritableMetricImplementation::setMetricValue(DataVariant value) {
   } else {
     throw runtime_error("Writable metric: " + getElementName() + " " +
                         getElementId() +
-                        "called a non exsistan write function!");
+                        "called a non existant write function!");
   }
 }
 
 DataVariant WritableMetricImplementation::getMetricValue() {
   try {
-    return readadble_part_.getMetricValue();
+    return readable_part_.getMetricValue();
   } catch (exception &e) {
     throw;
   }
 }
 
 DataType WritableMetricImplementation::getDataType() {
-  return readadble_part_.getDataType();
+  return readable_part_.getDataType();
 }
 } // namespace Information_Model_Manager
