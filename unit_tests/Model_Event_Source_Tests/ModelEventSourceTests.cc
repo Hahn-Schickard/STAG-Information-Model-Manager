@@ -51,7 +51,7 @@ TEST_F(ModelEventSourceTests, canHandleEvent) {
   EXPECT_TRUE(event_source->registerDevice(
       make_shared<MockDevice>("123", "mocked", "mocked device")));
 
-  this_thread::sleep_for(10ms); // block premature destruction
+  this_thread::sleep_for(50ms); // block premature destruction
 }
 
 TEST_F(ModelEventSourceTests, canStop) {
