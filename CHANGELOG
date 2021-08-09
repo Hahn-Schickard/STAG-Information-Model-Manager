@@ -28,7 +28,7 @@
 
 ### Changed 
  - ModelManager to Model Registry
- - Technolgoy Manager implementation to fit with 0.1.4 declaration
+ - Technology Manager implementation to fit with 0.1.4 declaration
  - Class member field ordering for Device_Builder class definitions
  - Model Registry to implement EventSource for Data_Consumer_Adapter_Interface 
  - Integration test to load proper symbols
