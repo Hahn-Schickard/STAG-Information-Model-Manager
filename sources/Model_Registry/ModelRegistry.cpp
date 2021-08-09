@@ -19,11 +19,16 @@ ModelRegistry::~ModelRegistry() {
   LoggerRepository::getInstance().deregisterLoger(logger_->getName());
 }
 
-void ModelRegistry::logException(const std::exception &ex) {
-  logger_->log(
-      SeverityLevel::ERROR,
-      "Received an exception while trying to notify listeners. Exception: {}",
-      ex.what());
+void ModelRegistry::logException(std::exception_ptr ex_ptr) {
+  try {
+    if (ex_ptr)
+      rethrow_exception(ex_ptr);
+  } catch (exception &ex) {
+    logger_->log(
+        SeverityLevel::ERROR,
+        "Received an exception while trying to notify listeners. Exception: {}",
+        ex.what());
+  }
 }
 
 bool ModelRegistry::registerDevice(shared_ptr<Device> device) {

@@ -4,8 +4,8 @@
 #include "Data_Consumer_Adapter_Interface/DataConsumerAdapterInterface.hpp"
 #include "Event_Model/AsyncEventSource.hpp"
 #include "Information_Model/Device.hpp"
-#include "Technology_Adapter_Interface/ModelRegistryInterface.hpp"
 #include "Logger.hpp"
+#include "Technology_Adapter_Interface/ModelRegistryInterface.hpp"
 
 #include <memory>
 #include <unordered_map>
@@ -21,7 +21,7 @@ class ModelRegistry
   std::shared_ptr<HaSLL::Logger> logger_;
 
   bool deviceExists(const std::string &device_id);
-  void logException(const std::exception &ex);
+  void logException(std::exception_ptr ex_ptr);
 
 public:
   ModelRegistry();
