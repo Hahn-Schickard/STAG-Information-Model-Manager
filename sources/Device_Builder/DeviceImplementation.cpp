@@ -9,7 +9,7 @@ DeviceImplementation::DeviceImplementation(const string &ref_id,
                                            const string &desc)
     : Device(ref_id, name, desc),
       base_group_(NonemptyPointer::make_shared<DeviceElementGroupImplementation>(
-          ref_id + ":", name, desc))
+          ref_id + ":"))
     {}
 
 NonemptyDeviceElementGroupPtr DeviceImplementation::getDeviceElementGroup() {

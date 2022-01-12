@@ -5,13 +5,9 @@ using namespace Information_Model;
 
 namespace Information_Model_Manager {
 MetricImplementation::MetricImplementation()
-    : MetricImplementation(string(), string(), string(), DataType::UNKNOWN,
-                           nullptr) {}
+    : MetricImplementation(DataType::UNKNOWN, nullptr) {}
 
-MetricImplementation::MetricImplementation(const string &ref_id,
-                                           const string &name,
-                                           const string &desc,
-                                           DataType data_type,
+MetricImplementation::MetricImplementation(DataType data_type,
                                            function<DataVariant()> read_cb)
     : Metric(), data_type_(data_type),
       read_cb_(move(read_cb)) {}

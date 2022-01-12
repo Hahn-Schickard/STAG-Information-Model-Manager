@@ -90,8 +90,8 @@ string getNextElementID(const string &child_ref_id, size_t parent_level) {
 }
 
 DeviceElementGroupImplementation::DeviceElementGroupImplementation(
-    const string &ref_id, const string &name, const string &desc)
-    : DeviceElementGroup(), elemenet_count_(0), base_ref_id_(ref_id) {}
+    const string &base_ref_id)
+    : DeviceElementGroup(), elemenet_count_(0), base_ref_id_(base_ref_id) {}
 
 std::vector<NonemptyDeviceElementPtr>
 DeviceElementGroupImplementation::getSubelements() {
@@ -152,8 +152,7 @@ string DeviceElementGroupImplementation::addSubgroup(const string &name,
   string ref_id = generate_Reference_ID();
 
   auto implementation =
-    NonemptyPointer::make_shared<DeviceElementGroupImplementation>
-      (ref_id, name, desc);
+    NonemptyPointer::make_shared<DeviceElementGroupImplementation>(ref_id);
   NonemptyDeviceElementGroupPtr interface = implementation;
   auto element = NonemptyPointer::make_shared<DeviceElement>(
     ref_id,name,desc,interface);
@@ -170,11 +169,12 @@ string DeviceElementGroupImplementation::addReadableMetric(
     function<DataVariant()> read_cb) {
   string ref_id = generate_Reference_ID();
 
-  NonemptyMetricPtr interface =
-    NonemptyPointer::make_shared<MetricImplementation>
-      (ref_id, name, desc, data_type, read_cb);
+  auto implementation =
+    NonemptyPointer::make_shared<MetricImplementation>(data_type, read_cb);
+  NonemptyMetricPtr interface = implementation;
   auto element = NonemptyPointer::make_shared<DeviceElement>(
     ref_id,name,desc,interface);
+  implementation->linkNames(element);
   pair<string, NonemptyDeviceElementPtr> element_pair(ref_id,element);
   elements_map_.insert(element_pair);
 
@@ -187,11 +187,13 @@ string DeviceElementGroupImplementation::addWritableMetric(
     function<void(DataVariant)> write_cb) {
   string ref_id = generate_Reference_ID();
 
-  NonemptyWritableMetricPtr interface =
+  auto implementation =
     NonemptyPointer::make_shared<WritableMetricImplementation>
-      (ref_id, name, desc, data_type, read_cb, write_cb);
+      (data_type, read_cb, write_cb);
+  NonemptyWritableMetricPtr interface = implementation;
   auto element = NonemptyPointer::make_shared<DeviceElement>(
     ref_id,name,desc,interface);
+  implementation->linkNames(element);
   pair<string, NonemptyDeviceElementPtr> element_pair(ref_id,element);
   elements_map_.insert(element_pair);
 

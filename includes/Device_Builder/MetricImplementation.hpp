@@ -14,14 +14,14 @@ class MetricImplementation : public Information_Model::Metric {
 
 public:
   MetricImplementation();
-  MetricImplementation(const std::string &ref_id, const std::string &name,
-                       const std::string &desc,
-                       Information_Model::DataType data_type,
+  MetricImplementation(Information_Model::DataType data_type,
                        std::function<Information_Model::DataVariant()> read_cb);
 
   Information_Model::DataVariant getMetricValue();
   Information_Model::DataType getDataType();
   void linkNames(const Information_Model::NonemptyNamedElementPtr &);
+
+friend class WritableMetricImplementation;
 };
 } // namespace Information_Model_Manager
 

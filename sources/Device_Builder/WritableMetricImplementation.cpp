@@ -7,13 +7,11 @@ using namespace Information_Model;
 
 namespace Information_Model_Manager {
 WritableMetricImplementation::WritableMetricImplementation(
-    const string &ref_id, const string &name, const string &desc,
     DataType data_type, optional<function<DataVariant()>> read_cb,
     function<void(DataVariant)> write_cb)
     : WritableMetric(), write_cb_(move(write_cb)) {
   if (read_cb.has_value()) {
-    readable_part_ = MetricImplementation(ref_id, name, desc, data_type,
-                                          move(read_cb.value()));
+    readable_part_ = MetricImplementation(data_type, move(read_cb.value()));
   } else {
     DataVariant value;
     switch (data_type) {
@@ -47,7 +45,7 @@ WritableMetricImplementation::WritableMetricImplementation(
     }
     }
     readable_part_ = MetricImplementation(
-        ref_id, name, desc, data_type, [&]() -> DataVariant { return value; });
+        data_type, [&]() -> DataVariant { return value; });
   }
 }
 
@@ -55,7 +53,7 @@ void WritableMetricImplementation::setMetricValue(DataVariant value) {
   if (write_cb_) {
     write_cb_(value);
   } else {
-    auto names = names_.lock();
+    auto names = readable_part_.names_.lock();
     if (names)
       throw runtime_error("Writable metric: " + names->getElementName() + " " +
                           names->getElementId() +
@@ -80,7 +78,7 @@ DataType WritableMetricImplementation::getDataType() {
 void WritableMetricImplementation::linkNames(
   const NonemptyNamedElementPtr & names)
 {
-  names_ = names.base();
+  readable_part_.linkNames(names);
 }
 
 } // namespace Information_Model_Manager

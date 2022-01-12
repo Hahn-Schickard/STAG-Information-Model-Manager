@@ -25,9 +25,7 @@ class DeviceElementGroupImplementation
   std::string generate_Reference_ID();
 
 public:
-  DeviceElementGroupImplementation(const std::string &ref_id,
-                                   const std::string &name,
-                                   const std::string &desc);
+  DeviceElementGroupImplementation(const std::string &base_ref_id);
 
   std::vector<Information_Model::NonemptyDeviceElementPtr> getSubelements();
 
