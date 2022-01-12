@@ -45,7 +45,7 @@ TEST_F(SimpleReadableDeviceTests, returnsCorrectDeviceID) {
 }
 TEST_F(SimpleReadableDeviceTests, executesReadCallback) {
   EXPECT_CALL(readCallback, BracketsOperator());
-  auto metric = static_pointer_cast<Metric>(
-      device->getDeviceElementGroup()->getSubelement(metric_id));
+  auto metric = std::get<NonemptyMetricPtr>(
+    device->getDeviceElementGroup()->getSubelement(metric_id)->specific_interface);
   ASSERT_NO_THROW(metric->getMetricValue());
 }

@@ -7,12 +7,17 @@ namespace Information_Model_Manager {
 DeviceImplementation::DeviceImplementation(const string &ref_id,
                                            const string &name,
                                            const string &desc)
-    : Device(ref_id, name, desc) {
-  base_group_ =
-      make_shared<DeviceElementGroupImplementation>(ref_id + ":", name, desc);
-};
+    : Device(ref_id, name, desc),
+      base_group_(NonemptyPointer::make_shared<DeviceElementGroupImplementation>(
+          ref_id + ":", name, desc))
+    {}
 
-shared_ptr<DeviceElementGroup> DeviceImplementation::getDeviceElementGroup() {
+NonemptyDeviceElementGroupPtr DeviceImplementation::getDeviceElementGroup() {
+  return base_group_;
+}
+
+DeviceImplementation::DeviceGroupImplementation
+DeviceImplementation::getGroupImplementation() {
   return base_group_;
 }
 

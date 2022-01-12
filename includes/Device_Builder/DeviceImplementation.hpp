@@ -8,14 +8,19 @@
 
 namespace Information_Model_Manager {
 class DeviceImplementation : public Information_Model::Device {
-  std::shared_ptr<Information_Model::DeviceElementGroup> base_group_;
+public:
+  using DeviceGroupImplementation = NonemptyPointer::NonemptyPtr<
+    std::shared_ptr<DeviceElementGroupImplementation>>;
+
+private:
+  DeviceGroupImplementation base_group_;
 
 public:
   DeviceImplementation(const std::string &ref_id, const std::string &name,
                        const std::string &desc);
 
-  std::shared_ptr<Information_Model::DeviceElementGroup>
-  getDeviceElementGroup() final;
+  Information_Model::NonemptyDeviceElementGroupPtr getDeviceElementGroup() final;
+  DeviceGroupImplementation getGroupImplementation();
   std::shared_ptr<Information_Model::DeviceElement>
   getDeviceElement(const std::string &ref_id) final;
 };

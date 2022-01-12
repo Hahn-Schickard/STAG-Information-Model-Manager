@@ -1,6 +1,7 @@
 #ifndef __MODEL_BUILDER_DEVICE_IMPLEMENTATION_BUILDER_HPP_
 #define __MODEL_BUILDER_DEVICE_IMPLEMENTATION_BUILDER_HPP_
 
+#include "Information_Model/DeviceBuilderInterface.hpp"
 #include "DeviceElementGroupImplementation.hpp"
 #include "DeviceImplementation.hpp"
 

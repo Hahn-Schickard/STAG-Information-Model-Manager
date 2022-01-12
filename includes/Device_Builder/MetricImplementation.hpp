@@ -2,6 +2,7 @@
 #define __MODEL_BUILDER_METRIC_IMPLEMENTATION_HPP_
 
 #include "Information_Model/Metric.hpp"
+#include "Information_Model/NamedElement.hpp"
 
 #include <functional>
 
@@ -9,6 +10,7 @@ namespace Information_Model_Manager {
 class MetricImplementation : public Information_Model::Metric {
   Information_Model::DataType data_type_;
   std::function<Information_Model::DataVariant()> read_cb_;
+  std::weak_ptr<Information_Model::NamedElement> names_;
 
 public:
   MetricImplementation();
@@ -19,6 +21,7 @@ public:
 
   Information_Model::DataVariant getMetricValue();
   Information_Model::DataType getDataType();
+  void linkNames(const Information_Model::NonemptyNamedElementPtr &);
 };
 } // namespace Information_Model_Manager
 

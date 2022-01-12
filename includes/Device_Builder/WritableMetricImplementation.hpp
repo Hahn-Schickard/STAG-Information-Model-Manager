@@ -9,6 +9,7 @@ namespace Information_Model_Manager {
 class WritableMetricImplementation : public Information_Model::WritableMetric {
   MetricImplementation readable_part_;
   std::function<void(Information_Model::DataVariant)> write_cb_;
+  std::weak_ptr<Information_Model::NamedElement> names_;
 
 public:
   WritableMetricImplementation(
@@ -20,6 +21,7 @@ public:
   void setMetricValue(Information_Model::DataVariant value);
   Information_Model::DataVariant getMetricValue();
   Information_Model::DataType getDataType();
+  void linkNames(const Information_Model::NonemptyNamedElementPtr &);
 };
 
 } // namespace Information_Model_Manager

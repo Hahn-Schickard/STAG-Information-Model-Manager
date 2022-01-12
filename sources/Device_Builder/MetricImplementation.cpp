@@ -13,18 +13,27 @@ MetricImplementation::MetricImplementation(const string &ref_id,
                                            const string &desc,
                                            DataType data_type,
                                            function<DataVariant()> read_cb)
-    : Metric(ref_id, name, desc), data_type_(data_type),
+    : Metric(), data_type_(data_type),
       read_cb_(move(read_cb)) {}
 
 DataVariant MetricImplementation::getMetricValue() {
   if (read_cb_) {
     return read_cb_();
   } else {
-    throw runtime_error("Readable metric: " + getElementName() + " " +
-                        getElementId() +
-                        "called a non existant read function!");
+    auto names = names_.lock();
+    if (names)
+      throw runtime_error("Readable metric: " + names->getElementName() + " " +
+                          names->getElementId() +
+                          "called a nonexistent read function!");
+    else
+      throw runtime_error("Readable metric called a nonexistent read function!");
   }
 }
 
 DataType MetricImplementation::getDataType() { return data_type_; }
+
+void MetricImplementation::linkNames(const NonemptyNamedElementPtr & names) {
+  names_ = names.base();
+}
+
 } // namespace Information_Model_Manager

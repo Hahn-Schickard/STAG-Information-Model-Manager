@@ -11,8 +11,8 @@ class PackageConan(ConanFile):
     build_requires = "gtest/1.10.0"
     requires = [
         "HaSLL/0.2.2@hahn-schickard/stable",
-        "Data_Consumer_Adapter_Interface/0.1.7@hahn-schickard/stable",
-        "Technology_Adapter_Interface/0.1.6@hahn-schickard/stable"
+        "Data_Consumer_Adapter_Interface/0.1.7@hahn-schickard/experiment_7.0",
+        "Technology_Adapter_Interface/0.1.6@hahn-schickard/experiment_11.0"
     ]
     settings = "cppstd", "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False],

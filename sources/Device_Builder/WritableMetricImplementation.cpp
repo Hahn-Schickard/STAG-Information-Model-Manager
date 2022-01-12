@@ -10,7 +10,7 @@ WritableMetricImplementation::WritableMetricImplementation(
     const string &ref_id, const string &name, const string &desc,
     DataType data_type, optional<function<DataVariant()>> read_cb,
     function<void(DataVariant)> write_cb)
-    : WritableMetric(ref_id, name, desc), write_cb_(move(write_cb)) {
+    : WritableMetric(), write_cb_(move(write_cb)) {
   if (read_cb.has_value()) {
     readable_part_ = MetricImplementation(ref_id, name, desc, data_type,
                                           move(read_cb.value()));
@@ -55,9 +55,13 @@ void WritableMetricImplementation::setMetricValue(DataVariant value) {
   if (write_cb_) {
     write_cb_(value);
   } else {
-    throw runtime_error("Writable metric: " + getElementName() + " " +
-                        getElementId() +
-                        "called a non existant write function!");
+    auto names = names_.lock();
+    if (names)
+      throw runtime_error("Writable metric: " + names->getElementName() + " " +
+                          names->getElementId() +
+                          "called a nonexistent write function!");
+    else
+      throw runtime_error("Writable metric called a nonexistent write function!");
   }
 }
 
@@ -72,4 +76,11 @@ DataVariant WritableMetricImplementation::getMetricValue() {
 DataType WritableMetricImplementation::getDataType() {
   return readable_part_.getDataType();
 }
+
+void WritableMetricImplementation::linkNames(
+  const NonemptyNamedElementPtr & names)
+{
+  names_ = names.base();
+}
+
 } // namespace Information_Model_Manager
