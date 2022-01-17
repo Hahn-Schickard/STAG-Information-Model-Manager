@@ -19,7 +19,7 @@ public:
   void setMetricValue(Information_Model::DataVariant value);
   Information_Model::DataVariant getMetricValue();
   Information_Model::DataType getDataType();
-  void linkNames(const Information_Model::NonemptyNamedElementPtr &);
+  void linkMetaInfo(const Information_Model::NonemptyNamedElementPtr &);
 };
 
 } // namespace Information_Model_Manager

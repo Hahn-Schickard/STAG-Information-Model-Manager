@@ -16,11 +16,11 @@ DataVariant MetricImplementation::getMetricValue() {
   if (read_cb_) {
     return read_cb_();
   } else {
-    auto names = names_.lock();
-    if (names)
-      throw runtime_error("Readable metric: " + names->getElementName() + " " +
-                          names->getElementId() +
-                          "called a nonexistent read function!");
+    auto meta_info = meta_info_.lock();
+    if (meta_info)
+      throw runtime_error(
+        "Readable metric: " + meta_info->getElementName() + " " +
+        meta_info->getElementId() + "called a nonexistent read function!");
     else
       throw runtime_error("Readable metric called a nonexistent read function!");
   }
@@ -28,8 +28,10 @@ DataVariant MetricImplementation::getMetricValue() {
 
 DataType MetricImplementation::getDataType() { return data_type_; }
 
-void MetricImplementation::linkNames(const NonemptyNamedElementPtr & names) {
-  names_ = names.base();
+void MetricImplementation::linkMetaInfo(
+  const NonemptyNamedElementPtr & meta_info)
+{
+  meta_info_ = meta_info.base();
 }
 
 } // namespace Information_Model_Manager

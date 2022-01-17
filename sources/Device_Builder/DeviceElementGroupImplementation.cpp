@@ -174,7 +174,7 @@ string DeviceElementGroupImplementation::addReadableMetric(
   NonemptyMetricPtr interface = implementation;
   auto element = NonemptyPointer::make_shared<DeviceElement>(
     ref_id,name,desc,interface);
-  implementation->linkNames(element);
+  implementation->linkMetaInfo(element);
   pair<string, NonemptyDeviceElementPtr> element_pair(ref_id,element);
   elements_map_.insert(element_pair);
 
@@ -193,7 +193,7 @@ string DeviceElementGroupImplementation::addWritableMetric(
   NonemptyWritableMetricPtr interface = implementation;
   auto element = NonemptyPointer::make_shared<DeviceElement>(
     ref_id,name,desc,interface);
-  implementation->linkNames(element);
+  implementation->linkMetaInfo(element);
   pair<string, NonemptyDeviceElementPtr> element_pair(ref_id,element);
   elements_map_.insert(element_pair);
 

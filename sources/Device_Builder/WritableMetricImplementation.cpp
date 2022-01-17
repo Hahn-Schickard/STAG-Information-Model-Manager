@@ -53,11 +53,11 @@ void WritableMetricImplementation::setMetricValue(DataVariant value) {
   if (write_cb_) {
     write_cb_(value);
   } else {
-    auto names = readable_part_.names_.lock();
-    if (names)
-      throw runtime_error("Writable metric: " + names->getElementName() + " " +
-                          names->getElementId() +
-                          "called a nonexistent write function!");
+    auto meta_info = readable_part_.meta_info_.lock();
+    if (meta_info)
+      throw runtime_error(
+        "Writable metric: " + meta_info->getElementName() + " " +
+        meta_info->getElementId() + "called a nonexistent write function!");
     else
       throw runtime_error("Writable metric called a nonexistent write function!");
   }
@@ -75,10 +75,10 @@ DataType WritableMetricImplementation::getDataType() {
   return readable_part_.getDataType();
 }
 
-void WritableMetricImplementation::linkNames(
-  const NonemptyNamedElementPtr & names)
+void WritableMetricImplementation::linkMetaInfo(
+  const NonemptyNamedElementPtr & meta_info)
 {
-  readable_part_.linkNames(names);
+  readable_part_.linkMetaInfo(meta_info);
 }
 
 } // namespace Information_Model_Manager

@@ -10,7 +10,7 @@ namespace Information_Model_Manager {
 class MetricImplementation : public Information_Model::Metric {
   Information_Model::DataType data_type_;
   std::function<Information_Model::DataVariant()> read_cb_;
-  std::weak_ptr<Information_Model::NamedElement> names_;
+  std::weak_ptr<Information_Model::NamedElement> meta_info_;
 
 public:
   MetricImplementation();
@@ -19,7 +19,7 @@ public:
 
   Information_Model::DataVariant getMetricValue();
   Information_Model::DataType getDataType();
-  void linkNames(const Information_Model::NonemptyNamedElementPtr &);
+  void linkMetaInfo(const Information_Model::NonemptyNamedElementPtr &);
 
 friend class WritableMetricImplementation;
 };
