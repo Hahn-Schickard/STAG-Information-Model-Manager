@@ -1,6 +1,18 @@
-## [0.1.6.] - 2021.09.17
+## [0.1.6] - NOT YET RELEASED
+### Added
+ - DeviceImplementation::getGroupImplementation
+ - DeviceElementGroupImplementation::getSubgroupImplementation
+ - MetricImplementation::linkMetaInfo
+ - WritableMetricImplementation::linkMetaInfo
+
+### Removed
+ - arguments name and desc from DeviceElementGroupImplementation constructor
+ - arguments ref_id, name, and desc from MetricImplementation constructor
+ - arguments ref_id, name, and desc from WritableMetricImplementation constructor
+
 ### Changed
- - Data_Consumer_Adapter_Interface to v0.1.7
+ - Data_Consumer_Adapter_Interface to v0.1.9
+ - Technology_Adapter_Interface to v0.1.8
 
 ## [0.1.5] - 2021.08.09
 ### Changed 
