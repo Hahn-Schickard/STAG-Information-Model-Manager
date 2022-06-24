@@ -39,7 +39,7 @@ bool ModelRegistry::registerDevice(shared_ptr<Device> device) {
     pair<string, shared_ptr<Device>> device_pair(device->getElementId(),
                                                  device);
     devices_.insert(device_pair);
-    notify(make_shared<ModelRegistryEvent>(device));
+    notify(std::make_shared<ModelRegistryEvent>(NonemptyDevicePtr(device)));
     return true;
   } else {
     logger_->log(SeverityLevel::TRACE, "Device with id {} already exists!",

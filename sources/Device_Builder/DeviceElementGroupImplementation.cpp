@@ -153,7 +153,7 @@ string DeviceElementGroupImplementation::addSubgroup(const string &name,
 
   auto implementation =
     NonemptyPointer::make_shared<DeviceElementGroupImplementation>(ref_id);
-  NonemptyDeviceElementGroupPtr interface = implementation;
+  NonemptyDeviceElementGroupPtr interface(implementation);
   auto element = NonemptyPointer::make_shared<DeviceElement>(
     ref_id,name,desc,interface);
   pair<string, NonemptyDeviceElementPtr> element_pair(ref_id,element);
@@ -171,7 +171,7 @@ string DeviceElementGroupImplementation::addReadableMetric(
 
   auto implementation =
     NonemptyPointer::make_shared<MetricImplementation>(data_type, read_cb);
-  NonemptyMetricPtr interface = implementation;
+  NonemptyMetricPtr interface(implementation);
   auto element = NonemptyPointer::make_shared<DeviceElement>(
     ref_id,name,desc,interface);
   implementation->linkMetaInfo(element);
@@ -190,7 +190,7 @@ string DeviceElementGroupImplementation::addWritableMetric(
   auto implementation =
     NonemptyPointer::make_shared<WritableMetricImplementation>
       (data_type, read_cb, write_cb);
-  NonemptyWritableMetricPtr interface = implementation;
+  NonemptyWritableMetricPtr interface(implementation);
   auto element = NonemptyPointer::make_shared<DeviceElement>(
     ref_id,name,desc,interface);
   implementation->linkMetaInfo(element);
