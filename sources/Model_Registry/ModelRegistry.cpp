@@ -14,12 +14,13 @@ ModelRegistry::ModelRegistry()
           bind(&ModelRegistry::logException, this, placeholders::_1)),
       logger_(LoggerManager::registerTypedLogger(this)) {}
 
-ModelRegistry::~ModelRegistry() { logger_->flushMessages(); }
+ModelRegistry::~ModelRegistry() { logger_->flush(); }
 
 void ModelRegistry::logException(std::exception_ptr ex_ptr) {
   try {
-    if (ex_ptr)
+    if (ex_ptr) {
       rethrow_exception(ex_ptr);
+    }
   } catch (exception& ex) {
     logger_->log(SeverityLevel::ERROR,
         "Received an exception while trying to notify listeners. Exception: {}",
@@ -35,7 +36,7 @@ bool ModelRegistry::registerDevice(shared_ptr<Device> device) {
     pair<string, shared_ptr<Device>> device_pair(
         device->getElementId(), device);
     devices_.insert(device_pair);
-    notify(make_shared<ModelRegistryEvent>(device));
+    notify(std::make_shared<ModelRegistryEvent>(NonemptyDevicePtr(device)));
     return true;
   } else {
     logger_->log(SeverityLevel::TRACE, "Device with id {} already exists!",

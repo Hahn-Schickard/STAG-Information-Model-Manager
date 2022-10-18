@@ -1,6 +1,18 @@
-## [0.1.6.] - 2021.09.17
+## [0.1.6] - NOT YET RELEASED
+### Added
+ - `DeviceImplementation::getGroupImplementation`
+ - `DeviceElementGroupImplementation::getSubgroupImplementation`
+ - `MetricImplementation::linkMetaInfo`
+ - `WritableMetricImplementation::linkMetaInfo`
+
+### Removed
+ - arguments `name` and desc from `DeviceElementGroupImplementation` constructor
+ - arguments `ref_id`, `name`, and `desc` from `MetricImplementation` constructor
+ - arguments `ref_id`, `name`, and `desc` from `WritableMetricImplementation` constructor
+
 ### Changed
- - Data_Consumer_Adapter_Interface to v0.1.7
+ - Data_Consumer_Adapter_Interface to v0.1.9
+ - Technology_Adapter_Interface to v0.1.8
 
 ## [0.1.5] - 2021.08.09
 ### Changed
@@ -13,16 +25,16 @@
 
 ## [0.1.4] - 2020.11.16
 ### Changed
- - DeviceImplementationBuilder to set the RefID as RefID and name as name
+ - `DeviceImplementationBuilder` to set the `RefID` as RefID and `name` as name
  - Data_Consumer_Adapter_Interface to 0.1.4
 
 ## [0.1.3] - 2020.10.14
 ### Added
  - Concrete implementation of DeviceBuilder
- - DeviceImplementationBuilder
- - DeviceImplementationBuilder unit tests
+ - `DeviceImplementationBuilder`
+ - `DeviceImplementationBuilder` unit tests
  - Data_Consumer_Adapter_Interface v0.1.3 dependency
- - getModelEventSource() method
+ - `getModelEventSource()` method
 
 ### Removed
  - Device_Builder dependency
@@ -45,7 +57,7 @@
  - Device_Builder to 0.1.2
  - Device_Building_And_Registration to 0.1.2
  - Technology_Adapter_Interface to 0.1.2
- - Building and Registration Facade to use optional parameters for addDeviceElement()
+ - Building and Registration Facade to use optional parameters for `addDeviceElement()`
 
 ## [0.1.1] - 2020.09.28
 ### Removed
@@ -59,7 +71,7 @@
  - Device Builder to 0.1.1
  - Device Building And Registration to 0.1.1
  - Technology Adapter Interface to 0.1.1
- - getElementRefId() to getElementId()
+ - `getElementRefId()` to `getElementId()`
 
 ### Added
  - TechnologyManagerTestSuite placeholder directory
@@ -72,7 +84,7 @@
  - runner
 
 ### Changed
- - test case soruce file extentions
+ - test case source file extensions
  - CMakeLists.txt to use Cmake 3.x best practices
  - auto generated doc style
  - utility scripts to use python

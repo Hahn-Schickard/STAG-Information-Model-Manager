@@ -50,14 +50,14 @@ TEST_F(SimpleWritableDeviceTests, returnsCorrectDeviceID) {
 }
 TEST_F(SimpleWritableDeviceTests, executesReadCallback) {
   EXPECT_CALL(readCallback, BracketsOperator());
-  auto metric = static_pointer_cast<Metric>(
-      device->getDeviceElementGroup()->getSubelement(metric_id));
+  auto metric = std::get<NonemptyWritableMetricPtr>(
+    device->getDeviceElementGroup()->getSubelement(metric_id)->specific_interface);
   ASSERT_NO_THROW(metric->getMetricValue());
 }
 
 TEST_F(SimpleWritableDeviceTests, executesWriteCallback) {
   EXPECT_CALL(writeCallback, BracketsOperator((DataVariant)(int64_t)19));
-  auto metric = static_pointer_cast<WritableMetric>(
-      device->getDeviceElementGroup()->getSubelement(metric_id));
+  auto metric = std::get<NonemptyWritableMetricPtr>(
+    device->getDeviceElementGroup()->getSubelement(metric_id)->specific_interface);
   ASSERT_NO_THROW(metric->setMetricValue((int64_t)19));
 }

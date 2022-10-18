@@ -72,7 +72,6 @@ string DeviceImplementationBuilder::addDeviceElement(
     ref_id = group->addSubgroup(name, desc);
     break;
   };
-  case ElementType::OBSERVABLE:
   case ElementType::WRITABLE: {
     ref_id = group->addWritableMetric(name, desc, data_type,
                                       setCallback<ReadFunctor>(read_cb),
@@ -84,7 +83,6 @@ string DeviceImplementationBuilder::addDeviceElement(
                                       setCallback<ReadFunctor>(read_cb));
     break;
   }
-  case ElementType::FUNCTION:
   default: { break; }
   }
   return ref_id;
@@ -92,14 +90,12 @@ string DeviceImplementationBuilder::addDeviceElement(
 
 shared_ptr<Device> DeviceImplementationBuilder::getResult() { return device_; }
 
-shared_ptr<DeviceElementGroupImplementation>
+DeviceImplementationBuilder::DeviceGroupImplementation
 DeviceImplementationBuilder::getGroupImplementation(const string &ref_id) {
   if (ref_id.empty()) {
-    return static_pointer_cast<DeviceElementGroupImplementation>(
-        device_->getDeviceElementGroup());
+    return device_->getGroupImplementation().base();
   } else {
-    return static_pointer_cast<DeviceElementGroupImplementation>(
-        device_->getDeviceElementGroup()->getSubelement(ref_id));
+    return device_->getGroupImplementation()->getSubgroupImplementation(ref_id);
   }
 }
 } // namespace Information_Model_Manager
