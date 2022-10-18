@@ -14,12 +14,13 @@ ModelRegistry::ModelRegistry()
           bind(&ModelRegistry::logException, this, placeholders::_1)),
       logger_(LoggerManager::registerTypedLogger(this)) {}
 
-ModelRegistry::~ModelRegistry() { logger_->flushMessages(); }
+ModelRegistry::~ModelRegistry() { logger_->flush(); }
 
 void ModelRegistry::logException(std::exception_ptr ex_ptr) {
   try {
-    if (ex_ptr)
+    if (ex_ptr) {
       rethrow_exception(ex_ptr);
+    }
   } catch (exception& ex) {
     logger_->log(SeverityLevel::ERROR,
         "Received an exception while trying to notify listeners. Exception: {}",
