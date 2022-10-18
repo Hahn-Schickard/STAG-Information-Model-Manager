@@ -9,7 +9,7 @@ file(GLOB Model_Event_Source_Tests "${CMAKE_CURRENT_LIST_DIR}/Model_Event_Source
 find_package(GTest REQUIRED)
 
 add_executable(${THIS})
-target_sources(${THIS} PRIVATE 
+target_sources(${THIS} PRIVATE
                        "testRunner.cpp"
                        ${Device_Test_Suite}
                        ${Device_Builder_Test_Suite}

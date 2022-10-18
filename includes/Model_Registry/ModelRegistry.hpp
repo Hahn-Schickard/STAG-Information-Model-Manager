@@ -3,8 +3,8 @@
 
 #include "Data_Consumer_Adapter_Interface/DataConsumerAdapterInterface.hpp"
 #include "Event_Model/AsyncEventSource.hpp"
+#include "HaSLL/Logger.hpp"
 #include "Information_Model/Device.hpp"
-#include "Logger.hpp"
 #include "Technology_Adapter_Interface/ModelRegistryInterface.hpp"
 
 #include <memory>
@@ -15,21 +15,19 @@ class ModelRegistry
     : public Technology_Adapter::ModelRegistryInterface,
       public Event_Model::AsyncEventSource<DCAI::ModelRegistryEvent> {
   using DevicesMap =
-      std::unordered_map<std::string,
-                         std::shared_ptr<Information_Model::Device>>;
+      std::unordered_map<std::string, Information_Model::DevicePtr>;
   DevicesMap devices_;
-  std::shared_ptr<HaSLL::Logger> logger_;
+  HaSLI::LoggerPtr logger_;
 
-  bool deviceExists(const std::string &device_id);
+  bool deviceExists(const std::string& device_id);
   void logException(std::exception_ptr ex_ptr);
 
 public:
   ModelRegistry();
   ~ModelRegistry();
 
-  bool
-  registerDevice(std::shared_ptr<Information_Model::Device> device) override;
-  bool deregisterDevice(const std::string &device_id) override;
+  bool registerDevice(Information_Model::DevicePtr device) override;
+  bool deregisterDevice(const std::string& device_id) override;
 };
 } // namespace Information_Model_Manager
 
