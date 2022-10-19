@@ -3,52 +3,49 @@
 using namespace std;
 using namespace Information_Model;
 namespace Information_Model_Manager {
-DeviceImplementationBuilder::DeviceImplementationBuilder(const string &ref_id,
-                                                         const string &name,
-                                                         const string &desc) {
+DeviceImplementationBuilder::DeviceImplementationBuilder(
+    const string& ref_id, const string& name, const string& desc) {
   device_ = make_shared<DeviceImplementation>(ref_id, name, desc);
 }
 
-string DeviceImplementationBuilder::addDeviceElementGroup(const string &name,
-                                                          const string &desc) {
+string DeviceImplementationBuilder::addDeviceElementGroup(
+    const string& name, const string& desc) {
   return addDeviceElement(string(), name, desc, ElementType::GROUP,
-                          DataType::UNKNOWN, nullptr, nullptr);
+      DataType::UNKNOWN, nullptr, nullptr);
 }
 
 string DeviceImplementationBuilder::addDeviceElementGroup(
-    const string &group_refid, const string &name, const string &desc) {
+    const string& group_refid, const string& name, const string& desc) {
   return addDeviceElement(group_refid, name, desc, ElementType::GROUP,
-                          DataType::UNKNOWN, nullptr, nullptr);
+      DataType::UNKNOWN, nullptr, nullptr);
 }
 
-string DeviceImplementationBuilder::addReadableMetric(const string &name,
-                                                      const string &desc,
-                                                      DataType data_type,
-                                                      ReadFunctor read_cb) {
+string DeviceImplementationBuilder::addReadableMetric(const string& name,
+    const string& desc, DataType data_type, ReadFunctor read_cb) {
   return addDeviceElement(string(), name, desc, ElementType::READABLE,
-                          data_type, move(read_cb), nullptr);
+      data_type, move(read_cb), nullptr);
 }
 
 string DeviceImplementationBuilder::addReadableMetric(
-    const string &group_ref_id, const string &name, const string &desc,
+    const string& group_ref_id, const string& name, const string& desc,
     DataType data_type, ReadFunctor read_cb) {
   return addDeviceElement(group_ref_id, name, desc, ElementType::READABLE,
-                          data_type, move(read_cb), nullptr);
+      data_type, move(read_cb), nullptr);
 }
 
-string DeviceImplementationBuilder::addWritableMetric(
-    const string &name, const string &desc, DataType data_type,
-    std::optional<ReadFunctor> read_cb, WriteFunctor write_cb) {
+string DeviceImplementationBuilder::addWritableMetric(const string& name,
+    const string& desc, DataType data_type, std::optional<ReadFunctor> read_cb,
+    WriteFunctor write_cb) {
   return addDeviceElement(string(), name, desc, ElementType::WRITABLE,
-                          data_type, move(read_cb), move(write_cb));
+      data_type, move(read_cb), move(write_cb));
 }
 
 string DeviceImplementationBuilder::addWritableMetric(
-    const string &group_ref_id, const string &name, const string &desc,
+    const string& group_ref_id, const string& name, const string& desc,
     DataType data_type, std::optional<ReadFunctor> read_cb,
     WriteFunctor write_cb) {
   return addDeviceElement(group_ref_id, name, desc, ElementType::WRITABLE,
-                          data_type, move(read_cb), move(write_cb));
+      data_type, move(read_cb), move(write_cb));
 }
 
 template <class T> T setCallback(optional<T> optional_value) {
@@ -59,10 +56,10 @@ template <class T> T setCallback(optional<T> optional_value) {
   }
 }
 
-string DeviceImplementationBuilder::addDeviceElement(
-    const string &group_refid, const string &name, const string &desc,
-    Information_Model::ElementType type, Information_Model::DataType data_type,
-    optional<ReadFunctor> read_cb, optional<WriteFunctor> write_cb) {
+string DeviceImplementationBuilder::addDeviceElement(const string& group_refid,
+    const string& name, const string& desc, Information_Model::ElementType type,
+    Information_Model::DataType data_type, optional<ReadFunctor> read_cb,
+    optional<WriteFunctor> write_cb) {
   string ref_id("");
 
   auto group = getGroupImplementation(group_refid);
@@ -74,16 +71,17 @@ string DeviceImplementationBuilder::addDeviceElement(
   };
   case ElementType::WRITABLE: {
     ref_id = group->addWritableMetric(name, desc, data_type,
-                                      setCallback<ReadFunctor>(read_cb),
-                                      setCallback<WriteFunctor>(write_cb));
+        setCallback<ReadFunctor>(read_cb), setCallback<WriteFunctor>(write_cb));
     break;
   }
   case ElementType::READABLE: {
-    ref_id = group->addReadableMetric(name, desc, data_type,
-                                      setCallback<ReadFunctor>(read_cb));
+    ref_id = group->addReadableMetric(
+        name, desc, data_type, setCallback<ReadFunctor>(read_cb));
     break;
   }
-  default: { break; }
+  default: {
+    break;
+  }
   }
   return ref_id;
 }
@@ -91,7 +89,7 @@ string DeviceImplementationBuilder::addDeviceElement(
 shared_ptr<Device> DeviceImplementationBuilder::getResult() { return device_; }
 
 DeviceImplementationBuilder::DeviceGroupImplementation
-DeviceImplementationBuilder::getGroupImplementation(const string &ref_id) {
+DeviceImplementationBuilder::getGroupImplementation(const string& ref_id) {
   if (ref_id.empty()) {
     return device_->getGroupImplementation().base();
   } else {

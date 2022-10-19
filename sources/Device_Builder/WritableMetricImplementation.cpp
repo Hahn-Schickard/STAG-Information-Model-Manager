@@ -6,8 +6,8 @@ using namespace std;
 using namespace Information_Model;
 
 namespace Information_Model_Manager {
-WritableMetricImplementation::WritableMetricImplementation(
-    DataType data_type, optional<function<DataVariant()>> read_cb,
+WritableMetricImplementation::WritableMetricImplementation(DataType data_type,
+    optional<function<DataVariant()>> read_cb,
     function<void(DataVariant)> write_cb)
     : WritableMetric(), write_cb_(move(write_cb)) {
   if (read_cb.has_value()) {
@@ -44,8 +44,8 @@ WritableMetricImplementation::WritableMetricImplementation(
       throw runtime_error("Writable metric must have a known data type!");
     }
     }
-    readable_part_ = MetricImplementation(
-        data_type, [&]() -> DataVariant { return value; });
+    readable_part_ =
+        MetricImplementation(data_type, [&]() -> DataVariant { return value; });
   }
 }
 
@@ -55,18 +55,19 @@ void WritableMetricImplementation::setMetricValue(DataVariant value) {
   } else {
     auto meta_info = readable_part_.meta_info_.lock();
     if (meta_info)
-      throw runtime_error(
-        "Writable metric: " + meta_info->getElementName() + " " +
-        meta_info->getElementId() + "called a nonexistent write function!");
+      throw runtime_error("Writable metric: " + meta_info->getElementName() +
+          " " + meta_info->getElementId() +
+          "called a nonexistent write function!");
     else
-      throw runtime_error("Writable metric called a nonexistent write function!");
+      throw runtime_error(
+          "Writable metric called a nonexistent write function!");
   }
 }
 
 DataVariant WritableMetricImplementation::getMetricValue() {
   try {
     return readable_part_.getMetricValue();
-  } catch (exception &e) {
+  } catch (exception& e) {
     throw;
   }
 }
@@ -76,8 +77,7 @@ DataType WritableMetricImplementation::getDataType() {
 }
 
 void WritableMetricImplementation::linkMetaInfo(
-  const NonemptyNamedElementPtr & meta_info)
-{
+    const NonemptyNamedElementPtr& meta_info) {
   readable_part_.linkMetaInfo(meta_info);
 }
 

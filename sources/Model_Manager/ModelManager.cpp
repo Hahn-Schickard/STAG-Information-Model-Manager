@@ -10,9 +10,9 @@ ModelManager::ModelManager()
       registry_(make_shared<ModelRegistry>()) {}
 
 ModelManager::TechnologyAdaptersList::iterator
-ModelManager::findTechnologyAdapter(const TechnologyAdapterPtr &adapter) {
-  return find(technology_adapters_.begin(), technology_adapters_.end(),
-              adapter);
+ModelManager::findTechnologyAdapter(const TechnologyAdapterPtr& adapter) {
+  return find(
+      technology_adapters_.begin(), technology_adapters_.end(), adapter);
 }
 
 ModelEventSourcePtr ModelManager::getModelEventSource() { return registry_; }

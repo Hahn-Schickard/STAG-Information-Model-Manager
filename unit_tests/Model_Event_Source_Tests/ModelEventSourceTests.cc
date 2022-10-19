@@ -16,8 +16,8 @@ class ModelEventSourceTests : public ::testing::Test {
 public:
   void SetUp() {
     event_source = make_shared<ModelRegistry>();
-    event_listener = make_unique<DataConsumerAdapterInterfaceMock>(event_source,
-                                                                   "DCAI_Mock");
+    event_listener = make_unique<DataConsumerAdapterInterfaceMock>(
+        event_source, "DCAI_Mock");
   }
 
   shared_ptr<ModelRegistry> event_source;
@@ -26,17 +26,17 @@ public:
 
 TEST(ModelEventSourceThrowTest, thrrowsOnNullPtr) {
   auto event_source = make_shared<ModelRegistry>();
-  EXPECT_THROW(auto event_listener =
-                   make_unique<DataConsumerAdapterInterfaceMock>(
-                       shared_ptr<ModelRegistry>(), "DCAI_Mock"),
-               Event_Model::EventSourceIsNotInstantiated);
+  EXPECT_THROW(
+      auto event_listener = make_unique<DataConsumerAdapterInterfaceMock>(
+          shared_ptr<ModelRegistry>(), "DCAI_Mock"),
+      Event_Model::EventSourceIsNotInstantiated);
 }
 
 TEST(ModelEventSourceThrowTest, canAttachEventSource) {
   auto event_source = make_shared<ModelRegistry>();
-  EXPECT_NO_THROW(auto event_listener =
-                      make_unique<DataConsumerAdapterInterfaceMock>(
-                          event_source, "DCAI_Mock"));
+  EXPECT_NO_THROW(
+      auto event_listener = make_unique<DataConsumerAdapterInterfaceMock>(
+          event_source, "DCAI_Mock"));
 }
 
 TEST_F(ModelEventSourceTests, canStart) {

@@ -1,4 +1,5 @@
-## [0.1.6] - NOT YET RELEASED
+# Changelog
+## [0.2.0] - 2022.10.19
 ### Added
  - `DeviceImplementation::getGroupImplementation`
  - `DeviceElementGroupImplementation::getSubgroupImplementation`
@@ -9,10 +10,30 @@
  - arguments `name` and desc from `DeviceElementGroupImplementation` constructor
  - arguments `ref_id`, `name`, and `desc` from `MetricImplementation` constructor
  - arguments `ref_id`, `name`, and `desc` from `WritableMetricImplementation` constructor
+ - unused license mentions from Notice file
+ - conan directory
+ - conanfile.txt
+
+### Fixed
+ - Third Party license documentation in License file
+ - missing `optional` include for DeviceBuilder.hpp
+ - missing `optional` include for DeviceElementGroupImplementation.hpp 
+ - missing `optional` include for WritableMetricImplementation.hpp  
+ - missing `ARCHIVE DESTINATION` section for cmake install commands 
 
 ### Changed
  - Data_Consumer_Adapter_Interface to v0.1.9
- - Technology_Adapter_Interface to v0.1.8
+ - Technology_Adapter_Interface to v0.1.9
+ - HaSLL to v0.3.1
+ - conan packaging layout
+ - Contribution guide
+ - code formatting rules
+ - DeviceElementGroupImplementation.cpp to work with Information Model v0.2.1
+ - DeviceImplementation.cpp to work with Information Model v0.2.1
+ - DeviceImplementationBuilder.cpp to work with Information Model v0.2.1
+ - MetricImplementation.cpp to work with Information Model v0.2.1
+ - WritableMetricImplementation.cpp to work with Information Model v0.2.1
+ - ModelRegistry.cpp to work with HaSLL v0.3.1
 
 ## [0.1.5] - 2021.08.09
 ### Changed
