@@ -1,9 +1,9 @@
 #ifndef __MODEL_BUILDER_DEVICE_IMPLEMENTATION_BUILDER_HPP_
 #define __MODEL_BUILDER_DEVICE_IMPLEMENTATION_BUILDER_HPP_
 
-#include "Information_Model/DeviceBuilderInterface.hpp"
 #include "DeviceElementGroupImplementation.hpp"
 #include "DeviceImplementation.hpp"
+#include "Information_Model/DeviceBuilderInterface.hpp"
 
 #include <functional>
 #include <memory>
@@ -18,52 +18,43 @@ class DeviceImplementationBuilder {
 
   DeviceImplementationPtr device_;
 
-  DeviceGroupImplementation getGroupImplementation(const std::string &ref_id);
+  DeviceGroupImplementation getGroupImplementation(const std::string& ref_id);
 
 public:
   using ReadFunctor = std::function<Information_Model::DataVariant()>;
   using WriteFunctor = std::function<void(Information_Model::DataVariant)>;
 
-  DeviceImplementationBuilder(const std::string &ref_id,
-                              const std::string &name, const std::string &desc);
+  DeviceImplementationBuilder(const std::string& ref_id,
+      const std::string& name, const std::string& desc);
 
-  std::string addDeviceElementGroup(const std::string &name,
-                                    const std::string &desc);
+  std::string addDeviceElementGroup(
+      const std::string& name, const std::string& desc);
 
-  std::string addDeviceElementGroup(const std::string &group_refid,
-                                    const std::string &name,
-                                    const std::string &desc);
+  std::string addDeviceElementGroup(const std::string& group_refid,
+      const std::string& name, const std::string& desc);
 
-  std::string addReadableMetric(const std::string &name,
-                                const std::string &desc,
-                                Information_Model::DataType data_type,
-                                ReadFunctor read_cb);
+  std::string addReadableMetric(const std::string& name,
+      const std::string& desc, Information_Model::DataType data_type,
+      ReadFunctor read_cb);
 
-  std::string addReadableMetric(const std::string &group_refid,
-                                const std::string &name,
-                                const std::string &desc,
-                                Information_Model::DataType data_type,
-                                ReadFunctor read_cb);
+  std::string addReadableMetric(const std::string& group_refid,
+      const std::string& name, const std::string& desc,
+      Information_Model::DataType data_type, ReadFunctor read_cb);
 
-  std::string addWritableMetric(const std::string &name,
-                                const std::string &desc,
-                                Information_Model::DataType data_type,
-                                std::optional<ReadFunctor> read_cb,
-                                WriteFunctor write_cb);
+  std::string addWritableMetric(const std::string& name,
+      const std::string& desc, Information_Model::DataType data_type,
+      std::optional<ReadFunctor> read_cb, WriteFunctor write_cb);
 
-  std::string addWritableMetric(const std::string &group_refid,
-                                const std::string &name,
-                                const std::string &desc,
-                                Information_Model::DataType data_type,
-                                std::optional<ReadFunctor> read_cb,
-                                WriteFunctor write_cb);
+  std::string addWritableMetric(const std::string& group_refid,
+      const std::string& name, const std::string& desc,
+      Information_Model::DataType data_type, std::optional<ReadFunctor> read_cb,
+      WriteFunctor write_cb);
 
-  std::string addDeviceElement(const std::string &group_refid,
-                               const std::string &name, const std::string &desc,
-                               Information_Model::ElementType type,
-                               Information_Model::DataType data_type,
-                               std::optional<ReadFunctor> read_cb,
-                               std::optional<WriteFunctor> write_cb);
+  std::string addDeviceElement(const std::string& group_refid,
+      const std::string& name, const std::string& desc,
+      Information_Model::ElementType type,
+      Information_Model::DataType data_type, std::optional<ReadFunctor> read_cb,
+      std::optional<WriteFunctor> write_cb);
 
   std::shared_ptr<Information_Model::Device> getResult();
 };

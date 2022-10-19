@@ -15,13 +15,13 @@ class MetricImplementation : public Information_Model::Metric {
 public:
   MetricImplementation();
   MetricImplementation(Information_Model::DataType data_type,
-                       std::function<Information_Model::DataVariant()> read_cb);
+      std::function<Information_Model::DataVariant()> read_cb);
 
   Information_Model::DataVariant getMetricValue();
   Information_Model::DataType getDataType();
-  void linkMetaInfo(const Information_Model::NonemptyNamedElementPtr &);
+  void linkMetaInfo(const Information_Model::NonemptyNamedElementPtr&);
 
-friend class WritableMetricImplementation;
+  friend class WritableMetricImplementation;
 };
 } // namespace Information_Model_Manager
 

@@ -26,10 +26,10 @@ public:
   SimpleWritableDeviceTests() {}
 
   void SetUp() {
-    DeviceImplementationBuilder builder("1234", "Simple Writable Device",
-                                        "Lorem Ipsum");
-    metric_id = builder.addWritableMetric(
-        "Writable", "This is a writable INTEGER metric", DataType::INTEGER,
+    DeviceImplementationBuilder builder(
+        "1234", "Simple Writable Device", "Lorem Ipsum");
+    metric_id = builder.addWritableMetric("Writable",
+        "This is a writable INTEGER metric", DataType::INTEGER,
         bind(&ReadFunctionMock::operator(), &readCallback),
         bind(&WriteFunctionMock::operator(), &writeCallback, placeholders::_1));
     device = builder.getResult();
@@ -50,14 +50,18 @@ TEST_F(SimpleWritableDeviceTests, returnsCorrectDeviceID) {
 }
 TEST_F(SimpleWritableDeviceTests, executesReadCallback) {
   EXPECT_CALL(readCallback, BracketsOperator());
-  auto metric = std::get<NonemptyWritableMetricPtr>(
-    device->getDeviceElementGroup()->getSubelement(metric_id)->specific_interface);
+  auto metric =
+      std::get<NonemptyWritableMetricPtr>(device->getDeviceElementGroup()
+                                              ->getSubelement(metric_id)
+                                              ->specific_interface);
   ASSERT_NO_THROW(metric->getMetricValue());
 }
 
 TEST_F(SimpleWritableDeviceTests, executesWriteCallback) {
   EXPECT_CALL(writeCallback, BracketsOperator((DataVariant)(int64_t)19));
-  auto metric = std::get<NonemptyWritableMetricPtr>(
-    device->getDeviceElementGroup()->getSubelement(metric_id)->specific_interface);
+  auto metric =
+      std::get<NonemptyWritableMetricPtr>(device->getDeviceElementGroup()
+                                              ->getSubelement(metric_id)
+                                              ->specific_interface);
   ASSERT_NO_THROW(metric->setMetricValue((int64_t)19));
 }

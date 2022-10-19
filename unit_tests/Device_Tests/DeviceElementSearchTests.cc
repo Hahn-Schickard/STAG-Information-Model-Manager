@@ -13,28 +13,26 @@ public:
   DeviceElementSearchTests() {}
 
   void SetUp() {
-    DeviceImplementationBuilder builder("Simple Readable Device", "1234",
-                                        "Lorem Ipsum");
-    readable_metric_1_id = builder.addReadableMetric(
-        "Readble", "This is a readable BOOLEAN metric", DataType::BOOLEAN,
-        nullptr);
+    DeviceImplementationBuilder builder(
+        "Simple Readable Device", "1234", "Lorem Ipsum");
+    readable_metric_1_id = builder.addReadableMetric("Readble",
+        "This is a readable BOOLEAN metric", DataType::BOOLEAN, nullptr);
     builder.addReadableMetric("Readble", "This is a readable BOOLEAN metric",
-                              DataType::BOOLEAN, nullptr);
+        DataType::BOOLEAN, nullptr);
     string subgroup_1_id =
         builder.addDeviceElementGroup("Group 1", "Just some group.");
-    writable_metric_1_id = builder.addWritableMetric(
-        subgroup_1_id, "Writable", "This is a writable INTEGER metric",
-        DataType::INTEGER, nullptr, nullptr);
+    writable_metric_1_id = builder.addWritableMetric(subgroup_1_id, "Writable",
+        "This is a writable INTEGER metric", DataType::INTEGER, nullptr,
+        nullptr);
     string subgroup_2_id = builder.addDeviceElementGroup(
         subgroup_1_id, "Group 2", "Just some other group");
-    readable_metric_2_id = builder.addReadableMetric(
-        subgroup_2_id, "Readable", "This is a readable FLOAT metric",
-        DataType::DOUBLE, nullptr);
+    readable_metric_2_id = builder.addReadableMetric(subgroup_2_id, "Readable",
+        "This is a readable FLOAT metric", DataType::DOUBLE, nullptr);
     builder.addWritableMetric(subgroup_2_id, "Writable",
-                              "This is a writable INTEGER metric",
-                              DataType::INTEGER, nullptr, nullptr);
+        "This is a writable INTEGER metric", DataType::INTEGER, nullptr,
+        nullptr);
     builder.addReadableMetric("Readble", "This is a readable STRING metric",
-                              DataType::STRING, nullptr);
+        DataType::STRING, nullptr);
     device = builder.getResult();
   }
 

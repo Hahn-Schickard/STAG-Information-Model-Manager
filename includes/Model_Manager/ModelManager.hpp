@@ -25,7 +25,7 @@ class ModelManager : public Technology_Adapter::TechnologyManagerInterface {
   ModelRegistryPtr registry_;
 
   TechnologyAdaptersList::iterator findTechnologyAdapter(
-      const Technology_Adapter::TechnologyAdapterPtr &adapter);
+      const Technology_Adapter::TechnologyAdapterPtr& adapter);
 
 public:
   ModelManager();
