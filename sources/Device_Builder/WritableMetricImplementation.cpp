@@ -54,13 +54,14 @@ void WritableMetricImplementation::setMetricValue(DataVariant value) {
     write_cb_(value);
   } else {
     auto meta_info = readable_part_.meta_info_.lock();
-    if (meta_info)
+    if (meta_info) {
       throw runtime_error("Writable metric: " + meta_info->getElementName() +
           " " + meta_info->getElementId() +
           "called a nonexistent write function!");
-    else
+    } else {
       throw runtime_error(
           "Writable metric called a nonexistent write function!");
+    }
   }
 }
 

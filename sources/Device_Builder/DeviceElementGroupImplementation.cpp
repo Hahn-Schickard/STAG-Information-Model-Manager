@@ -113,10 +113,11 @@ shared_ptr<DeviceElement> DeviceElementGroupImplementation::getSubelement(
     auto next_element = getSubelement(next_id);
     // Check if next element exists and is a group
     if (next_element) {
-      auto next_group = std::get_if<NonemptyDeviceElementGroupPtr>(
+      const auto* next_group = std::get_if<NonemptyDeviceElementGroupPtr>(
           &next_element->specific_interface);
-      if (next_group)
+      if (next_group != nullptr) {
         return (*next_group)->getSubelement(ref_id);
+      }
     }
   } // If not, check if it is in this group
   else if (elements_map_.find(ref_id) != elements_map_.end()) {
@@ -136,8 +137,9 @@ DeviceElementGroupImplementation::getSubgroupImplementation(
     string next_id = getNextElementID(ref_id, target_level);
     auto next_group = getSubgroupImplementation(next_id);
     // Check if next group exists
-    if (next_group)
+    if (next_group) {
       return next_group->getSubgroupImplementation(ref_id);
+    }
   } // If not, check if it is in this group
   else if (subgroups_map_.find(ref_id) != subgroups_map_.end()) {
     return subgroups_map_.at(ref_id).base();
