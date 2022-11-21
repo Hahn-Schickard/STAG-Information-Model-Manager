@@ -1,4 +1,24 @@
 # Changelog
+## [0.2.1] - 2022.11.21
+### Changed
+ - conan packaging recipe
+ - gtest dependency to fuzzy v1.11
+ - HaSLL dependency to fuzzy v0.3
+ - Data_Consumer_Adapter_Interface dependency to fuzzy v0.1
+ - Technology_Adapter_Interface dependency to fuzzy v0.1
+ - `group_ref_id` param `DeviceImplementationBuilder` class
+ - `group_ref_id` param `DeviceBuilder` class
+
+### Added
+ - `ExecuteFunctor` handling in `DeviceBuilder::addDeviceElement()`
+ - `ExecuteFunctor` handling in `DeviceImplementationBuilder::addDeviceElement()` 
+ - example Runner 
+
+### Removed
+ - redundant call to base ctor in `MetricImplementation`
+ - redundant call to base ctor in `WritableMetricImplementation`
+ - redundant call to base ctor in `DeviceElementGroupImplementation`
+
 ## [0.2.0] - 2022.10.19
 ### Added
  - `DeviceImplementation::getGroupImplementation`
