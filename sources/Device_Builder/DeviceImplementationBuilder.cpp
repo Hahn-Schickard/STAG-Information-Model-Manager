@@ -73,12 +73,13 @@ string DeviceImplementationBuilder::addDeviceElement(const string& group_ref_id,
   };
   case ElementType::WRITABLE: {
     ref_id = group->addWritableMetric(name, desc, data_type,
-        setCallback<ReadFunctor>(read_cb), setCallback<WriteFunctor>(write_cb));
+        setCallback<ReadFunctor>(move(read_cb)),
+        setCallback<WriteFunctor>(move(write_cb)));
     break;
   }
   case ElementType::READABLE: {
     ref_id = group->addReadableMetric(
-        name, desc, data_type, setCallback<ReadFunctor>(read_cb));
+        name, desc, data_type, setCallback<ReadFunctor>(move(read_cb)));
     break;
   }
   case ElementType::FUNCTION: {
