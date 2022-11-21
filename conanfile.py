@@ -8,11 +8,11 @@ import shutil
 class PackageConan(ConanFile):
     license = "Apache 2.0"
     topics = ('lwm2m', 'server', 'coap')
-    build_requires = 'gtest/1.10.0'
+    build_requires = 'gtest/[~1.11]'
     requires = [
-        "HaSLL/0.3.1@hahn-schickard/stable",
-        "Data_Consumer_Adapter_Interface/0.1.9@hahn-schickard/stable",
-        "Technology_Adapter_Interface/0.1.9@hahn-schickard/stable"
+        "HaSLL/[~0.3]@hahn-schickard/stable",
+        "Data_Consumer_Adapter_Interface/[~0.1]@hahn-schickard/stable",
+        "Technology_Adapter_Interface/[~0.1]@hahn-schickard/stable"
     ]
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False],
