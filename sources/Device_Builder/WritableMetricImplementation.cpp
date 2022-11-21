@@ -9,7 +9,7 @@ namespace Information_Model_Manager {
 WritableMetricImplementation::WritableMetricImplementation(DataType data_type,
     optional<function<DataVariant()>> read_cb,
     function<void(DataVariant)> write_cb)
-    : WritableMetric(), write_cb_(move(write_cb)) {
+    : write_cb_(move(write_cb)) {
   if (read_cb.has_value()) {
     readable_part_ = MetricImplementation(data_type, move(read_cb.value()));
   } else {

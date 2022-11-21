@@ -9,7 +9,7 @@ MetricImplementation::MetricImplementation()
 
 MetricImplementation::MetricImplementation(
     DataType data_type, function<DataVariant()> read_cb)
-    : Metric(), data_type_(data_type), read_cb_(move(read_cb)) {}
+    : data_type_(data_type), read_cb_(move(read_cb)) {}
 
 DataVariant MetricImplementation::getMetricValue() {
   if (read_cb_) {
