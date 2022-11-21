@@ -9,6 +9,7 @@ using namespace std;
 using namespace Information_Model;
 using namespace Information_Model_Manager;
 
+// NOLINTNEXTLINE
 TEST(DeviceBuilder, canBuildSimpplestDevice) {
   auto builder_ =
       make_unique<DeviceImplementationBuilder>("1234", "name", "desc");

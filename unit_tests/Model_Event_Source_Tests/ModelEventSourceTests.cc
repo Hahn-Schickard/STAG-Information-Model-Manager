@@ -24,6 +24,7 @@ public:
   shared_ptr<DataConsumerAdapterInterfaceMock> event_listener;
 };
 
+// NOLINTNEXTLINE
 TEST(ModelEventSourceThrowTest, thrrowsOnNullPtr) {
   auto event_source = make_shared<ModelRegistry>();
   EXPECT_THROW(
@@ -32,6 +33,7 @@ TEST(ModelEventSourceThrowTest, thrrowsOnNullPtr) {
       Event_Model::EventSourceIsNotInstantiated);
 }
 
+// NOLINTNEXTLINE
 TEST(ModelEventSourceThrowTest, canAttachEventSource) {
   auto event_source = make_shared<ModelRegistry>();
   EXPECT_NO_THROW(
@@ -39,12 +41,14 @@ TEST(ModelEventSourceThrowTest, canAttachEventSource) {
           event_source, "DCAI_Mock"));
 }
 
+// NOLINTNEXTLINE
 TEST_F(ModelEventSourceTests, canStart) {
   EXPECT_CALL(*event_listener, start()).Times(1);
 
   EXPECT_NO_THROW(event_listener->start());
 }
 
+// NOLINTNEXTLINE
 TEST_F(ModelEventSourceTests, canHandleEvent) {
   EXPECT_CALL(*event_listener, handleEvent(::testing::_)).Times(1);
 
@@ -54,6 +58,7 @@ TEST_F(ModelEventSourceTests, canHandleEvent) {
   this_thread::sleep_for(50ms); // block premature destruction
 }
 
+// NOLINTNEXTLINE
 TEST_F(ModelEventSourceTests, canStop) {
   EXPECT_CALL(*event_listener, stop()).Times(1);
 

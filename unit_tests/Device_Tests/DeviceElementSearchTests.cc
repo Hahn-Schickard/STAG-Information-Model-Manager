@@ -42,6 +42,7 @@ public:
   string writable_metric_1_id;
 };
 
+// NOLINTNEXTLINE
 TEST_F(DeviceElementSearchTests, findsRootReadbleMetric) {
   auto metric = device->getDeviceElement(readable_metric_1_id);
 
@@ -54,6 +55,7 @@ TEST_F(DeviceElementSearchTests, findsRootReadbleMetric) {
       << "provided: " << tested_element << endl;
 }
 
+// NOLINTNEXTLINE
 TEST_F(DeviceElementSearchTests, findsGroup1WritableMetric) {
   auto metric = device->getDeviceElement(writable_metric_1_id);
 
@@ -66,6 +68,7 @@ TEST_F(DeviceElementSearchTests, findsGroup1WritableMetric) {
       << "provided: " << tested_element << endl;
 }
 
+// NOLINTNEXTLINE
 TEST_F(DeviceElementSearchTests, findsGroup2ReadableMetric) {
   auto metric = device->getDeviceElement(readable_metric_2_id);
 
@@ -78,6 +81,7 @@ TEST_F(DeviceElementSearchTests, findsGroup2ReadableMetric) {
       << "provided: " << tested_element << endl;
 }
 
+// NOLINTNEXTLINE
 TEST_F(DeviceElementSearchTests, returnsEmptySharedPtrForNonExistantElement) {
   auto metric = device->getDeviceElement("SomeBadID");
 

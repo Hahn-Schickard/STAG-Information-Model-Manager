@@ -36,6 +36,7 @@ public:
   string metric_id;
 };
 
+// NOLINTNEXTLINE
 TEST_F(SimpleReadableDeviceTests, returnsCorrectDeviceID) {
   string tested_element = device->getElementId();
   string expected_result = "1234";
@@ -43,6 +44,7 @@ TEST_F(SimpleReadableDeviceTests, returnsCorrectDeviceID) {
       << "expected: " << expected_result << endl
       << "provided: " << tested_element << endl;
 }
+// NOLINTNEXTLINE
 TEST_F(SimpleReadableDeviceTests, executesReadCallback) {
   EXPECT_CALL(readCallback, BracketsOperator());
   auto metric = std::get<NonemptyMetricPtr>(device->getDeviceElementGroup()

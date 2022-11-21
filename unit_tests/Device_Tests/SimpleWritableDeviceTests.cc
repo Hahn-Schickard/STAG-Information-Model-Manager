@@ -41,6 +41,7 @@ public:
   string metric_id;
 };
 
+// NOLINTNEXTLINE
 TEST_F(SimpleWritableDeviceTests, returnsCorrectDeviceID) {
   string tested_element = device->getElementId();
   string expected_result = "1234";
@@ -48,6 +49,7 @@ TEST_F(SimpleWritableDeviceTests, returnsCorrectDeviceID) {
       << "expected: " << expected_result << endl
       << "provided: " << tested_element << endl;
 }
+// NOLINTNEXTLINE
 TEST_F(SimpleWritableDeviceTests, executesReadCallback) {
   EXPECT_CALL(readCallback, BracketsOperator());
   auto metric =
@@ -57,6 +59,7 @@ TEST_F(SimpleWritableDeviceTests, executesReadCallback) {
   ASSERT_NO_THROW(metric->getMetricValue());
 }
 
+// NOLINTNEXTLINE
 TEST_F(SimpleWritableDeviceTests, executesWriteCallback) {
   EXPECT_CALL(writeCallback, BracketsOperator((DataVariant)(int64_t)19));
   auto metric =
