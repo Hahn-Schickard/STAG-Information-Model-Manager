@@ -62,7 +62,7 @@ string DeviceImplementationBuilder::addDeviceElement(const string& group_ref_id,
     std::optional<Information_Model::ReadFunctor> read_cb,
     std::optional<Information_Model::WriteFunctor> write_cb,
     std::optional<Information_Model::ExecuteFunctor> execute_cb) {
-  string ref_id("");
+  string ref_id;
 
   auto group = getGroupImplementation(group_ref_id);
 

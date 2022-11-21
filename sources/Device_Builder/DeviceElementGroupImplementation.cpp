@@ -199,7 +199,7 @@ string DeviceElementGroupImplementation::addWritableMetric(const string& name,
 }
 
 string DeviceElementGroupImplementation::generate_Reference_ID() {
-  string element_id("");
+  string element_id;
 
   if (base_ref_id_.back() == ':') {
     element_id = to_string(elemenet_count_);
