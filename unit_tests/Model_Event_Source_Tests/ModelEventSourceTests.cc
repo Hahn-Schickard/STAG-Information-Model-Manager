@@ -14,7 +14,7 @@ using namespace Information_Model_Manager;
 
 class ModelEventSourceTests : public ::testing::Test {
 public:
-  void SetUp() {
+  void SetUp() override {
     event_source = make_shared<ModelRegistry>();
     event_listener = make_unique<DataConsumerAdapterInterfaceMock>(
         event_source, "DCAI_Mock");

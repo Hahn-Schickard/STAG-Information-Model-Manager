@@ -11,14 +11,14 @@ using namespace Information_Model_Manager;
 
 class SimpleReadableDeviceTests : public ::testing::Test {
   struct ReadFunctionMock {
-    MOCK_METHOD0(BracketsOperator, DataVariant(void));
-    DataVariant operator()(void) { return BracketsOperator(); }
+    MOCK_METHOD0(BracketsOperator, DataVariant());
+    DataVariant operator()() { return BracketsOperator(); }
   };
 
 public:
-  SimpleReadableDeviceTests() {}
+  SimpleReadableDeviceTests() = default;
 
-  void SetUp() {
+  void SetUp() override {
     DeviceImplementationBuilder builder(
         "1234", "Simple Readable Device", "Lorem Ipsum");
     metric_id = builder.addReadableMetric("Readble",

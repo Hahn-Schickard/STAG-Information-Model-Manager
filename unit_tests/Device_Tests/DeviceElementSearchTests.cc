@@ -10,9 +10,9 @@ using namespace Information_Model_Manager;
 
 class DeviceElementSearchTests : public ::testing::Test {
 public:
-  DeviceElementSearchTests() {}
+  DeviceElementSearchTests() = default;
 
-  void SetUp() {
+  void SetUp() override {
     DeviceImplementationBuilder builder(
         "Simple Readable Device", "1234", "Lorem Ipsum");
     readable_metric_1_id = builder.addReadableMetric("Readble",

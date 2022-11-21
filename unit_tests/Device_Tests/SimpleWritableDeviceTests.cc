@@ -11,8 +11,8 @@ using namespace Information_Model_Manager;
 
 class SimpleWritableDeviceTests : public ::testing::Test {
   struct ReadFunctionMock {
-    MOCK_METHOD0(BracketsOperator, DataVariant(void));
-    DataVariant operator()(void) { return BracketsOperator(); }
+    MOCK_METHOD0(BracketsOperator, DataVariant());
+    DataVariant operator()() { return BracketsOperator(); }
   };
 
   struct WriteFunctionMock {
@@ -23,9 +23,9 @@ class SimpleWritableDeviceTests : public ::testing::Test {
   };
 
 public:
-  SimpleWritableDeviceTests() {}
+  SimpleWritableDeviceTests() = default;
 
-  void SetUp() {
+  void SetUp() override {
     DeviceImplementationBuilder builder(
         "1234", "Simple Writable Device", "Lorem Ipsum");
     metric_id = builder.addWritableMetric("Writable",
