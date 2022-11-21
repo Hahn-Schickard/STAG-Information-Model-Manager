@@ -56,6 +56,6 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
 shared_ptr<Device> DeviceBuilder::getResult() {
   auto result = builder_->getResult();
   builder_.reset();
-  return move(result);
+  return result;
 }
 } // namespace Information_Model_Manager
