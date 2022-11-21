@@ -90,8 +90,8 @@ string getNextElementID(const string& child_ref_id, size_t parent_level) {
 }
 
 DeviceElementGroupImplementation::DeviceElementGroupImplementation(
-    const string& base_ref_id)
-    : DeviceElementGroup(), elemenet_count_(0), base_ref_id_(base_ref_id) {}
+    const string& base_ref_id) // NOLINT(modernize-pass-by-value)
+    : elemenet_count_(0), base_ref_id_(base_ref_id) {}
 
 std::vector<NonemptyDeviceElementPtr>
 DeviceElementGroupImplementation::getSubelements() {
