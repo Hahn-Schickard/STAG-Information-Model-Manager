@@ -15,8 +15,8 @@ string DeviceBuilder::addDeviceElementGroup(
 }
 
 string DeviceBuilder::addDeviceElementGroup(
-    const string& group_refid, const string& name, const string& desc) {
-  return builder_->addDeviceElementGroup(group_refid, name, desc);
+    const string& group_ref_id, const string& name, const string& desc) {
+  return builder_->addDeviceElementGroup(group_ref_id, name, desc);
 }
 
 string DeviceBuilder::addReadableMetric(const string& name, const string& desc,
@@ -24,11 +24,11 @@ string DeviceBuilder::addReadableMetric(const string& name, const string& desc,
   return builder_->addReadableMetric(name, desc, data_type, read_cb);
 }
 
-string DeviceBuilder::addReadableMetric(const string& group_refid,
+string DeviceBuilder::addReadableMetric(const string& group_ref_id,
     const string& name, const string& desc, DataType data_type,
     ReadFunctor read_cb) {
   return builder_->addReadableMetric(
-      group_refid, name, desc, data_type, read_cb);
+      group_ref_id, name, desc, data_type, read_cb);
 }
 
 string DeviceBuilder::addWritableMetric(const string& name, const string& desc,
@@ -36,21 +36,21 @@ string DeviceBuilder::addWritableMetric(const string& name, const string& desc,
   return builder_->addWritableMetric(name, desc, data_type, read_cb, write_cb);
 }
 
-string DeviceBuilder::addWritableMetric(const string& group_refid,
+string DeviceBuilder::addWritableMetric(const string& group_ref_id,
     const string& name, const string& desc, DataType data_type,
     optional<ReadFunctor> read_cb, WriteFunctor write_cb) {
   return builder_->addWritableMetric(
-      group_refid, name, desc, data_type, read_cb, write_cb);
+      group_ref_id, name, desc, data_type, read_cb, write_cb);
 }
 
-string DeviceBuilder::addDeviceElement(const string& group_refid,
+string DeviceBuilder::addDeviceElement(const string& group_ref_id,
     const string& name, const string& desc, Information_Model::ElementType type,
     Information_Model::DataType data_type,
     optional<Information_Model::ReadFunctor> read_cb,
     optional<Information_Model::WriteFunctor> write_cb,
     optional<Information_Model::ExecuteFunctor> execute_cb) {
   return builder_->addDeviceElement(
-      group_refid, name, desc, type, data_type, read_cb, write_cb, execute_cb);
+      group_ref_id, name, desc, type, data_type, read_cb, write_cb, execute_cb);
 }
 
 shared_ptr<Device> DeviceBuilder::getResult() {

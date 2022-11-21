@@ -30,14 +30,14 @@ public:
   std::string addDeviceElementGroup(
       const std::string& name, const std::string& desc);
 
-  std::string addDeviceElementGroup(const std::string& group_refid,
+  std::string addDeviceElementGroup(const std::string& group_ref_id,
       const std::string& name, const std::string& desc);
 
   std::string addReadableMetric(const std::string& name,
       const std::string& desc, Information_Model::DataType data_type,
       ReadFunctor read_cb);
 
-  std::string addReadableMetric(const std::string& group_refid,
+  std::string addReadableMetric(const std::string& group_ref_id,
       const std::string& name, const std::string& desc,
       Information_Model::DataType data_type, ReadFunctor read_cb);
 
@@ -45,12 +45,12 @@ public:
       const std::string& desc, Information_Model::DataType data_type,
       std::optional<ReadFunctor> read_cb, WriteFunctor write_cb);
 
-  std::string addWritableMetric(const std::string& group_refid,
+  std::string addWritableMetric(const std::string& group_ref_id,
       const std::string& name, const std::string& desc,
       Information_Model::DataType data_type, std::optional<ReadFunctor> read_cb,
       WriteFunctor write_cb);
 
-  std::string addDeviceElement(const std::string& group_refid,
+  std::string addDeviceElement(const std::string& group_ref_id,
       const std::string& name, const std::string& desc,
       Information_Model::ElementType type,
       Information_Model::DataType data_type,

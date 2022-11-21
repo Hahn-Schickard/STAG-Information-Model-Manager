@@ -15,8 +15,8 @@ string DeviceImplementationBuilder::addDeviceElementGroup(
 }
 
 string DeviceImplementationBuilder::addDeviceElementGroup(
-    const string& group_refid, const string& name, const string& desc) {
-  return addDeviceElement(group_refid, name, desc, ElementType::GROUP,
+    const string& group_ref_id, const string& name, const string& desc) {
+  return addDeviceElement(group_ref_id, name, desc, ElementType::GROUP,
       DataType::UNKNOWN, std::nullopt, std::nullopt, std::nullopt);
 }
 
@@ -56,7 +56,7 @@ template <class T> T setCallback(optional<T> optional_value) {
   }
 }
 
-string DeviceImplementationBuilder::addDeviceElement(const string& group_refid,
+string DeviceImplementationBuilder::addDeviceElement(const string& group_ref_id,
     const string& name, const string& desc, Information_Model::ElementType type,
     Information_Model::DataType data_type,
     std::optional<Information_Model::ReadFunctor> read_cb,
@@ -64,7 +64,7 @@ string DeviceImplementationBuilder::addDeviceElement(const string& group_refid,
     std::optional<Information_Model::ExecuteFunctor> execute_cb) {
   string ref_id("");
 
-  auto group = getGroupImplementation(group_refid);
+  auto group = getGroupImplementation(group_ref_id);
 
   switch (type) {
   case ElementType::GROUP: {
