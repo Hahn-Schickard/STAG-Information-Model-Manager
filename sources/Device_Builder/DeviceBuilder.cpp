@@ -44,11 +44,13 @@ string DeviceBuilder::addWritableMetric(const string& group_refid,
 }
 
 string DeviceBuilder::addDeviceElement(const string& group_refid,
-    const string& name, const string& desc, ElementType type,
-    DataType data_type, optional<ReadFunctor> read_cb,
-    optional<WriteFunctor> write_cb) {
+    const string& name, const string& desc, Information_Model::ElementType type,
+    Information_Model::DataType data_type,
+    optional<Information_Model::ReadFunctor> read_cb,
+    optional<Information_Model::WriteFunctor> write_cb,
+    optional<Information_Model::ExecuteFunctor> execute_cb) {
   return builder_->addDeviceElement(
-      group_refid, name, desc, type, data_type, read_cb, write_cb);
+      group_refid, name, desc, type, data_type, read_cb, write_cb, execute_cb);
 }
 
 shared_ptr<Device> DeviceBuilder::getResult() {

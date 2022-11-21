@@ -53,8 +53,10 @@ public:
   std::string addDeviceElement(const std::string& group_refid,
       const std::string& name, const std::string& desc,
       Information_Model::ElementType type,
-      Information_Model::DataType data_type, std::optional<ReadFunctor> read_cb,
-      std::optional<WriteFunctor> write_cb);
+      Information_Model::DataType data_type,
+      std::optional<Information_Model::ReadFunctor> read_cb,
+      std::optional<Information_Model::WriteFunctor> write_cb,
+      std::optional<Information_Model::ExecuteFunctor> execute_cb);
 
   std::shared_ptr<Information_Model::Device> getResult();
 };

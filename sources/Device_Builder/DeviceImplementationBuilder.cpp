@@ -11,33 +11,33 @@ DeviceImplementationBuilder::DeviceImplementationBuilder(
 string DeviceImplementationBuilder::addDeviceElementGroup(
     const string& name, const string& desc) {
   return addDeviceElement(string(), name, desc, ElementType::GROUP,
-      DataType::UNKNOWN, nullptr, nullptr);
+      DataType::UNKNOWN, std::nullopt, std::nullopt, std::nullopt);
 }
 
 string DeviceImplementationBuilder::addDeviceElementGroup(
     const string& group_refid, const string& name, const string& desc) {
   return addDeviceElement(group_refid, name, desc, ElementType::GROUP,
-      DataType::UNKNOWN, nullptr, nullptr);
+      DataType::UNKNOWN, std::nullopt, std::nullopt, std::nullopt);
 }
 
 string DeviceImplementationBuilder::addReadableMetric(const string& name,
     const string& desc, DataType data_type, ReadFunctor read_cb) {
   return addDeviceElement(string(), name, desc, ElementType::READABLE,
-      data_type, move(read_cb), nullptr);
+      data_type, move(read_cb), std::nullopt, std::nullopt);
 }
 
 string DeviceImplementationBuilder::addReadableMetric(
     const string& group_ref_id, const string& name, const string& desc,
     DataType data_type, ReadFunctor read_cb) {
   return addDeviceElement(group_ref_id, name, desc, ElementType::READABLE,
-      data_type, move(read_cb), nullptr);
+      data_type, move(read_cb), std::nullopt, std::nullopt);
 }
 
 string DeviceImplementationBuilder::addWritableMetric(const string& name,
     const string& desc, DataType data_type, std::optional<ReadFunctor> read_cb,
     WriteFunctor write_cb) {
   return addDeviceElement(string(), name, desc, ElementType::WRITABLE,
-      data_type, move(read_cb), move(write_cb));
+      data_type, move(read_cb), move(write_cb), std::nullopt);
 }
 
 string DeviceImplementationBuilder::addWritableMetric(
@@ -45,7 +45,7 @@ string DeviceImplementationBuilder::addWritableMetric(
     DataType data_type, std::optional<ReadFunctor> read_cb,
     WriteFunctor write_cb) {
   return addDeviceElement(group_ref_id, name, desc, ElementType::WRITABLE,
-      data_type, move(read_cb), move(write_cb));
+      data_type, move(read_cb), move(write_cb), std::nullopt);
 }
 
 template <class T> T setCallback(optional<T> optional_value) {
@@ -58,8 +58,10 @@ template <class T> T setCallback(optional<T> optional_value) {
 
 string DeviceImplementationBuilder::addDeviceElement(const string& group_refid,
     const string& name, const string& desc, Information_Model::ElementType type,
-    Information_Model::DataType data_type, optional<ReadFunctor> read_cb,
-    optional<WriteFunctor> write_cb) {
+    Information_Model::DataType data_type,
+    std::optional<Information_Model::ReadFunctor> read_cb,
+    std::optional<Information_Model::WriteFunctor> write_cb,
+    std::optional<Information_Model::ExecuteFunctor> execute_cb) {
   string ref_id("");
 
   auto group = getGroupImplementation(group_refid);
@@ -78,6 +80,10 @@ string DeviceImplementationBuilder::addDeviceElement(const string& group_refid,
     ref_id = group->addReadableMetric(
         name, desc, data_type, setCallback<ReadFunctor>(read_cb));
     break;
+  }
+  case ElementType::FUNCTION: {
+    // @TODO: implement function support
+    __attribute__((unused)) auto suppress = execute_cb;
   }
   default: {
     break;

@@ -45,7 +45,8 @@ public:
       Information_Model::ElementType type,
       Information_Model::DataType data_type,
       std::optional<Information_Model::ReadFunctor> read_cb,
-      std::optional<Information_Model::WriteFunctor> write_cb) override;
+      std::optional<Information_Model::WriteFunctor> write_cb,
+      std::optional<Information_Model::ExecuteFunctor> execute_cb) override;
 
   std::shared_ptr<Information_Model::Device> getResult() override;
 };
