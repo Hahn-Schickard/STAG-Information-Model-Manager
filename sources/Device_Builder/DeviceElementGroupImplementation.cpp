@@ -91,7 +91,7 @@ string getNextElementID(const string& child_ref_id, size_t parent_level) {
 
 DeviceElementGroupImplementation::DeviceElementGroupImplementation(
     const string& base_ref_id) // NOLINT(modernize-pass-by-value)
-    : elemenet_count_(0), base_ref_id_(base_ref_id) {}
+    : element_count_(0), base_ref_id_(base_ref_id) {}
 
 std::vector<NonemptyDeviceElementPtr>
 DeviceElementGroupImplementation::getSubelements() {
@@ -148,67 +148,25 @@ DeviceElementGroupImplementation::getSubgroupImplementation(
   return shared_ptr<DeviceElementGroupImplementation>();
 }
 
-string DeviceElementGroupImplementation::addSubgroup(
-    const string& name, const string& desc) {
-  string ref_id = generate_Reference_ID();
-
-  auto implementation =
-      NonemptyPointer::make_shared<DeviceElementGroupImplementation>(ref_id);
-  NonemptyDeviceElementGroupPtr interface(implementation);
-  auto element = NonemptyPointer::make_shared<DeviceElement>(
-      ref_id, name, desc, interface);
-  pair<string, NonemptyDeviceElementPtr> element_pair(ref_id, element);
-  elements_map_.insert(element_pair);
-
-  subgroups_map_.insert(make_pair(ref_id, implementation));
-
-  return ref_id;
+void DeviceElementGroupImplementation::addSubgroup(
+    NonemptyDeviceElementGroupImplementationPtr group) {
+  subgroups_map_.emplace(group->base_ref_id_, group);
 }
 
-string DeviceElementGroupImplementation::addReadableMetric(const string& name,
-    const string& desc, DataType data_type, function<DataVariant()> read_cb) {
-  string ref_id = generate_Reference_ID();
-
-  auto implementation =
-      NonemptyPointer::make_shared<MetricImplementation>(data_type, read_cb);
-  NonemptyMetricPtr interface(implementation);
-  auto element = NonemptyPointer::make_shared<DeviceElement>(
-      ref_id, name, desc, interface);
-  implementation->linkMetaInfo(element);
-  pair<string, NonemptyDeviceElementPtr> element_pair(ref_id, element);
-  elements_map_.insert(element_pair);
-
-  return ref_id;
+void DeviceElementGroupImplementation::addDeviceElement(
+    NonemptyDeviceElementPtr element) {
+  elements_map_.emplace(element->getElementId(), element);
 }
 
-string DeviceElementGroupImplementation::addWritableMetric(const string& name,
-    const string& desc, DataType data_type,
-    optional<function<DataVariant()>> read_cb,
-    function<void(DataVariant)> write_cb) {
-  string ref_id = generate_Reference_ID();
-
-  auto implementation =
-      NonemptyPointer::make_shared<WritableMetricImplementation>(
-          data_type, read_cb, write_cb);
-  NonemptyWritableMetricPtr interface(implementation);
-  auto element = NonemptyPointer::make_shared<DeviceElement>(
-      ref_id, name, desc, interface);
-  implementation->linkMetaInfo(element);
-  pair<string, NonemptyDeviceElementPtr> element_pair(ref_id, element);
-  elements_map_.insert(element_pair);
-
-  return ref_id;
-}
-
-string DeviceElementGroupImplementation::generate_Reference_ID() {
+string DeviceElementGroupImplementation::generateReferenceID() {
   string element_id;
 
   if (base_ref_id_.back() == ':') {
-    element_id = to_string(elemenet_count_);
+    element_id = to_string(element_count_);
   } else {
-    element_id = "." + to_string(elemenet_count_);
+    element_id = "." + to_string(element_count_);
   }
-  elemenet_count_++;
+  element_count_++;
   return base_ref_id_ + element_id;
 }
 } // namespace Information_Model_Manager

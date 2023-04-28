@@ -1,16 +1,13 @@
 #ifndef __MODEL_BUILDER_DEVICE_BUILDER_HPP_
 #define __MODEL_BUILDER_DEVICE_BUILDER_HPP_
 
-#include "DeviceImplementationBuilder.hpp"
+#include "DeviceImplementation.hpp"
 #include "Information_Model/DeviceBuilderInterface.hpp"
 
 #include <optional>
 
 namespace Information_Model_Manager {
-class DeviceBuilder : public Information_Model::DeviceBuilderInterface {
-  std::unique_ptr<DeviceImplementationBuilder> builder_;
-
-public:
+struct DeviceBuilder : public Information_Model::DeviceBuilderInterface {
   void buildDeviceBase(const std::string& unique_id, const std::string& name,
       const std::string& desc) override;
 
@@ -48,7 +45,22 @@ public:
       std::optional<Information_Model::WriteFunctor> write_cb,
       std::optional<Information_Model::ExecuteFunctor> execute_cb) override;
 
-  std::shared_ptr<Information_Model::Device> getResult() override;
+  Information_Model::UniqueDevicePtr getResult() override;
+
+private:
+  using DeviceImplementationPtr = std::unique_ptr<DeviceImplementation>;
+
+  DeviceGroupImplementationPtr getGroupImplementation(
+      const std::string& ref_id);
+  Information_Model::NonemptyDeviceElementPtr buildDeviceElement(
+      const std::string& group_ref_id, const std::string& name,
+      const std::string& desc, Information_Model::ElementType type,
+      Information_Model::DataType data_type,
+      std::optional<Information_Model::ReadFunctor> read_cb,
+      std::optional<Information_Model::WriteFunctor> write_cb,
+      std::optional<Information_Model::ExecuteFunctor> execute_cb);
+
+  DeviceImplementationPtr device_;
 };
 } // namespace Information_Model_Manager
 

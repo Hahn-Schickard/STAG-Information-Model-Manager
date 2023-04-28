@@ -1,4 +1,4 @@
-#include "DeviceImplementationBuilder.hpp"
+#include "DeviceBuilder.hpp"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -19,9 +19,9 @@ public:
   SimpleReadableDeviceTests() = default;
 
   void SetUp() override {
-    DeviceImplementationBuilder builder(
-        "1234", "Simple Readable Device", "Lorem Ipsum");
-    metric_id = builder.addReadableMetric("Readble",
+    auto builder = DeviceBuilder();
+    builder.buildDeviceBase("1234", "Simple Readable Device", "Lorem Ipsum");
+    metric_id = builder.addReadableMetric("Readable",
         "This is a readable BOOLEAN metric", DataType::BOOLEAN,
         bind(&ReadFunctionMock::operator(), &readCallback));
     if (metric_id.empty()) {

@@ -1,4 +1,4 @@
-#include "DeviceImplementationBuilder.hpp"
+#include "DeviceBuilder.hpp"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -26,8 +26,8 @@ public:
   SimpleWritableDeviceTests() = default;
 
   void SetUp() override {
-    DeviceImplementationBuilder builder(
-        "1234", "Simple Writable Device", "Lorem Ipsum");
+    auto builder = DeviceBuilder();
+    builder.buildDeviceBase("1234", "Simple Writable Device", "Lorem Ipsum");
     metric_id = builder.addWritableMetric("Writable",
         "This is a writable INTEGER metric", DataType::INTEGER,
         bind(&ReadFunctionMock::operator(), &readCallback),

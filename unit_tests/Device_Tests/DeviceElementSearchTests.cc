@@ -1,4 +1,4 @@
-#include "DeviceImplementationBuilder.hpp"
+#include "DeviceBuilder.hpp"
 
 #include <gtest/gtest.h>
 #include <memory>
@@ -13,11 +13,11 @@ public:
   DeviceElementSearchTests() = default;
 
   void SetUp() override {
-    DeviceImplementationBuilder builder(
-        "Simple Readable Device", "1234", "Lorem Ipsum");
+    auto builder = DeviceBuilder();
+    builder.buildDeviceBase("Simple Readable Device", "1234", "Lorem Ipsum");
     readable_metric_1_id = builder.addReadableMetric("Readble",
         "This is a readable BOOLEAN metric", DataType::BOOLEAN, nullptr);
-    builder.addReadableMetric("Readble", "This is a readable BOOLEAN metric",
+    builder.addReadableMetric("Readable", "This is a readable BOOLEAN metric",
         DataType::BOOLEAN, nullptr);
     string subgroup_1_id =
         builder.addDeviceElementGroup("Group 1", "Just some group.");
@@ -31,7 +31,7 @@ public:
     builder.addWritableMetric(subgroup_2_id, "Writable",
         "This is a writable INTEGER metric", DataType::INTEGER, nullptr,
         nullptr);
-    builder.addReadableMetric("Readble", "This is a readable STRING metric",
+    builder.addReadableMetric("Readable", "This is a readable STRING metric",
         DataType::STRING, nullptr);
     device = builder.getResult();
   }
