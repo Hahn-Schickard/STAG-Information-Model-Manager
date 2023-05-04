@@ -11,12 +11,12 @@ using namespace Information_Model_Manager;
 
 class SimpleWritableDeviceTests : public ::testing::Test {
   struct ReadFunctionMock {
-    MOCK_METHOD0(BracketsOperator, DataVariant());
-    DataVariant operator()() { return BracketsOperator(); }
+    MOCK_METHOD(DataVariant, BracketsOperator, ());
+    virtual DataVariant operator()() { return BracketsOperator(); }
   };
 
   struct WriteFunctionMock {
-    MOCK_METHOD1(BracketsOperator, void(DataVariant value));
+    MOCK_METHOD(void, BracketsOperator, (DataVariant /*value*/));
     virtual void operator()(DataVariant value) {
       return BracketsOperator(move(value));
     }
@@ -49,6 +49,7 @@ TEST_F(SimpleWritableDeviceTests, returnsCorrectDeviceID) {
       << "expected: " << expected_result << endl
       << "provided: " << tested_element << endl;
 }
+
 // NOLINTNEXTLINE
 TEST_F(SimpleWritableDeviceTests, executesReadCallback) {
   EXPECT_CALL(readCallback, BracketsOperator());
