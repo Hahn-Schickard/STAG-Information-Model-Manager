@@ -7,8 +7,7 @@ namespace Information_Model_Manager {
 MetricImplementation::MetricImplementation()
     : MetricImplementation(DataType::UNKNOWN, nullptr) {}
 
-MetricImplementation::MetricImplementation(
-    DataType data_type, function<DataVariant()> read_cb)
+MetricImplementation::MetricImplementation(DataType data_type, Reader read_cb)
     : data_type_(data_type), read_cb_(move(read_cb)) {}
 
 DataVariant MetricImplementation::getMetricValue() {

@@ -7,21 +7,20 @@
 #include <functional>
 
 namespace Information_Model_Manager {
-class MetricImplementation : public Information_Model::Metric {
-  Information_Model::DataType data_type_;
-  std::function<Information_Model::DataVariant()> read_cb_;
-  std::weak_ptr<Information_Model::NamedElement> meta_info_;
+struct MetricImplementation : public Information_Model::Metric {
+  using Reader = std::function<Information_Model::DataVariant()>;
 
-public:
   MetricImplementation();
-  MetricImplementation(Information_Model::DataType data_type,
-      std::function<Information_Model::DataVariant()> read_cb);
+  MetricImplementation(Information_Model::DataType data_type, Reader read_cb);
 
-  Information_Model::DataVariant getMetricValue();
-  Information_Model::DataType getDataType();
+  Information_Model::DataVariant getMetricValue() override;
+  Information_Model::DataType getDataType() override;
   void linkMetaInfo(const Information_Model::NonemptyNamedElementPtr&);
 
-  friend class WritableMetricImplementation;
+protected:
+  Information_Model::DataType data_type_;
+  Reader read_cb_;
+  std::weak_ptr<Information_Model::NamedElement> meta_info_;
 };
 } // namespace Information_Model_Manager
 
