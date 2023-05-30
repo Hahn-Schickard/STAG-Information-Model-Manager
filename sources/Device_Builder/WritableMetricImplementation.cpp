@@ -9,9 +9,7 @@ namespace Information_Model_Manager {
 
 WritableMetricImplementation::WritableMetricImplementation(
     DataType data_type, optional<Reader> read_cb, Writer write_cb)
-    : MetricImplementation(data_type,
-          read_cb.value_or( // return default value in case there is no reader
-              [data_type]() -> DataVariant { return setVariant(data_type); })),
+    : MetricImplementation(data_type, read_cb.value_or(nullptr)),
       write_cb_(move(write_cb)) {}
 
 void WritableMetricImplementation::setMetricValue(DataVariant value) {
@@ -30,7 +28,11 @@ void WritableMetricImplementation::setMetricValue(DataVariant value) {
   }
 }
 
-// Point redeclares to real implementation in MetricImplementation
+bool WritableMetricImplementation::isWriteOnly() {
+  return !hasReadCapability();
+}
+
+// Point redeclarations to real implementation in MetricImplementation
 DataVariant WritableMetricImplementation::getMetricValue() {
   return MetricImplementation::getMetricValue();
 }

@@ -18,6 +18,8 @@ struct MetricImplementation : public Information_Model::Metric {
   void linkMetaInfo(const Information_Model::NonemptyNamedElementPtr&);
 
 protected:
+  bool hasReadCapability();
+
   Information_Model::DataType data_type_;
   Reader read_cb_;
   std::weak_ptr<Information_Model::NamedElement> meta_info_;

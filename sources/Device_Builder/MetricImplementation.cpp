@@ -26,6 +26,11 @@ DataVariant MetricImplementation::getMetricValue() {
   }
 }
 
+bool MetricImplementation::hasReadCapability() {
+  // Use operator bool, instead of casting to bool
+  return read_cb_ ? true : false; // NOLINT(readability-simplify-boolean-expr)
+}
+
 DataType MetricImplementation::getDataType() { return data_type_; }
 
 void MetricImplementation::linkMetaInfo(

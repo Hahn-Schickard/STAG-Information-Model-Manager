@@ -16,6 +16,7 @@ struct WritableMetricImplementation : public Information_Model::WritableMetric,
       std::optional<Reader> read_cb, Writer write_cb);
 
   void setMetricValue(Information_Model::DataVariant value) override;
+  bool isWriteOnly() override;
   // Redeclare overrides, so default Information_Model::WritableMetric
   // implementations are not used instead of MetricImplementation
   Information_Model::DataVariant getMetricValue() override;
