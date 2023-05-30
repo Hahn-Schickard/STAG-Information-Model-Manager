@@ -47,8 +47,7 @@ TEST_F(SimpleReadableDeviceTests, returnsCorrectDeviceID) {
 // NOLINTNEXTLINE
 TEST_F(SimpleReadableDeviceTests, executesReadCallback) {
   EXPECT_CALL(readCallback, BracketsOperator());
-  auto metric = std::get<NonemptyMetricPtr>(device->getDeviceElementGroup()
-                                                ->getSubelement(metric_id)
-                                                ->specific_interface);
+  auto metric = std::get<NonemptyMetricPtr>(
+      device->getDeviceElementGroup()->getSubelement(metric_id)->functionality);
   ASSERT_NO_THROW(metric->getMetricValue());
 }

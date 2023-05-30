@@ -53,19 +53,15 @@ TEST_F(SimpleWritableDeviceTests, returnsCorrectDeviceID) {
 // NOLINTNEXTLINE
 TEST_F(SimpleWritableDeviceTests, executesReadCallback) {
   EXPECT_CALL(readCallback, BracketsOperator());
-  auto metric =
-      std::get<NonemptyWritableMetricPtr>(device->getDeviceElementGroup()
-                                              ->getSubelement(metric_id)
-                                              ->specific_interface);
+  auto metric = std::get<NonemptyWritableMetricPtr>(
+      device->getDeviceElementGroup()->getSubelement(metric_id)->functionality);
   ASSERT_NO_THROW(metric->getMetricValue());
 }
 
 // NOLINTNEXTLINE
 TEST_F(SimpleWritableDeviceTests, executesWriteCallback) {
   EXPECT_CALL(writeCallback, BracketsOperator((DataVariant)(int64_t)19));
-  auto metric =
-      std::get<NonemptyWritableMetricPtr>(device->getDeviceElementGroup()
-                                              ->getSubelement(metric_id)
-                                              ->specific_interface);
+  auto metric = std::get<NonemptyWritableMetricPtr>(
+      device->getDeviceElementGroup()->getSubelement(metric_id)->functionality);
   ASSERT_NO_THROW(metric->setMetricValue((int64_t)19));
 }

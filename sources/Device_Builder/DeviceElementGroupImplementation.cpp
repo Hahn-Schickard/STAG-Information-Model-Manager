@@ -114,7 +114,7 @@ shared_ptr<DeviceElement> DeviceElementGroupImplementation::getSubelement(
     // Check if next element exists and is a group
     if (next_element) {
       const auto* next_group = std::get_if<NonemptyDeviceElementGroupPtr>(
-          &next_element->specific_interface);
+          &next_element->functionality);
       if (next_group != nullptr) {
         return (*next_group)->getSubelement(ref_id);
       }
