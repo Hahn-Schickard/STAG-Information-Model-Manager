@@ -10,102 +10,69 @@ void DeviceBuilder::buildDeviceBase(
 }
 
 string DeviceBuilder::addDeviceElementGroup(
-    const string& name, const string& desc) {
-  return addDeviceElement(string(), name, desc, ElementType::GROUP,
-      DataType::UNKNOWN, std::nullopt, std::nullopt, std::nullopt);
-}
-
-string DeviceBuilder::addDeviceElementGroup(
     const string& group_ref_id, const string& name, const string& desc) {
-  return addDeviceElement(group_ref_id, name, desc, ElementType::GROUP,
-      DataType::UNKNOWN, std::nullopt, std::nullopt, std::nullopt);
-}
-
-string DeviceBuilder::addReadableMetric(const string& name, const string& desc,
-    DataType data_type, ReadFunctor read_cb) {
-  return addDeviceElement(string(), name, desc, ElementType::READABLE,
-      data_type, move(read_cb), std::nullopt, std::nullopt);
+  return addDeviceElement(group_ref_id, name, desc, Functionality());
 }
 
 string DeviceBuilder::addReadableMetric(const string& group_ref_id,
     const string& name, const string& desc, DataType data_type,
-    ReadFunctor read_cb) {
-  return addDeviceElement(group_ref_id, name, desc, ElementType::READABLE,
-      data_type, move(read_cb), std::nullopt, std::nullopt);
-}
-
-string DeviceBuilder::addWritableMetric(const string& name, const string& desc,
-    DataType data_type, std::optional<ReadFunctor> read_cb,
-    WriteFunctor write_cb) {
-  return addDeviceElement(string(), name, desc, ElementType::WRITABLE,
-      data_type, move(read_cb), move(write_cb), std::nullopt);
+    Reader read_cb) {
+  return addDeviceElement(
+      group_ref_id, name, desc, Functionality(data_type, read_cb));
 }
 
 string DeviceBuilder::addWritableMetric(const string& group_ref_id,
-    const string& name, const string& desc, DataType data_type,
-    std::optional<ReadFunctor> read_cb, WriteFunctor write_cb) {
-  return addDeviceElement(group_ref_id, name, desc, ElementType::WRITABLE,
-      data_type, move(read_cb), move(write_cb), std::nullopt);
-}
-
-template <class T> T setCallback(optional<T> optional_value) {
-  if (optional_value.has_value()) {
-    return optional_value.value();
-  } else {
-    return T();
-  }
+    const string& name, const string& desc, DataType data_type, Writer write_cb,
+    Reader read_cb) {
+  return addDeviceElement(
+      group_ref_id, name, desc, Functionality(data_type, read_cb, write_cb));
 }
 
 string DeviceBuilder::addDeviceElement(const string& group_ref_id,
-    const string& name, const string& desc, Information_Model::ElementType type,
-    Information_Model::DataType data_type,
-    std::optional<Information_Model::ReadFunctor> read_cb,
-    std::optional<Information_Model::WriteFunctor> write_cb,
-    std::optional<Information_Model::ExecuteFunctor> execute_cb) {
+    const string& name, const string& desc,
+    const Functionality& functionality) {
   auto group = getGroupImplementation(group_ref_id);
-  auto new_id = group->generateReferenceID();
-
-  Information_Model::DeviceElementPtr element;
-  switch (type) {
+  auto ref_id = group->generateReferenceID();
+  DeviceElementPtr element;
+  switch (functionality.type()) {
   case ElementType::GROUP: {
     auto sub_group =
-        NonemptyPointer::make_shared<DeviceElementGroupImplementation>(new_id);
+        NonemptyPointer::make_shared<DeviceElementGroupImplementation>(ref_id);
     group->addSubgroup(sub_group);
     element = makeDeviceElement(
-        new_id, name, desc, NonemptyDeviceElementGroupPtr(sub_group));
-    break;
-  }
-  case ElementType::WRITABLE: {
-    auto implementation =
-        NonemptyPointer::make_shared<WritableMetricImplementation>(data_type,
-            setCallback<ReadFunctor>(move(read_cb)),
-            setCallback<WriteFunctor>(move(write_cb)));
-    NonemptyWritableMetricPtr interface(implementation);
-    element = makeDeviceElement(new_id, name, desc, interface);
-    implementation->linkMetaInfo(NonemptyDeviceElementPtr(element));
+        ref_id, name, desc, NonemptyDeviceElementGroupPtr(sub_group));
     break;
   }
   case ElementType::READABLE: {
-    auto implementation = NonemptyPointer::make_shared<MetricImplementation>(
-        data_type, setCallback<ReadFunctor>(move(read_cb)));
-    NonemptyMetricPtr interface(implementation);
-    element = makeDeviceElement(new_id, name, desc, interface);
-    implementation->linkMetaInfo(NonemptyDeviceElementPtr(element));
+    auto read = functionality.getRead();
+    auto readable = NonemptyPointer::make_shared<MetricImplementation>(
+        functionality.data_type, read.callback);
+    NonemptyMetricPtr interface(readable);
+    element = makeDeviceElement(ref_id, name, desc, interface);
+    readable->linkMetaInfo(NonemptyDeviceElementPtr(element));
+    break;
+  }
+  case ElementType::WRITABLE: {
+    auto write = functionality.getWrite();
+    auto writable = NonemptyPointer::make_shared<WritableMetricImplementation>(
+        functionality.data_type, write.read_part.callback, write.callback);
+    NonemptyWritableMetricPtr interface(writable);
+    element = makeDeviceElement(ref_id, name, desc, interface);
+    writable->linkMetaInfo(NonemptyDeviceElementPtr(element));
     break;
   }
   case ElementType::FUNCTION: {
     // @TODO: implement function support
-    __attribute__((unused)) auto suppress = execute_cb;
+    __attribute__((unused)) auto suppress = functionality;
     throw std::invalid_argument("Function metric types are not implemented");
   }
   default: {
     throw std::invalid_argument("Requested to build unsupported ElementType");
   }
   }
-
   group->addDeviceElement(NonemptyDeviceElementPtr(element));
 
-  return new_id;
+  return ref_id;
 }
 
 Information_Model::UniqueDevicePtr DeviceBuilder::getResult() {

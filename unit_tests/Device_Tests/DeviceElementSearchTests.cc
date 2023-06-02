@@ -15,16 +15,16 @@ public:
   void SetUp() override {
     auto builder = DeviceBuilder();
     builder.buildDeviceBase("Simple Readable Device", "1234", "Lorem Ipsum");
-    readable_metric_1_id = builder.addReadableMetric("Readble",
+    readable_metric_1_id = builder.addReadableMetric("Readable",
         "This is a readable BOOLEAN metric", DataType::BOOLEAN, nullptr);
     builder.addReadableMetric("Readable", "This is a readable BOOLEAN metric",
         DataType::BOOLEAN, nullptr);
-    string subgroup_1_id =
+    auto subgroup_1_id =
         builder.addDeviceElementGroup("Group 1", "Just some group.");
     writable_metric_1_id = builder.addWritableMetric(subgroup_1_id, "Writable",
         "This is a writable INTEGER metric", DataType::INTEGER, nullptr,
         nullptr);
-    string subgroup_2_id = builder.addDeviceElementGroup(
+    auto subgroup_2_id = builder.addDeviceElementGroup(
         subgroup_1_id, "Group 2", "Just some other group");
     readable_metric_2_id = builder.addReadableMetric(subgroup_2_id, "Readable",
         "This is a readable FLOAT metric", DataType::DOUBLE, nullptr);

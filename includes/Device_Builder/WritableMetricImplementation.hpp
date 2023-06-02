@@ -12,8 +12,8 @@ struct WritableMetricImplementation : public Information_Model::WritableMetric,
                                       public MetricImplementation {
   using Writer = std::function<void(Information_Model::DataVariant)>;
 
-  WritableMetricImplementation(Information_Model::DataType data_type,
-      std::optional<Reader> read_cb, Writer write_cb);
+  WritableMetricImplementation(
+      Information_Model::DataType data_type, Reader read_cb, Writer write_cb);
 
   void setMetricValue(Information_Model::DataVariant value) override;
   bool isWriteOnly() override;
