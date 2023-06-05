@@ -2,6 +2,7 @@
 #define __MODEL_BUILDER_ELEMENT_META_INFO_HPP_
 
 #include "Information_Model/NamedElement.hpp"
+#include <string>
 
 namespace Information_Model_Manager {
 
@@ -17,6 +18,7 @@ struct ElementMetaInfo {
 
 protected:
   Information_Model::NamedElementPtr getMetaInfo() const;
+  std::string getElementInfo(const std::string& type) const;
 
 private:
   void linkMetaInfo(
