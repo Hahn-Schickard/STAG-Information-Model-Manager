@@ -14,13 +14,8 @@ DataVariant MetricImplementation::getMetricValue() {
   if (read_cb_) {
     return read_cb_();
   } else {
-    if (auto meta_info = getMetaInfo()) {
-      throw logic_error("Readable metric: " + meta_info->getElementName() +
-          " " + meta_info->getElementId() +
-          "called a nonexistent read function!");
-    } else {
-      throw logic_error("Readable metric called a nonexistent read function!");
-    }
+    throw logic_error(getElementInfo("Readable metric") +
+        " metric called a nonexistent read function!");
   }
 }
 

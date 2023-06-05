@@ -16,13 +16,8 @@ void WritableMetricImplementation::setMetricValue(DataVariant value) {
   if (write_cb_) {
     write_cb_(value);
   } else {
-    if (auto meta_info = getMetaInfo()) {
-      throw logic_error("Writable metric: " + meta_info->getElementName() +
-          " " + meta_info->getElementId() +
-          "called a nonexistent write function!");
-    } else {
-      throw logic_error("Writable metric called a nonexistent write function!");
-    }
+    throw logic_error(getElementInfo("Writable metric") +
+        " metric called a nonexistent write function!");
   }
 }
 

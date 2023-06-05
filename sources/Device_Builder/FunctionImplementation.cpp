@@ -17,21 +17,12 @@ FunctionImplementation::FunctionImplementation(DataType result_type,
     : Function(result_type, supported_params), executor_(executor),
       canceler_(canceler) {}
 
-string FunctionImplementation::getFunctionInfo() {
-  string function_info = "Unknown Function";
-  if (auto meta_info = getMetaInfo()) {
-    function_info =
-        meta_info->getElementName() + " " + meta_info->getElementId();
-  }
-  return function_info;
-}
-
 void FunctionImplementation::execute(Parameters parameters) {
   if (executor_) {
     thread([this, &parameters]() -> void { executor_(parameters); }).detach();
   } else {
-    throw logic_error(
-        getFunctionInfo() + " executed a nonexistent execute function");
+    throw logic_error(getElementInfo("Function") +
+        " executed a nonexistent execute function");
   }
 }
 
@@ -40,7 +31,7 @@ Function::ResultFuture FunctionImplementation::addCaller(
   if (!calls_.insert(promised_future.first).second) {
     canceler_(promised_future.first);
     throw CallerIDExists(promised_future.first,
-        getFunctionInfo() + " executer returned existing caller id");
+        getElementInfo("Function") + " executer returned existing caller id");
   } else {
     return Function::ResultFuture(move(promised_future.second),
         promised_future.first,
@@ -74,18 +65,18 @@ DataVariant FunctionImplementation::call(
           removeCaller(result_future.call_id);
           return result_future.get();
         } else {
-          throw FunctionCallTimedout(getFunctionInfo());
+          throw FunctionCallTimedout(getElementInfo("Function"));
         }
       } else {
         return Function::call();
       }
     } else {
-      throw logic_error(getFunctionInfo() +
+      throw logic_error(getElementInfo("Function") +
           " called the execute function without a valid canceler");
     }
   } else {
     throw logic_error(
-        getFunctionInfo() + " called a nonexistent execute function");
+        getElementInfo("Function") + " called a nonexistent execute function");
   }
 }
 
@@ -99,12 +90,12 @@ Function::ResultFuture FunctionImplementation::asyncCall(
         return Function::asyncCall();
       }
     } else {
-      throw logic_error(getFunctionInfo() +
+      throw logic_error(getElementInfo("Function") +
           " async called the execute function without a valid canceler");
     }
   } else {
-    throw logic_error(
-        getFunctionInfo() + " async called a nonexistent execute function");
+    throw logic_error(getElementInfo("Function") +
+        " async called a nonexistent execute function");
   }
 }
 
@@ -116,11 +107,11 @@ void FunctionImplementation::cancelAsyncCall(uintmax_t call_id) {
       removeCaller(call_id);
     } else {
 
-      throw CallerNotFound(call_id, getFunctionInfo());
+      throw CallerNotFound(call_id, getElementInfo("Function"));
     }
   } else {
-    throw logic_error(
-        getFunctionInfo() + " called a nonexistent cancel call function");
+    throw logic_error(getElementInfo("Function") +
+        " called a nonexistent cancel call function");
   }
 }
 
@@ -132,8 +123,8 @@ void FunctionImplementation::cancelAllAsyncCalls() {
     }
     calls_.clear();
   } else {
-    throw logic_error(
-        getFunctionInfo() + " called a nonexistent cancel all calls function");
+    throw logic_error(getElementInfo("Function") +
+        " called a nonexistent cancel all calls function");
   }
 }
 
