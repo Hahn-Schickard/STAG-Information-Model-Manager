@@ -1,4 +1,5 @@
 #include "DeviceBuilder.hpp"
+#include "FunctionImplementation.hpp"
 #include "MetricImplementation.hpp"
 #include "WritableMetricImplementation.hpp"
 
@@ -64,9 +65,14 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
     break;
   }
   case ElementType::FUNCTION: {
-    // @TODO: implement function support
-    __attribute__((unused)) auto suppress = functionality;
-    throw std::invalid_argument("Function metric types are not implemented");
+    auto execute = functionality.getExecute();
+    auto executable = NonemptyPointer::make_shared<FunctionImplementation>(
+        functionality.data_type, execute.supported_params, execute.call,
+        execute.cancel);
+    NonemptyFunctionPtr interface(executable);
+    element = makeDeviceElement(ref_id, name, desc, interface);
+    executable->linkMetaInfo(NonemptyDeviceElementPtr(element));
+    break;
   }
   default: {
     throw std::invalid_argument("Requested to build unsupported ElementType");
