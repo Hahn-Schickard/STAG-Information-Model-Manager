@@ -4,10 +4,13 @@
 #include "Information_Model/Metric.hpp"
 #include "Information_Model/NamedElement.hpp"
 
+#include "ElementMetaInfo.hpp"
+
 #include <functional>
 
 namespace Information_Model_Manager {
-struct MetricImplementation : public Information_Model::Metric {
+struct MetricImplementation : public Information_Model::Metric,
+                              public ElementMetaInfo {
   using Reader = std::function<Information_Model::DataVariant()>;
 
   MetricImplementation();
@@ -15,14 +18,12 @@ struct MetricImplementation : public Information_Model::Metric {
 
   Information_Model::DataVariant getMetricValue() override;
   Information_Model::DataType getDataType() override;
-  void linkMetaInfo(const Information_Model::NonemptyNamedElementPtr&);
 
 protected:
   bool hasReadCapability();
 
   Information_Model::DataType data_type_;
   Reader read_cb_;
-  std::weak_ptr<Information_Model::NamedElement> meta_info_;
 };
 } // namespace Information_Model_Manager
 

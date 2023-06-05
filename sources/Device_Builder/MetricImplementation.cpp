@@ -14,14 +14,12 @@ DataVariant MetricImplementation::getMetricValue() {
   if (read_cb_) {
     return read_cb_();
   } else {
-    auto meta_info = meta_info_.lock();
-    if (meta_info) {
-      throw runtime_error("Readable metric: " + meta_info->getElementName() +
+    if (auto meta_info = getMetaInfo()) {
+      throw logic_error("Readable metric: " + meta_info->getElementName() +
           " " + meta_info->getElementId() +
           "called a nonexistent read function!");
     } else {
-      throw runtime_error(
-          "Readable metric called a nonexistent read function!");
+      throw logic_error("Readable metric called a nonexistent read function!");
     }
   }
 }
@@ -32,10 +30,4 @@ bool MetricImplementation::hasReadCapability() {
 }
 
 DataType MetricImplementation::getDataType() { return data_type_; }
-
-void MetricImplementation::linkMetaInfo(
-    const NonemptyNamedElementPtr& meta_info) {
-  meta_info_ = meta_info.base();
-}
-
 } // namespace Information_Model_Manager
