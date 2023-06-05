@@ -1,4 +1,6 @@
 #include "DeviceBuilder.hpp"
+#include "MetricImplementation.hpp"
+#include "WritableMetricImplementation.hpp"
 
 using namespace std;
 using namespace Information_Model;

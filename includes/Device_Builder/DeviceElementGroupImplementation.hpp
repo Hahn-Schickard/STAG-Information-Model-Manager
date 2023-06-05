@@ -3,8 +3,6 @@
 
 #include "Information_Model/DeviceElement.hpp"
 #include "Information_Model/DeviceElementGroup.hpp"
-#include "MetricImplementation.hpp"
-#include "WritableMetricImplementation.hpp"
 
 #include <optional>
 #include <unordered_map>
