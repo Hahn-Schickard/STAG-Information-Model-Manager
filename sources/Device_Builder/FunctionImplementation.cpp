@@ -39,7 +39,7 @@ Function::ResultFuture FunctionImplementation::addCaller(
     ExecutorResult&& promised_future) {
   if (!calls_.insert(promised_future.first).second) {
     canceler_(promised_future.first);
-    throw runtime_error(
+    throw CallerIDExists(promised_future.first,
         getFunctionInfo() + " executer returned existing caller id");
   } else {
     return Function::ResultFuture(move(promised_future.second),
