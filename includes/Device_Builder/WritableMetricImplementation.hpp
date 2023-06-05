@@ -4,8 +4,6 @@
 #include "Information_Model/WritableMetric.hpp"
 #include "MetricImplementation.hpp"
 
-#include <optional>
-
 namespace Information_Model_Manager {
 
 struct WritableMetricImplementation : public Information_Model::WritableMetric,
