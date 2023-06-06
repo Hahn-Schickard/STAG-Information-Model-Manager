@@ -24,7 +24,6 @@ class ModelRegistry
 
 public:
   ModelRegistry();
-  ~ModelRegistry();
 
   bool registerDevice(Information_Model::DevicePtr device) override;
   bool deregisterDevice(const std::string& device_id) override;

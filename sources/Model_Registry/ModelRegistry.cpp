@@ -14,8 +14,6 @@ ModelRegistry::ModelRegistry()
           bind(&ModelRegistry::logException, this, placeholders::_1)),
       logger_(LoggerManager::registerTypedLogger(this)) {}
 
-ModelRegistry::~ModelRegistry() { logger_->flush(); }
-
 void ModelRegistry::logException(const exception_ptr& ex_ptr) {
   try {
     if (ex_ptr) {
