@@ -16,7 +16,7 @@ ModelRegistry::ModelRegistry()
 
 ModelRegistry::~ModelRegistry() { logger_->flush(); }
 
-void ModelRegistry::logException(std::exception_ptr ex_ptr) {
+void ModelRegistry::logException(const exception_ptr& ex_ptr) {
   try {
     if (ex_ptr) {
       rethrow_exception(ex_ptr);

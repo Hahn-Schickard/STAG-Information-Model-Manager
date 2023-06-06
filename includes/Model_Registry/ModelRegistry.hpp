@@ -20,7 +20,7 @@ class ModelRegistry
   HaSLI::LoggerPtr logger_;
 
   bool deviceExists(const std::string& device_id);
-  void logException(std::exception_ptr ex_ptr);
+  void logException(const std::exception_ptr& ex_ptr);
 
 public:
   ModelRegistry();
