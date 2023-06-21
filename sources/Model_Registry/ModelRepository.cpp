@@ -1,20 +1,20 @@
-#include "ModelRegistry.hpp"
+#include "ModelRepository.hpp"
 #include "HaSLL/LoggerManager.hpp"
 
 #include <functional>
 
 using namespace std;
 using namespace Information_Model;
-using namespace DCAI;
+using namespace Data_Consumer_Adapter;
 using namespace HaSLI;
 
 namespace Information_Model_Manager {
-ModelRegistry::ModelRegistry()
+ModelRepository::ModelRepository()
     : AsyncEventSource(
-          bind(&ModelRegistry::logException, this, placeholders::_1)),
+          bind(&ModelRepository::logException, this, placeholders::_1)),
       logger_(LoggerManager::registerTypedLogger(this)) {}
 
-void ModelRegistry::logException(const exception_ptr& ex_ptr) {
+void ModelRepository::logException(const exception_ptr& ex_ptr) {
   try {
     if (ex_ptr) {
       rethrow_exception(ex_ptr);
@@ -26,15 +26,14 @@ void ModelRegistry::logException(const exception_ptr& ex_ptr) {
   }
 }
 
-bool ModelRegistry::registerDevice(shared_ptr<Device> device) {
+bool ModelRepository::add(NonemptyDevicePtr device) {
   if (!deviceExists(device->getElementId())) {
     logger_->log(SeverityLevel::TRACE,
         "Registering device with id: {} within the Information Model",
         device->getElementId());
-    pair<string, shared_ptr<Device>> device_pair(
-        device->getElementId(), device);
+    pair<string, NonemptyDevicePtr> device_pair(device->getElementId(), device);
     devices_.insert(device_pair);
-    notify(std::make_shared<ModelRegistryEvent>(NonemptyDevicePtr(device)));
+    notify(std::make_shared<ModelRepositoryEvent>(device));
     return true;
   } else {
     logger_->log(SeverityLevel::TRACE, "Device with id {} already exists!",
@@ -43,11 +42,11 @@ bool ModelRegistry::registerDevice(shared_ptr<Device> device) {
   }
 }
 
-bool ModelRegistry::deregisterDevice(const string& device_id) {
+bool ModelRepository::remove(const string& device_id) {
   if (deviceExists(device_id)) {
     logger_->log(SeverityLevel::TRACE,
         "Removing Device with id {} from the Information Model", device_id);
-    notify(make_shared<ModelRegistryEvent>(device_id));
+    notify(make_shared<ModelRepositoryEvent>(device_id));
     devices_.erase(device_id);
     return true;
   } else {
@@ -57,7 +56,7 @@ bool ModelRegistry::deregisterDevice(const string& device_id) {
   }
 }
 
-bool ModelRegistry::deviceExists(const string& device_id) {
+bool ModelRepository::deviceExists(const string& device_id) {
   if (devices_.find(device_id) == devices_.end()) {
     logger_->log(
         SeverityLevel::TRACE, "Device with id {} not found!", device_id);

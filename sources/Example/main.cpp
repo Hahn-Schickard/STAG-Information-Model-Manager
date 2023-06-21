@@ -16,26 +16,18 @@ using namespace Information_Model_Manager;
 using namespace Technology_Adapter;
 using namespace Technology_Adapter::testing;
 
-DevicePtr buildMock(DeviceBuilderPtr builder) {
+DevicePtr buildMock(DeviceBuilderInterfacePtr builder) {
   builder->buildDeviceBase(
       "1234", "Mocky", "Mocked test device without any elements");
   return builder->getResult();
 }
 
-struct TechnologyAdapterFake : TechnologyAdapter {
-  TechnologyAdapterFake() : TechnologyAdapter("TAI-Fake") {}
-
-  void interfaceSet() override {
-    auto logger = getLogger();
-    logger->info("Interface set properly!");
-  }
-};
-
-using ModelRegistryEvent =
+using ModelRepositoryEvent =
     std::variant<std::string, Information_Model::NonemptyDevicePtr>;
 
-struct EventListener : Event_Model::EventListenerInterface<ModelRegistryEvent> {
-  using ModelRegistryEventPtr = std::shared_ptr<ModelRegistryEvent>;
+struct EventListener
+    : Event_Model::EventListenerInterface<ModelRepositoryEvent> {
+  using ModelRepositoryEventPtr = std::shared_ptr<ModelRepositoryEvent>;
 
   EventListener(ModelEventSourcePtr event_source)
       : EventListenerInterface(event_source),
@@ -43,7 +35,7 @@ struct EventListener : Event_Model::EventListenerInterface<ModelRegistryEvent> {
     logger_->trace("Listener Registered!");
   }
 
-  void handleEvent(ModelRegistryEventPtr /* event */) override {
+  void handleEvent(ModelRepositoryEventPtr /* event */) override {
     logger_->info("Handle Event was called!");
     finished_.set_value(true);
   }
@@ -76,15 +68,14 @@ int main() {
     }
     auto event_listener = std::make_shared<EventListener>(event_source);
 
-    auto tai_fake = std::make_shared<TechnologyAdapterFake>();
-    technology_manager.registerTechnologyAdapter(tai_fake);
-    auto builder = tai_fake->getDeviceBuilder();
-    if (!builder) {
-      throw runtime_error("Device Builder can not be null ptr");
-    }
-    auto device_mock = buildMock(builder);
-    auto registry = tai_fake->getModelRegistry();
-    registry->registerDevice(device_mock);
+    auto tai_mock =
+        std::make_shared<::testing::NiceMock<TechnologyAdapterInterfaceMock>>(
+            "MockedTAI");
+    technology_manager.registerTechnologyAdapter(tai_mock);
+    auto builder = tai_mock->getDeviceBuilder();
+    auto device_mock = buildMock(builder.base());
+    auto registry = tai_mock->getDeviceRegistry();
+    registry->registerDevice(NonemptyDevicePtr(device_mock));
 
     event_listener->waitForEvent();
 

@@ -7,19 +7,21 @@ using namespace Technology_Adapter;
 namespace Information_Model_Manager {
 ModelManager::ModelManager()
     : builder_(make_shared<DeviceBuilder>()),
-      registry_(make_shared<ModelRegistry>()) {}
+      registry_(make_shared<ModelRepository>()) {}
 
 ModelManager::TechnologyAdaptersList::iterator
-ModelManager::findTechnologyAdapter(const TechnologyAdapterPtr& adapter) {
+ModelManager::findTechnologyAdapter(const TAI_Ptr& adapter) {
   return find(
       technology_adapters_.begin(), technology_adapters_.end(), adapter);
 }
 
 ModelEventSourcePtr ModelManager::getModelEventSource() { return registry_; }
 
-bool ModelManager::registerTechnologyAdapter(TechnologyAdapterPtr adapter) {
+bool ModelManager::registerTechnologyAdapter(TAI_Ptr adapter) {
   if (findTechnologyAdapter(adapter) == technology_adapters_.end()) {
-    adapter->setInterfaces(builder_, registry_);
+    adapter->setInterfaces(
+        TechnologyAdapterInterface::NonemptyDeviceBuilderInterfacePtr(builder_),
+        NonemptyModelRepositoryInterfacePtr(registry_));
     technology_adapters_.push_back(adapter);
     return true;
   } else {
@@ -28,7 +30,7 @@ bool ModelManager::registerTechnologyAdapter(TechnologyAdapterPtr adapter) {
   }
 }
 
-bool ModelManager::deregisterTechnologyAdapter(TechnologyAdapterPtr adapter) {
+bool ModelManager::deregisterTechnologyAdapter(TAI_Ptr adapter) {
   auto iterator = findTechnologyAdapter(adapter);
   if (iterator != technology_adapters_.end()) {
     technology_adapters_.erase(iterator);

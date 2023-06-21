@@ -5,17 +5,17 @@
 #include "Event_Model/AsyncEventSource.hpp"
 #include "HaSLL/Logger.hpp"
 #include "Information_Model/Device.hpp"
-#include "Technology_Adapter_Interface/ModelRegistryInterface.hpp"
+#include "Technology_Adapter_Interface/ModelRepositoryInterface.hpp"
 
 #include <memory>
 #include <unordered_map>
 
 namespace Information_Model_Manager {
-class ModelRegistry
-    : public Technology_Adapter::ModelRegistryInterface,
-      public Event_Model::AsyncEventSource<DCAI::ModelRegistryEvent> {
+class ModelRepository : public Technology_Adapter::ModelRepositoryInterface,
+                        public Event_Model::AsyncEventSource<
+                            Data_Consumer_Adapter::ModelRepositoryEvent> {
   using DevicesMap =
-      std::unordered_map<std::string, Information_Model::DevicePtr>;
+      std::unordered_map<std::string, Information_Model::NonemptyDevicePtr>;
   DevicesMap devices_;
   HaSLI::LoggerPtr logger_;
 
@@ -23,10 +23,10 @@ class ModelRegistry
   void logException(const std::exception_ptr& ex_ptr);
 
 public:
-  ModelRegistry();
+  ModelRepository();
 
-  bool registerDevice(Information_Model::DevicePtr device) override;
-  bool deregisterDevice(const std::string& device_id) override;
+  bool add(Information_Model::NonemptyDevicePtr device) override;
+  bool remove(const std::string& device_id) override;
 };
 } // namespace Information_Model_Manager
 
