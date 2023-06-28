@@ -12,10 +12,10 @@ struct DeviceElementGroupImplementation
     : public Information_Model::DeviceElementGroup {
   DeviceElementGroupImplementation(const std::string& base_ref_id);
 
-  std::vector<Information_Model::NonemptyDeviceElementPtr> getSubelements();
+  DeviceElementGroup::DeviceElements getSubelements() const final;
 
-  std::shared_ptr<Information_Model::DeviceElement> getSubelement(
-      const std::string& ref_id);
+  Information_Model::NonemptyDeviceElementPtr getSubelement(
+      const std::string& ref_id) const final;
 
 private:
   using DeviceElementsMap = std::unordered_map<std::string,

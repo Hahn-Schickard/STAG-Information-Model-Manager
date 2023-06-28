@@ -11,14 +11,15 @@ struct DeviceImplementation : public Information_Model::Device {
   using DeviceGroupImplementation = NonemptyPointer::NonemptyPtr<
       std::shared_ptr<DeviceElementGroupImplementation>>;
 
-  DeviceImplementation(const std::string& ref_id, const std::string& name,
+  DeviceImplementation(const std::string& ref_id,
+      const std::string& name,
       const std::string& desc);
 
   Information_Model::NonemptyDeviceElementGroupPtr
-  getDeviceElementGroup() final;
+  getDeviceElementGroup() const final;
   DeviceGroupImplementation getGroupImplementation();
-  Information_Model::DeviceElementPtr getDeviceElement(
-      const std::string& ref_id) final;
+  Information_Model::NonemptyDeviceElementPtr getDeviceElement(
+      const std::string& ref_id) const final;
 
 private:
   DeviceGroupImplementation base_group_;

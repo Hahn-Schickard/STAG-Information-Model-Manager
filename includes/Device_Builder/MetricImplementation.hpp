@@ -17,7 +17,6 @@ struct MetricImplementation : public Information_Model::Metric,
   MetricImplementation(Information_Model::DataType data_type, Reader read_cb);
 
   Information_Model::DataVariant getMetricValue() override;
-  Information_Model::DataType getDataType() override;
 
 protected:
   bool hasReadCapability();

@@ -13,11 +13,13 @@ FunctionImplementation::FunctionImplementation(
           DataType::NONE, supported_params, executor, nullptr) {}
 
 FunctionImplementation::FunctionImplementation(DataType result_type,
-    ParameterTypes supported_params, Executor executor, Canceler canceler)
+    ParameterTypes supported_params,
+    Executor executor,
+    Canceler canceler)
     : Function(result_type, supported_params), executor_(executor),
       canceler_(canceler) {}
 
-void FunctionImplementation::execute(Parameters parameters) {
+void FunctionImplementation::execute(const Parameters& parameters) {
   if (executor_) {
     thread([this, &parameters]() -> void { executor_(parameters); }).detach();
   } else {
@@ -49,7 +51,7 @@ void FunctionImplementation::removeCaller(uintmax_t call_id) {
 }
 
 DataVariant FunctionImplementation::call(
-    Parameters parameters, uintmax_t timeout) {
+    const Parameters& parameters, uintmax_t timeout) {
   if (executor_) {
     if (canceler_) {
       if (result_type_ != DataType::NONE) {
@@ -81,7 +83,7 @@ DataVariant FunctionImplementation::call(
 }
 
 Function::ResultFuture FunctionImplementation::asyncCall(
-    Parameters parameters) {
+    const Parameters& parameters) {
   if (executor_) {
     if (canceler_) {
       if (result_type_ != DataType::NONE) {

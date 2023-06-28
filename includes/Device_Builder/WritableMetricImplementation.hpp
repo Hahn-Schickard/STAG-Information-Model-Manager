@@ -18,7 +18,6 @@ struct WritableMetricImplementation : public Information_Model::WritableMetric,
   // Redeclare overrides, so default Information_Model::WritableMetric
   // implementations are not used instead of MetricImplementation
   Information_Model::DataVariant getMetricValue() override;
-  Information_Model::DataType getDataType() override;
 
 private:
   Writer write_cb_;

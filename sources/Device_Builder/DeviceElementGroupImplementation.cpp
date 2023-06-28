@@ -93,9 +93,9 @@ DeviceElementGroupImplementation::DeviceElementGroupImplementation(
     const string& base_ref_id) // NOLINT(modernize-pass-by-value)
     : element_count_(0), base_ref_id_(base_ref_id) {}
 
-std::vector<NonemptyDeviceElementPtr>
-DeviceElementGroupImplementation::getSubelements() {
-  vector<NonemptyDeviceElementPtr> subelements;
+DeviceElementGroup::DeviceElements
+DeviceElementGroupImplementation::getSubelements() const {
+  DeviceElementGroup::DeviceElements subelements;
   // NOLINTNEXTLINE
   for (auto element_pair : elements_map_) {
     subelements.push_back(element_pair.second);
@@ -103,28 +103,26 @@ DeviceElementGroupImplementation::getSubelements() {
   return subelements;
 }
 
-shared_ptr<DeviceElement> DeviceElementGroupImplementation::getSubelement(
-    const string& ref_id) {
+NonemptyDeviceElementPtr DeviceElementGroupImplementation::getSubelement(
+    const string& ref_id) const {
   size_t target_level = getTreeLevel(ref_id) - 1;
   size_t current_level = getTreeLevel(base_ref_id_);
   // Check if a given element is in a sub group
   if (target_level != current_level) {
-    string next_id = getNextElementID(ref_id, target_level);
-    auto next_element = getSubelement(next_id);
-    // Check if next element exists and is a group
-    if (next_element) {
-      const auto* next_group = std::get_if<NonemptyDeviceElementGroupPtr>(
-          &next_element->functionality);
-      if (next_group != nullptr) {
-        return (*next_group)->getSubelement(ref_id);
-      }
+    auto next_id = getNextElementID(ref_id, target_level);
+    auto next_element = getSubelement(next_id).base();
+    try {
+      auto next_group =
+          std::get<NonemptyDeviceElementGroupPtr>(next_element->functionality);
+      return next_group->getSubelement(ref_id);
+    } catch (...) {
+      throw DeviceElementNotFound(ref_id);
     }
-  } // If not, check if it is in this group
-  else if (elements_map_.find(ref_id) != elements_map_.end()) {
-    return elements_map_.at(ref_id).base();
+
+  } else if (elements_map_.find(ref_id) != elements_map_.end()) {
+    return elements_map_.at(ref_id);
   }
-  // If not, return an empty shared_ptr
-  return shared_ptr<DeviceElement>();
+  throw DeviceElementNotFound(ref_id);
 }
 
 std::shared_ptr<DeviceElementGroupImplementation>

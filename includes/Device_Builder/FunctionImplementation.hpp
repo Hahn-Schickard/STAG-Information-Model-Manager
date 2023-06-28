@@ -20,12 +20,14 @@ struct FunctionImplementation : public Information_Model::Function,
 
   FunctionImplementation(ParameterTypes supported_params, Executor executor);
   FunctionImplementation(Information_Model::DataType result_type,
-      ParameterTypes supported_params, Executor executor, Canceler canceler);
+      ParameterTypes supported_params,
+      Executor executor,
+      Canceler canceler);
 
-  void execute(Parameters parameters) override;
+  void execute(const Parameters& parameters) override;
   Information_Model::DataVariant call(
-      Parameters parameters, uintmax_t timeout) override;
-  ResultFuture asyncCall(Parameters parameters) override;
+      const Parameters& parameters, uintmax_t timeout) override;
+  ResultFuture asyncCall(const Parameters& parameters) override;
   void cancelAsyncCall(uintmax_t call_id) override;
   void cancelAllAsyncCalls() override;
 

@@ -3,6 +3,7 @@
 
 using namespace std;
 using namespace Technology_Adapter;
+using namespace Information_Model;
 
 namespace Information_Model_Manager {
 ModelManager::ModelManager()
@@ -19,8 +20,7 @@ ModelEventSourcePtr ModelManager::getModelEventSource() { return registry_; }
 
 bool ModelManager::registerTechnologyAdapter(TAI_Ptr adapter) {
   if (findTechnologyAdapter(adapter) == technology_adapters_.end()) {
-    adapter->setInterfaces(
-        TechnologyAdapterInterface::NonemptyDeviceBuilderInterfacePtr(builder_),
+    adapter->setInterfaces(NonemptyDeviceBuilderInterfacePtr(builder_),
         NonemptyModelRepositoryInterfacePtr(registry_));
     technology_adapters_.push_back(adapter);
     return true;

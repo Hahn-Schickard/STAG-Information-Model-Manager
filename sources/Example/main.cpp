@@ -69,13 +69,13 @@ int main() {
     auto event_listener = std::make_shared<EventListener>(event_source);
 
     auto tai_mock =
-        std::make_shared<::testing::NiceMock<TechnologyAdapterInterfaceMock>>(
+        std::make_shared<::testing::NiceMock<TechnologyAdapterMock>>(
             "MockedTAI");
     technology_manager.registerTechnologyAdapter(tai_mock);
     auto builder = tai_mock->getDeviceBuilder();
     auto device_mock = buildMock(builder.base());
     auto registry = tai_mock->getDeviceRegistry();
-    registry->registerDevice(NonemptyDevicePtr(device_mock));
+    registry->registrate(NonemptyDevicePtr(device_mock));
 
     event_listener->waitForEvent();
 
