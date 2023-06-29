@@ -22,8 +22,9 @@ public:
     auto builder = DeviceBuilder();
     builder.buildDeviceBase("1234", "Simple Readable Device", "Lorem Ipsum");
     metric_id = builder.addReadableMetric("Readable",
-        "This is a readable BOOLEAN metric", DataType::BOOLEAN,
-        bind(&ReadFunctionMock::operator(), &readCallback));
+        "This is a readable BOOLEAN metric",
+        DataType::BOOLEAN,
+        bind(&ReadFunctionMock::operator(), &read_callback));
     if (metric_id.empty()) {
       throw runtime_error("Failed to build readable metric!");
     } else {
@@ -31,7 +32,7 @@ public:
     }
   }
 
-  ReadFunctionMock readCallback;
+  ReadFunctionMock read_callback;
   shared_ptr<Device> device;
   string metric_id;
 };
@@ -46,7 +47,7 @@ TEST_F(SimpleReadableDeviceTests, returnsCorrectDeviceID) {
 }
 // NOLINTNEXTLINE
 TEST_F(SimpleReadableDeviceTests, executesReadCallback) {
-  EXPECT_CALL(readCallback, BracketsOperator());
+  EXPECT_CALL(read_callback, BracketsOperator());
   auto metric = std::get<NonemptyMetricPtr>(
       device->getDeviceElementGroup()->getSubelement(metric_id)->functionality);
   ASSERT_NO_THROW(metric->getMetricValue());

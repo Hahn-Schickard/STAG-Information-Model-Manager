@@ -16,7 +16,7 @@ using namespace Information_Model_Manager;
 using namespace Technology_Adapter;
 using namespace Technology_Adapter::testing;
 
-DevicePtr buildMock(DeviceBuilderInterfacePtr builder) {
+DevicePtr buildMock(const DeviceBuilderInterfacePtr& builder) {
   builder->buildDeviceBase(
       "1234", "Mocky", "Mocked test device without any elements");
   return builder->getResult();
@@ -29,7 +29,7 @@ struct EventListener
     : Event_Model::EventListenerInterface<ModelRepositoryEvent> {
   using ModelRepositoryEventPtr = std::shared_ptr<ModelRepositoryEvent>;
 
-  EventListener(ModelEventSourcePtr event_source)
+  EventListener(const ModelEventSourcePtr& event_source)
       : EventListenerInterface(event_source),
         logger_(LoggerManager::registerTypedLogger(this)) {
     logger_->trace("Listener Registered!");

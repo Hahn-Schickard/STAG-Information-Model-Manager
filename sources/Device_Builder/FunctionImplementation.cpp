@@ -20,7 +20,7 @@ FunctionImplementation::FunctionImplementation(DataType result_type,
 
 void FunctionImplementation::checkParameters(
     const Parameters& requested_parameters) {
-  for (auto& requested : requested_parameters) {
+  for (const auto& requested : requested_parameters) {
     auto supported = parameters.at(requested.first);
     if (requested.second.has_value()) {
       auto requested_param_type = toDataType(requested.second.value());

@@ -29,14 +29,15 @@ public:
     auto builder = DeviceBuilder();
     builder.buildDeviceBase("1234", "Simple Writable Device", "Lorem Ipsum");
     metric_id = builder.addWritableMetric("Writable",
-        "This is a writable INTEGER metric", DataType::INTEGER,
-        bind(&WriteFunctionMock::operator(), &writeCallback, placeholders::_1),
-        bind(&ReadFunctionMock::operator(), &readCallback));
+        "This is a writable INTEGER metric",
+        DataType::INTEGER,
+        bind(&WriteFunctionMock::operator(), &write_callback, placeholders::_1),
+        bind(&ReadFunctionMock::operator(), &read_callback));
     device = builder.getResult();
   }
 
-  ReadFunctionMock readCallback;
-  WriteFunctionMock writeCallback;
+  ReadFunctionMock read_callback;
+  WriteFunctionMock write_callback;
   shared_ptr<Device> device;
   string metric_id;
 };
@@ -52,7 +53,7 @@ TEST_F(SimpleWritableDeviceTests, returnsCorrectDeviceID) {
 
 // NOLINTNEXTLINE
 TEST_F(SimpleWritableDeviceTests, executesReadCallback) {
-  EXPECT_CALL(readCallback, BracketsOperator());
+  EXPECT_CALL(read_callback, BracketsOperator());
   auto metric = std::get<NonemptyWritableMetricPtr>(
       device->getDeviceElementGroup()->getSubelement(metric_id)->functionality);
   ASSERT_NO_THROW(metric->getMetricValue());
@@ -60,7 +61,7 @@ TEST_F(SimpleWritableDeviceTests, executesReadCallback) {
 
 // NOLINTNEXTLINE
 TEST_F(SimpleWritableDeviceTests, executesWriteCallback) {
-  EXPECT_CALL(writeCallback, BracketsOperator((DataVariant)(int64_t)19));
+  EXPECT_CALL(write_callback, BracketsOperator((DataVariant)(int64_t)19));
   auto metric = std::get<NonemptyWritableMetricPtr>(
       device->getDeviceElementGroup()->getSubelement(metric_id)->functionality);
   ASSERT_NO_THROW(metric->setMetricValue((int64_t)19));
