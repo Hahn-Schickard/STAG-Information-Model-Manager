@@ -16,11 +16,13 @@ void DeviceBuilder::buildDeviceBase(
   device_ = make_unique<DeviceImplementation>(unique_id, name, desc);
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
 string DeviceBuilder::addDeviceElementGroup(
     const string& group_ref_id, const string& name, const string& desc) {
   return addDeviceElement(group_ref_id, name, desc, Functionality());
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
 string DeviceBuilder::addReadableMetric(const string& group_ref_id,
     const string& name,
     const string& desc,
@@ -30,6 +32,7 @@ string DeviceBuilder::addReadableMetric(const string& group_ref_id,
       group_ref_id, name, desc, Functionality(data_type, read_cb));
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
 string DeviceBuilder::addWritableMetric(const string& group_ref_id,
     const string& name,
     const string& desc,
@@ -40,6 +43,7 @@ string DeviceBuilder::addWritableMetric(const string& group_ref_id,
       group_ref_id, name, desc, Functionality(data_type, read_cb, write_cb));
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 string DeviceBuilder::addDeviceElement(const string& group_ref_id,
     const string& name,
     const string& desc,
