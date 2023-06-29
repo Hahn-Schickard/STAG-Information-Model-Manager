@@ -18,11 +18,12 @@ struct FunctionImplementation : public Information_Model::Function,
   using Executor = std::function<ExecutorResult(Function::Parameters)>;
   using Canceler = std::function<void(uintmax_t)>;
 
-  FunctionImplementation(ParameterTypes supported_params, Executor executor);
+  FunctionImplementation(
+      const ParameterTypes& parameters, const Executor& executor);
   FunctionImplementation(Information_Model::DataType result_type,
-      ParameterTypes supported_params,
-      Executor executor,
-      Canceler canceler);
+      const ParameterTypes& parameters,
+      const Executor& executor,
+      const Canceler& canceler);
 
   void execute(const Parameters& parameters) override;
   Information_Model::DataVariant call(

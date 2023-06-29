@@ -8,15 +8,14 @@ using namespace Information_Model;
 
 namespace Information_Model_Manager {
 FunctionImplementation::FunctionImplementation(
-    ParameterTypes supported_params, Executor executor)
-    : FunctionImplementation(
-          DataType::NONE, supported_params, executor, nullptr) {}
+    const ParameterTypes& parameters, const Executor& executor)
+    : FunctionImplementation(DataType::NONE, parameters, executor, nullptr) {}
 
 FunctionImplementation::FunctionImplementation(DataType result_type,
-    ParameterTypes supported_params,
-    Executor executor,
-    Canceler canceler)
-    : Function(result_type, supported_params), executor_(executor),
+    const ParameterTypes& parameters,
+    const Executor& executor, // NOLINT(modernize-pass-by-value)
+    const Canceler& canceler) // NOLINT(modernize-pass-by-value)
+    : Function(result_type, parameters), executor_(executor),
       canceler_(canceler) {}
 
 void FunctionImplementation::execute(const Parameters& parameters) {
