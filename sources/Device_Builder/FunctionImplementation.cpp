@@ -18,8 +18,31 @@ FunctionImplementation::FunctionImplementation(DataType result_type,
     : Function(result_type, parameters), executor_(executor),
       canceler_(canceler) {}
 
+void FunctionImplementation::checkParameters(
+    const Parameters& requested_parameters) {
+  for (auto& requested : requested_parameters) {
+    auto supported = parameters.at(requested.first);
+    if (requested.second.has_value()) {
+      auto requested_param_type = toDataType(requested.second.value());
+      if (requested_param_type != supported.first) {
+        throw invalid_argument("Requested parameter " +
+            to_string(requested.first) + " " + toString(requested_param_type) +
+            " does not match supported parameter " + toString(supported.first) +
+            " type");
+      }
+    } else {
+      if (!supported.second) {
+        throw invalid_argument("Requested parameter " +
+            to_string(requested.first) +
+            " is marked as mandatory, but has no assigned value");
+      }
+    }
+  }
+}
+
 void FunctionImplementation::execute(const Parameters& parameters) {
   if (executor_) {
+    checkParameters(parameters);
     thread([this, &parameters]() -> void { executor_(parameters); }).detach();
   } else {
     throw logic_error(getElementInfo("Function") +
@@ -53,6 +76,7 @@ DataVariant FunctionImplementation::call(
     const Parameters& parameters, uintmax_t timeout) {
   if (executor_) {
     if (canceler_) {
+      checkParameters(parameters);
       if (result_type_ != DataType::NONE) {
         auto execution_call =
             std::async(std::launch::async, [this, &parameters]() {
@@ -85,6 +109,7 @@ Function::ResultFuture FunctionImplementation::asyncCall(
     const Parameters& parameters) {
   if (executor_) {
     if (canceler_) {
+      checkParameters(parameters);
       if (result_type_ != DataType::NONE) {
         return addCaller(move(executor_(parameters)));
       } else {

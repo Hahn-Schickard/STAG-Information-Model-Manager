@@ -33,6 +33,7 @@ struct FunctionImplementation : public Information_Model::Function,
   void cancelAllAsyncCalls() override;
 
 private:
+  void checkParameters(const Parameters& requested_parameters);
   void removeCaller(uintmax_t call_id);
   ResultFuture addCaller(ExecutorResult&& promised_future);
 
