@@ -39,7 +39,6 @@ private:
   Executor executor_;
   Canceler canceler_;
   Information_Model::DataType result_type_;
-  ParameterTypes supported_params_;
   std::unordered_set<uintmax_t> calls_;
   std::mutex clear_mx_;
 };
