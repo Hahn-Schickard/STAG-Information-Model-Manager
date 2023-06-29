@@ -1,4 +1,6 @@
-#include "DeviceImplementationBuilder.hpp"
+#include "DeviceBuilder.hpp"
+
+#include "HaSLL/LoggerManager.hpp"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -8,6 +10,7 @@
 using namespace std;
 using namespace Information_Model;
 using namespace Information_Model_Manager;
+using namespace HaSLI;
 
 class SimpleReadableDeviceTests : public ::testing::Test {
   struct ReadFunctionMock {
@@ -19,11 +22,13 @@ public:
   SimpleReadableDeviceTests() = default;
 
   void SetUp() override {
-    DeviceImplementationBuilder builder(
-        "1234", "Simple Readable Device", "Lorem Ipsum");
-    metric_id = builder.addReadableMetric("Readble",
-        "This is a readable BOOLEAN metric", DataType::BOOLEAN,
-        bind(&ReadFunctionMock::operator(), &readCallback));
+    auto builder = DeviceBuilder(
+        LoggerManager::registerLogger("SimpleReadableDeviceTestsLogger"));
+    builder.buildDeviceBase("1234", "Simple Readable Device", "Lorem Ipsum");
+    metric_id = builder.addReadableMetric("Readable",
+        "This is a readable BOOLEAN metric",
+        DataType::BOOLEAN,
+        bind(&ReadFunctionMock::operator(), &read_callback));
     if (metric_id.empty()) {
       throw runtime_error("Failed to build readable metric!");
     } else {
@@ -31,7 +36,7 @@ public:
     }
   }
 
-  ReadFunctionMock readCallback;
+  ReadFunctionMock read_callback;
   shared_ptr<Device> device;
   string metric_id;
 };
@@ -46,9 +51,8 @@ TEST_F(SimpleReadableDeviceTests, returnsCorrectDeviceID) {
 }
 // NOLINTNEXTLINE
 TEST_F(SimpleReadableDeviceTests, executesReadCallback) {
-  EXPECT_CALL(readCallback, BracketsOperator());
-  auto metric = std::get<NonemptyMetricPtr>(device->getDeviceElementGroup()
-                                                ->getSubelement(metric_id)
-                                                ->specific_interface);
+  EXPECT_CALL(read_callback, BracketsOperator());
+  auto metric = std::get<NonemptyMetricPtr>(
+      device->getDeviceElementGroup()->getSubelement(metric_id)->functionality);
   ASSERT_NO_THROW(metric->getMetricValue());
 }

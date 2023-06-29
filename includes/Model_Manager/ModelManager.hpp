@@ -2,40 +2,41 @@
 #define __INFORMATION_MODEL_MANAGER_HPP
 
 #include "DeviceBuilder.hpp"
-#include "ModelRegistry.hpp"
+#include "ModelRepository.hpp"
+
+#include "HaSLL/Logger.hpp"
 #include "Technology_Adapter_Interface/TechnologyManagerInterface.hpp"
 
 #include <memory>
 #include <vector>
 
-using ModelEventSourcePtr = std::shared_ptr<
-    Event_Model::EventSourceInterface<DCAI::ModelRegistryEvent>>;
+using ModelEventSourcePtr = std::shared_ptr<Event_Model::EventSourceInterface<
+    Data_Consumer_Adapter::ModelRepositoryEvent>>;
 
 namespace Information_Model_Manager {
-class ModelManager : public Technology_Adapter::TechnologyManagerInterface {
-  using TechnologyAdaptersList =
-      std::vector<Technology_Adapter::TechnologyAdapterPtr>;
-  using DeviceBuilderPtr =
-      std::shared_ptr<Information_Model_Manager::DeviceBuilder>;
-  using ModelRegistryPtr =
-      std::shared_ptr<Information_Model_Manager::ModelRegistry>;
-
-  TechnologyAdaptersList technology_adapters_;
-  DeviceBuilderPtr builder_;
-  ModelRegistryPtr registry_;
-
-  TechnologyAdaptersList::iterator findTechnologyAdapter(
-      const Technology_Adapter::TechnologyAdapterPtr& adapter);
-
-public:
+struct ModelManager : public Technology_Adapter::TechnologyManagerInterface {
   ModelManager();
 
   ModelEventSourcePtr getModelEventSource();
+  std::vector<Information_Model::NonemptyDevicePtr> getModelSnapshot();
 
-  bool registerTechnologyAdapter(
-      Technology_Adapter::TechnologyAdapterPtr adapter) final;
-  bool deregisterTechnologyAdapter(
-      Technology_Adapter::TechnologyAdapterPtr adapter) final;
+  bool registerTechnologyAdapter(Technology_Adapter::TAI_Ptr adapter) final;
+  bool deregisterTechnologyAdapter(Technology_Adapter::TAI_Ptr adapter) final;
+
+private:
+  using TechnologyAdaptersList = std::vector<Technology_Adapter::TAI_Ptr>;
+  using DeviceBuilderPtr =
+      std::shared_ptr<Information_Model_Manager::DeviceBuilder>;
+  using ModelRepositoryPtr =
+      std::shared_ptr<Information_Model_Manager::ModelRepository>;
+
+  TechnologyAdaptersList::iterator findTechnologyAdapter(
+      const Technology_Adapter::TAI_Ptr& adapter);
+
+  TechnologyAdaptersList technology_adapters_;
+  HaSLI::LoggerPtr logger_;
+  DeviceBuilderPtr builder_;
+  ModelRepositoryPtr registry_;
 };
 } // namespace Information_Model_Manager
 

@@ -4,24 +4,25 @@
 #include "Information_Model/Metric.hpp"
 #include "Information_Model/NamedElement.hpp"
 
+#include "ElementMetaInfo.hpp"
+
 #include <functional>
 
 namespace Information_Model_Manager {
-class MetricImplementation : public Information_Model::Metric {
-  Information_Model::DataType data_type_;
-  std::function<Information_Model::DataVariant()> read_cb_;
-  std::weak_ptr<Information_Model::NamedElement> meta_info_;
+struct MetricImplementation : public Information_Model::Metric,
+                              public ElementMetaInfo {
+  using Reader = std::function<Information_Model::DataVariant()>;
 
-public:
   MetricImplementation();
-  MetricImplementation(Information_Model::DataType data_type,
-      std::function<Information_Model::DataVariant()> read_cb);
+  MetricImplementation(Information_Model::DataType data_type, Reader read_cb);
 
-  Information_Model::DataVariant getMetricValue();
-  Information_Model::DataType getDataType();
-  void linkMetaInfo(const Information_Model::NonemptyNamedElementPtr&);
+  Information_Model::DataVariant getMetricValue() override;
 
-  friend class WritableMetricImplementation;
+protected:
+  bool hasReadCapability();
+
+  Information_Model::DataType data_type_;
+  Reader read_cb_;
 };
 } // namespace Information_Model_Manager
 

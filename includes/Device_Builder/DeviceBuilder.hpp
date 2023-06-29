@@ -1,54 +1,59 @@
 #ifndef __MODEL_BUILDER_DEVICE_BUILDER_HPP_
 #define __MODEL_BUILDER_DEVICE_BUILDER_HPP_
 
-#include "DeviceImplementationBuilder.hpp"
+#include "DeviceImplementation.hpp"
+
+#include "HaSLL/Logger.hpp"
 #include "Information_Model/DeviceBuilderInterface.hpp"
 
 #include <optional>
 
 namespace Information_Model_Manager {
-class DeviceBuilder : public Information_Model::DeviceBuilderInterface {
-  std::unique_ptr<DeviceImplementationBuilder> builder_;
+struct DeviceBuilder : public Information_Model::DeviceBuilderInterface {
+  // import interface overloads
+  using DeviceBuilderInterface::addDeviceElementGroup;
+  using DeviceBuilderInterface::addFunction;
+  using DeviceBuilderInterface::addReadableMetric;
+  using DeviceBuilderInterface::addWritableMetric;
 
-public:
-  void buildDeviceBase(const std::string& unique_id, const std::string& name,
+  DeviceBuilder(const HaSLI::LoggerPtr& logger);
+
+  void buildDeviceBase(const std::string& unique_id,
+      const std::string& name,
       const std::string& desc) override;
 
-  std::string addDeviceElementGroup(
-      const std::string& name, const std::string& desc) override;
-
   std::string addDeviceElementGroup(const std::string& group_ref_id,
-      const std::string& name, const std::string& desc) override;
-
-  std::string addReadableMetric(const std::string& name,
-      const std::string& desc, Information_Model::DataType data_type,
-      Information_Model::ReadFunctor read_cb) override;
+      const std::string& name,
+      const std::string& desc) override;
 
   std::string addReadableMetric(const std::string& group_ref_id,
-      const std::string& name, const std::string& desc,
+      const std::string& name,
+      const std::string& desc,
       Information_Model::DataType data_type,
-      Information_Model::ReadFunctor read_cb) override;
-
-  std::string addWritableMetric(const std::string& name,
-      const std::string& desc, Information_Model::DataType data_type,
-      std::optional<Information_Model::ReadFunctor> read_cb,
-      Information_Model::WriteFunctor write_cb) override;
+      Reader read_cb) override;
 
   std::string addWritableMetric(const std::string& group_ref_id,
-      const std::string& name, const std::string& desc,
+      const std::string& name,
+      const std::string& desc,
       Information_Model::DataType data_type,
-      std::optional<Information_Model::ReadFunctor> read_cb,
-      Information_Model::WriteFunctor write_cb) override;
+      Writer write_cb,
+      Reader read_cb) override;
+
+  Information_Model::UniqueDevicePtr getResult() override;
+
+private:
+  using DeviceImplementationPtr = std::unique_ptr<DeviceImplementation>;
+
+  DeviceGroupImplementationPtr getGroupImplementation(
+      const std::string& ref_id);
 
   std::string addDeviceElement(const std::string& group_ref_id,
-      const std::string& name, const std::string& desc,
-      Information_Model::ElementType type,
-      Information_Model::DataType data_type,
-      std::optional<Information_Model::ReadFunctor> read_cb,
-      std::optional<Information_Model::WriteFunctor> write_cb,
-      std::optional<Information_Model::ExecuteFunctor> execute_cb) override;
+      const std::string& name,
+      const std::string& desc,
+      const Functionality& functionality);
 
-  std::shared_ptr<Information_Model::Device> getResult() override;
+  DeviceImplementationPtr device_;
+  HaSLI::LoggerPtr logger_;
 };
 } // namespace Information_Model_Manager
 

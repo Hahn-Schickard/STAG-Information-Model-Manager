@@ -91,11 +91,11 @@ string getNextElementID(const string& child_ref_id, size_t parent_level) {
 
 DeviceElementGroupImplementation::DeviceElementGroupImplementation(
     const string& base_ref_id) // NOLINT(modernize-pass-by-value)
-    : elemenet_count_(0), base_ref_id_(base_ref_id) {}
+    : element_count_(0), base_ref_id_(base_ref_id) {}
 
-std::vector<NonemptyDeviceElementPtr>
-DeviceElementGroupImplementation::getSubelements() {
-  vector<NonemptyDeviceElementPtr> subelements;
+DeviceElementGroup::DeviceElements
+DeviceElementGroupImplementation::getSubelements() const {
+  DeviceElementGroup::DeviceElements subelements;
   // NOLINTNEXTLINE
   for (auto element_pair : elements_map_) {
     subelements.push_back(element_pair.second);
@@ -103,28 +103,26 @@ DeviceElementGroupImplementation::getSubelements() {
   return subelements;
 }
 
-shared_ptr<DeviceElement> DeviceElementGroupImplementation::getSubelement(
-    const string& ref_id) {
+NonemptyDeviceElementPtr DeviceElementGroupImplementation::getSubelement(
+    const string& ref_id) const {
   size_t target_level = getTreeLevel(ref_id) - 1;
   size_t current_level = getTreeLevel(base_ref_id_);
   // Check if a given element is in a sub group
   if (target_level != current_level) {
-    string next_id = getNextElementID(ref_id, target_level);
-    auto next_element = getSubelement(next_id);
-    // Check if next element exists and is a group
-    if (next_element) {
-      const auto* next_group = std::get_if<NonemptyDeviceElementGroupPtr>(
-          &next_element->specific_interface);
-      if (next_group != nullptr) {
-        return (*next_group)->getSubelement(ref_id);
-      }
+    auto next_id = getNextElementID(ref_id, target_level);
+    auto next_element = getSubelement(next_id).base();
+    try {
+      auto next_group =
+          std::get<NonemptyDeviceElementGroupPtr>(next_element->functionality);
+      return next_group->getSubelement(ref_id);
+    } catch (...) {
+      throw DeviceElementNotFound(ref_id);
     }
-  } // If not, check if it is in this group
-  else if (elements_map_.find(ref_id) != elements_map_.end()) {
-    return elements_map_.at(ref_id).base();
+
+  } else if (elements_map_.find(ref_id) != elements_map_.end()) {
+    return elements_map_.at(ref_id);
   }
-  // If not, return an empty shared_ptr
-  return shared_ptr<DeviceElement>();
+  throw DeviceElementNotFound(ref_id);
 }
 
 std::shared_ptr<DeviceElementGroupImplementation>
@@ -148,67 +146,25 @@ DeviceElementGroupImplementation::getSubgroupImplementation(
   return shared_ptr<DeviceElementGroupImplementation>();
 }
 
-string DeviceElementGroupImplementation::addSubgroup(
-    const string& name, const string& desc) {
-  string ref_id = generate_Reference_ID();
-
-  auto implementation =
-      NonemptyPointer::make_shared<DeviceElementGroupImplementation>(ref_id);
-  NonemptyDeviceElementGroupPtr interface(implementation);
-  auto element = NonemptyPointer::make_shared<DeviceElement>(
-      ref_id, name, desc, interface);
-  pair<string, NonemptyDeviceElementPtr> element_pair(ref_id, element);
-  elements_map_.insert(element_pair);
-
-  subgroups_map_.insert(make_pair(ref_id, implementation));
-
-  return ref_id;
+void DeviceElementGroupImplementation::addSubgroup(
+    NonemptyDeviceElementGroupImplementationPtr group) {
+  subgroups_map_.emplace(group->base_ref_id_, group);
 }
 
-string DeviceElementGroupImplementation::addReadableMetric(const string& name,
-    const string& desc, DataType data_type, function<DataVariant()> read_cb) {
-  string ref_id = generate_Reference_ID();
-
-  auto implementation =
-      NonemptyPointer::make_shared<MetricImplementation>(data_type, read_cb);
-  NonemptyMetricPtr interface(implementation);
-  auto element = NonemptyPointer::make_shared<DeviceElement>(
-      ref_id, name, desc, interface);
-  implementation->linkMetaInfo(element);
-  pair<string, NonemptyDeviceElementPtr> element_pair(ref_id, element);
-  elements_map_.insert(element_pair);
-
-  return ref_id;
+void DeviceElementGroupImplementation::addDeviceElement(
+    NonemptyDeviceElementPtr element) {
+  elements_map_.emplace(element->getElementId(), element);
 }
 
-string DeviceElementGroupImplementation::addWritableMetric(const string& name,
-    const string& desc, DataType data_type,
-    optional<function<DataVariant()>> read_cb,
-    function<void(DataVariant)> write_cb) {
-  string ref_id = generate_Reference_ID();
-
-  auto implementation =
-      NonemptyPointer::make_shared<WritableMetricImplementation>(
-          data_type, read_cb, write_cb);
-  NonemptyWritableMetricPtr interface(implementation);
-  auto element = NonemptyPointer::make_shared<DeviceElement>(
-      ref_id, name, desc, interface);
-  implementation->linkMetaInfo(element);
-  pair<string, NonemptyDeviceElementPtr> element_pair(ref_id, element);
-  elements_map_.insert(element_pair);
-
-  return ref_id;
-}
-
-string DeviceElementGroupImplementation::generate_Reference_ID() {
+string DeviceElementGroupImplementation::generateReferenceID() {
   string element_id;
 
   if (base_ref_id_.back() == ':') {
-    element_id = to_string(elemenet_count_);
+    element_id = to_string(element_count_);
   } else {
-    element_id = "." + to_string(elemenet_count_);
+    element_id = "." + to_string(element_count_);
   }
-  elemenet_count_++;
+  element_count_++;
   return base_ref_id_ + element_id;
 }
 } // namespace Information_Model_Manager

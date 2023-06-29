@@ -4,23 +4,23 @@
 #include "Information_Model/WritableMetric.hpp"
 #include "MetricImplementation.hpp"
 
-#include <optional>
-
 namespace Information_Model_Manager {
 
-class WritableMetricImplementation : public Information_Model::WritableMetric {
-  MetricImplementation readable_part_;
-  std::function<void(Information_Model::DataVariant)> write_cb_;
+struct WritableMetricImplementation : public Information_Model::WritableMetric,
+                                      public MetricImplementation {
+  using Writer = std::function<void(Information_Model::DataVariant)>;
 
-public:
-  WritableMetricImplementation(Information_Model::DataType data_type,
-      std::optional<std::function<Information_Model::DataVariant()>> read_cb,
-      std::function<void(Information_Model::DataVariant)> write_cb);
+  WritableMetricImplementation(
+      Information_Model::DataType data_type, Reader read_cb, Writer write_cb);
 
-  void setMetricValue(Information_Model::DataVariant value);
-  Information_Model::DataVariant getMetricValue();
-  Information_Model::DataType getDataType();
-  void linkMetaInfo(const Information_Model::NonemptyNamedElementPtr&);
+  void setMetricValue(Information_Model::DataVariant value) override;
+  bool isWriteOnly() override;
+  // Redeclare overrides, so default Information_Model::WritableMetric
+  // implementations are not used instead of MetricImplementation
+  Information_Model::DataVariant getMetricValue() override;
+
+private:
+  Writer write_cb_;
 };
 
 } // namespace Information_Model_Manager

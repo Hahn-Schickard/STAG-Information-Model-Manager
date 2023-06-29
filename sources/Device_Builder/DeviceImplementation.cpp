@@ -11,7 +11,8 @@ DeviceImplementation::DeviceImplementation(
           NonemptyPointer::make_shared<DeviceElementGroupImplementation>(
               ref_id + ":")) {}
 
-NonemptyDeviceElementGroupPtr DeviceImplementation::getDeviceElementGroup() {
+NonemptyDeviceElementGroupPtr
+DeviceImplementation::getDeviceElementGroup() const {
   return base_group_;
 }
 
@@ -20,13 +21,12 @@ DeviceImplementation::getGroupImplementation() {
   return base_group_;
 }
 
-shared_ptr<DeviceElement> DeviceImplementation::getDeviceElement(
-    const string& ref_id) {
+NonemptyDeviceElementPtr DeviceImplementation::getDeviceElement(
+    const string& ref_id) const {
   // Check if a given element could exists in this device
   if (ref_id.find(getElementId()) != string::npos) {
     return base_group_->getSubelement(ref_id);
-  } else {
-    return shared_ptr<DeviceElement>();
   }
+  throw DeviceElementNotFound(ref_id);
 }
 } // namespace Information_Model_Manager
