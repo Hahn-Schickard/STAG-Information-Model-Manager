@@ -31,6 +31,8 @@ public:
 
   ModelEventSourcePtr getModelEventSource();
 
+  std::vector<Information_Model::NonemptyDevicePtr> getModelSnapshot();
+
   bool registerTechnologyAdapter(Technology_Adapter::TAI_Ptr adapter) final;
   bool deregisterTechnologyAdapter(Technology_Adapter::TAI_Ptr adapter) final;
 };

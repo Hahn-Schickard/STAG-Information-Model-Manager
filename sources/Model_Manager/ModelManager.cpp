@@ -18,6 +18,10 @@ ModelManager::findTechnologyAdapter(const TAI_Ptr& adapter) {
 
 ModelEventSourcePtr ModelManager::getModelEventSource() { return registry_; }
 
+vector<NonemptyDevicePtr> ModelManager::getModelSnapshot() {
+  return registry_->getModelSnapshot();
+}
+
 bool ModelManager::registerTechnologyAdapter(TAI_Ptr adapter) {
   if (findTechnologyAdapter(adapter) == technology_adapters_.end()) {
     adapter->setInterfaces(NonemptyDeviceBuilderInterfacePtr(builder_),

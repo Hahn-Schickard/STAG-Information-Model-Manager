@@ -36,7 +36,8 @@ bool ModelRepository::add(NonemptyDevicePtr device) {
     notify(std::make_shared<ModelRepositoryEvent>(device));
     return true;
   } else {
-    logger_->log(SeverityLevel::TRACE, "Device with id {} already exists!",
+    logger_->log(SeverityLevel::TRACE,
+        "Device with id {} already exists!",
         device->getElementId());
     return false;
   }
@@ -45,7 +46,8 @@ bool ModelRepository::add(NonemptyDevicePtr device) {
 bool ModelRepository::remove(const string& device_id) {
   if (deviceExists(device_id)) {
     logger_->log(SeverityLevel::TRACE,
-        "Removing Device with id {} from the Information Model", device_id);
+        "Removing Device with id {} from the Information Model",
+        device_id);
     notify(make_shared<ModelRepositoryEvent>(device_id));
     devices_.erase(device_id);
     return true;
@@ -54,6 +56,14 @@ bool ModelRepository::remove(const string& device_id) {
         SeverityLevel::TRACE, "Device with id {} does not exist!", device_id);
     return false;
   }
+}
+
+vector<NonemptyDevicePtr> ModelRepository::getModelSnapshot() {
+  vector<NonemptyDevicePtr> result;
+  for (auto& device : devices_) {
+    result.push_back(device.second);
+  }
+  return result;
 }
 
 bool ModelRepository::deviceExists(const string& device_id) {
