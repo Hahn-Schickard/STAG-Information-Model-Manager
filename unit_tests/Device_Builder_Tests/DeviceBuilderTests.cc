@@ -1,5 +1,7 @@
 #include "DeviceBuilder.hpp"
 
+#include "HaSLL/LoggerManager.hpp"
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <memory>
@@ -8,10 +10,12 @@
 using namespace std;
 using namespace Information_Model;
 using namespace Information_Model_Manager;
+using namespace HaSLI;
 
 // NOLINTNEXTLINE
 TEST(DeviceBuilder, canBuildSimplestDevice) {
-  auto builder = make_unique<DeviceBuilder>();
+  auto builder = make_unique<DeviceBuilder>(
+      LoggerManager::registerLogger("DeviceBuilderTestsLogger"));
   builder->buildDeviceBase("1234", "name", "desc");
   auto device = builder->getResult();
 

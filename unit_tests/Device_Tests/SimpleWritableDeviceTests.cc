@@ -1,5 +1,7 @@
 #include "DeviceBuilder.hpp"
 
+#include "HaSLL/LoggerManager.hpp"
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <memory>
@@ -8,6 +10,7 @@
 using namespace std;
 using namespace Information_Model;
 using namespace Information_Model_Manager;
+using namespace HaSLI;
 
 class SimpleWritableDeviceTests : public ::testing::Test {
   struct ReadFunctionMock {
@@ -26,7 +29,8 @@ public:
   SimpleWritableDeviceTests() = default;
 
   void SetUp() override {
-    auto builder = DeviceBuilder();
+    auto builder = DeviceBuilder(
+        LoggerManager::registerLogger("SimpleWritableDeviceTestsLogger"));
     builder.buildDeviceBase("1234", "Simple Writable Device", "Lorem Ipsum");
     metric_id = builder.addWritableMetric("Writable",
         "This is a writable INTEGER metric",

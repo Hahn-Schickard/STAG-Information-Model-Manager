@@ -1,5 +1,7 @@
 #include "DeviceBuilder.hpp"
 
+#include "HaSLL/LoggerManager.hpp"
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <memory>
@@ -8,6 +10,7 @@
 using namespace std;
 using namespace Information_Model;
 using namespace Information_Model_Manager;
+using namespace HaSLI;
 
 class SimpleReadableDeviceTests : public ::testing::Test {
   struct ReadFunctionMock {
@@ -19,7 +22,8 @@ public:
   SimpleReadableDeviceTests() = default;
 
   void SetUp() override {
-    auto builder = DeviceBuilder();
+    auto builder = DeviceBuilder(
+        LoggerManager::registerLogger("SimpleReadableDeviceTestsLogger"));
     builder.buildDeviceBase("1234", "Simple Readable Device", "Lorem Ipsum");
     metric_id = builder.addReadableMetric("Readable",
         "This is a readable BOOLEAN metric",

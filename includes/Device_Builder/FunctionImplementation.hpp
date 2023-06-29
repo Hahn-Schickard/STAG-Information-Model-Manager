@@ -2,6 +2,8 @@
 #define __MODEL_BUILDER_FUNCTION_IMPLEMENTATION_HPP_
 
 #include "ElementMetaInfo.hpp"
+
+#include "HaSLL/Logger.hpp"
 #include "Information_Model/Function.hpp"
 
 #include <cstdint>
@@ -18,9 +20,11 @@ struct FunctionImplementation : public Information_Model::Function,
   using Executor = std::function<ExecutorResult(Function::Parameters)>;
   using Canceler = std::function<void(uintmax_t)>;
 
-  FunctionImplementation(
-      const ParameterTypes& parameters, const Executor& executor);
-  FunctionImplementation(Information_Model::DataType result_type,
+  FunctionImplementation(const HaSLI::LoggerPtr& logger,
+      const ParameterTypes& parameters,
+      const Executor& executor);
+  FunctionImplementation(const HaSLI::LoggerPtr& logger,
+      Information_Model::DataType result_type,
       const ParameterTypes& parameters,
       const Executor& executor,
       const Canceler& canceler);
@@ -37,6 +41,7 @@ private:
   void removeCaller(uintmax_t call_id);
   ResultFuture addCaller(ExecutorResult&& promised_future);
 
+  HaSLI::LoggerPtr logger_;
   Executor executor_;
   Canceler canceler_;
   Information_Model::DataType result_type_;

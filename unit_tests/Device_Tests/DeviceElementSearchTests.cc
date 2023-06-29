@@ -1,5 +1,7 @@
 #include "DeviceBuilder.hpp"
 
+#include "HaSLL/LoggerManager.hpp"
+
 #include <gtest/gtest.h>
 #include <memory>
 #include <string>
@@ -7,13 +9,15 @@
 using namespace std;
 using namespace Information_Model;
 using namespace Information_Model_Manager;
+using namespace HaSLI;
 
 class DeviceElementSearchTests : public ::testing::Test {
 public:
   DeviceElementSearchTests() = default;
 
   void SetUp() override {
-    auto builder = DeviceBuilder();
+    auto builder = DeviceBuilder(
+        LoggerManager::registerLogger("DeviceElementSearchTestsLogger"));
     builder.buildDeviceBase("Simple Readable Device", "1234", "Lorem Ipsum");
     readable_metric_1_id = builder.addReadableMetric("Readable",
         "This is a readable BOOLEAN metric",

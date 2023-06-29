@@ -5,17 +5,22 @@
 
 using namespace std;
 using namespace Information_Model;
+using namespace HaSLI;
 
 namespace Information_Model_Manager {
-FunctionImplementation::FunctionImplementation(
-    const ParameterTypes& parameters, const Executor& executor)
-    : FunctionImplementation(DataType::NONE, parameters, executor, nullptr) {}
+FunctionImplementation::FunctionImplementation(const LoggerPtr& logger,
+    const ParameterTypes& parameters,
+    const Executor& executor)
+    : FunctionImplementation(
+          logger, DataType::NONE, parameters, executor, nullptr) {}
 
-FunctionImplementation::FunctionImplementation(DataType result_type,
+FunctionImplementation::FunctionImplementation(
+    const LoggerPtr& logger, // NOLINT(modernize-pass-by-value)
+    DataType result_type,
     const ParameterTypes& parameters,
     const Executor& executor, // NOLINT(modernize-pass-by-value)
     const Canceler& canceler) // NOLINT(modernize-pass-by-value)
-    : Function(result_type, parameters), executor_(executor),
+    : Function(result_type, parameters), logger_(logger), executor_(executor),
       canceler_(canceler) {}
 
 void FunctionImplementation::checkParameters(
@@ -25,15 +30,16 @@ void FunctionImplementation::checkParameters(
     if (requested.second.has_value()) {
       auto requested_param_type = toDataType(requested.second.value());
       if (requested_param_type != supported.first) {
-        throw invalid_argument("Requested parameter " +
-            to_string(requested.first) + " " + toString(requested_param_type) +
+        throw invalid_argument(getElementInfo("Function") +
+            " requested parameter " + to_string(requested.first) + " " +
+            toString(requested_param_type) +
             " does not match supported parameter " + toString(supported.first) +
             " type");
       }
     } else {
       if (!supported.second) {
-        throw invalid_argument("Requested parameter " +
-            to_string(requested.first) +
+        throw invalid_argument(getElementInfo("Function") +
+            " requested parameter " + to_string(requested.first) +
             " is marked as mandatory, but has no assigned value");
       }
     }
@@ -43,7 +49,18 @@ void FunctionImplementation::checkParameters(
 void FunctionImplementation::execute(const Parameters& parameters) {
   if (executor_) {
     checkParameters(parameters);
-    thread([this, &parameters]() -> void { executor_(parameters); }).detach();
+    thread([this, &parameters]() -> void {
+      try {
+        executor_(parameters);
+      } catch (const exception& ex) {
+        logger_->error("{} execute call caught an exception: {}",
+            getElementInfo("Function"),
+            ex.what());
+      } catch (...) {
+        logger_->critical("{} execute call caught an unknown exception",
+            getElementInfo("Function"));
+      }
+    }).detach();
   } else {
     throw logic_error(getElementInfo("Function") +
         " executed a nonexistent execute function");

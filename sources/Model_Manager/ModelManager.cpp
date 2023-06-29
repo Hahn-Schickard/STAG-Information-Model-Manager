@@ -1,13 +1,17 @@
 #include "ModelManager.hpp"
+#include "HaSLL/LoggerManager.hpp"
+
 #include <algorithm>
 
 using namespace std;
 using namespace Technology_Adapter;
 using namespace Information_Model;
+using namespace HaSLI;
 
 namespace Information_Model_Manager {
 ModelManager::ModelManager()
-    : builder_(make_shared<DeviceBuilder>()),
+    : logger_(LoggerManager::registerTypedLogger(this)),
+      builder_(make_shared<DeviceBuilder>(logger_)),
       registry_(make_shared<ModelRepository>()) {}
 
 ModelManager::TechnologyAdaptersList::iterator

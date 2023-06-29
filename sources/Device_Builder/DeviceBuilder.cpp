@@ -7,6 +7,10 @@ using namespace std;
 using namespace Information_Model;
 
 namespace Information_Model_Manager {
+DeviceBuilder::DeviceBuilder(
+    const HaSLI::LoggerPtr& logger) // NOLINT(modernize-pass-by-value)
+    : logger_(logger) {}
+
 void DeviceBuilder::buildDeviceBase(
     const string& unique_id, const string& name, const string& desc) {
   device_ = make_unique<DeviceImplementation>(unique_id, name, desc);
@@ -18,21 +22,27 @@ string DeviceBuilder::addDeviceElementGroup(
 }
 
 string DeviceBuilder::addReadableMetric(const string& group_ref_id,
-    const string& name, const string& desc, DataType data_type,
+    const string& name,
+    const string& desc,
+    DataType data_type,
     Reader read_cb) {
   return addDeviceElement(
       group_ref_id, name, desc, Functionality(data_type, read_cb));
 }
 
 string DeviceBuilder::addWritableMetric(const string& group_ref_id,
-    const string& name, const string& desc, DataType data_type, Writer write_cb,
+    const string& name,
+    const string& desc,
+    DataType data_type,
+    Writer write_cb,
     Reader read_cb) {
   return addDeviceElement(
       group_ref_id, name, desc, Functionality(data_type, read_cb, write_cb));
 }
 
 string DeviceBuilder::addDeviceElement(const string& group_ref_id,
-    const string& name, const string& desc,
+    const string& name,
+    const string& desc,
     const Functionality& functionality) {
   auto group = getGroupImplementation(group_ref_id);
   auto ref_id = group->generateReferenceID();
@@ -66,9 +76,12 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
   }
   case ElementType::FUNCTION: {
     auto execute = functionality.getExecute();
-    auto executable = NonemptyPointer::make_shared<FunctionImplementation>(
-        functionality.data_type, execute.supported_params, execute.call,
-        execute.cancel);
+    auto executable =
+        NonemptyPointer::make_shared<FunctionImplementation>(logger_,
+            functionality.data_type,
+            execute.supported_params,
+            execute.call,
+            execute.cancel);
     NonemptyFunctionPtr interface(executable);
     element = makeDeviceElement(ref_id, name, desc, interface);
     executable->linkMetaInfo(NonemptyDeviceElementPtr(element));
