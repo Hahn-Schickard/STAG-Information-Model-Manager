@@ -1,4 +1,24 @@
 # Changelog
+## [0.3.0] - 2023.07.06 
+### Added
+ - `ElementMetaInfo` class to group `Information_Model::DeviceElement` meta info
+ - `FunctionImplementation` class
+ - `ModelRepository::getModelSnapshot()`
+
+### Changed
+ - Data_Consumer_Adapter_Interface dependency to fuzzy v0.2
+ - Technology_Adapter_Interface dependency to fuzzy v0.2
+ - `DeviceBuilder` class to directly implement `Information_Model::DeviceBuilderInterface`
+ - `DeviceElementGroupImplementation::get*()` methods to be **const final**
+ - `DeviceImplementation::get*()` methods to be **const final**
+ - `WritableMetricImplementation` to inherit from `MetricImplementation`
+ - `ModelRegistry` into `ModelRepository`
+ - `ModelRegistry::registerDevice()` into `ModelRepository::add()`
+ - `ModelRegistry::deregisterDevice()` into `ModelRepository::remove()`
+
+### Removed
+ - `DeviceImplementationBuilder` class 
+
 ## [0.2.1] - 2022.11.21
 ### Changed
  - conan packaging recipe
