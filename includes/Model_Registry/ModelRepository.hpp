@@ -27,7 +27,7 @@ public:
 
   bool add(Information_Model::NonemptyDevicePtr device) override;
   bool remove(const std::string& device_id) override;
-  std::vector<Information_Model::NonemptyDevicePtr> getModelSnapshot();
+  std::vector<Information_Model::DevicePtr> getModelSnapshot();
 };
 } // namespace Information_Model_Manager
 

@@ -18,7 +18,7 @@ struct ModelManager : public Technology_Adapter::TechnologyManagerInterface {
   ModelManager();
 
   ModelEventSourcePtr getModelEventSource();
-  std::vector<Information_Model::NonemptyDevicePtr> getModelSnapshot();
+  std::vector<Information_Model::DevicePtr> getModelSnapshot();
 
   bool registerTechnologyAdapter(Technology_Adapter::TAI_Ptr adapter) final;
   bool deregisterTechnologyAdapter(Technology_Adapter::TAI_Ptr adapter) final;

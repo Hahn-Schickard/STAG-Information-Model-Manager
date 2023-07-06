@@ -58,10 +58,10 @@ bool ModelRepository::remove(const string& device_id) {
   }
 }
 
-vector<NonemptyDevicePtr> ModelRepository::getModelSnapshot() {
-  vector<NonemptyDevicePtr> result;
+vector<DevicePtr> ModelRepository::getModelSnapshot() {
+  vector<DevicePtr> result;
   for (auto& device : devices_) {
-    result.push_back(device.second);
+    result.push_back(device.second.base());
   }
   return result;
 }

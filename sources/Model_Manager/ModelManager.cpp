@@ -22,7 +22,7 @@ ModelManager::findTechnologyAdapter(const TAI_Ptr& adapter) {
 
 ModelEventSourcePtr ModelManager::getModelEventSource() { return registry_; }
 
-vector<NonemptyDevicePtr> ModelManager::getModelSnapshot() {
+vector<DevicePtr> ModelManager::getModelSnapshot() {
   return registry_->getModelSnapshot();
 }
 
