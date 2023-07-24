@@ -1,4 +1,10 @@
 # Changelog
+## [0.3.1] - 2023.07.24
+### Changed
+ - conan recipe to use conan v2 syntax
+ - CMake requirement to 3.24
+ - conan cmake integration to use conan v2 engine
+
 ## [0.3.0] - 2023.07.06 
 ### Added
  - `ElementMetaInfo` class to group `Information_Model::DeviceElement` meta info
