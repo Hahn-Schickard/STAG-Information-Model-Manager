@@ -60,9 +60,9 @@ int main() {
     auto repo = std::make_shared<SPD_LoggerRepository>();
     LoggerManager::initialise(repo);
 
-    auto technology_manager = ModelManager();
+    auto technology_manager = std::make_unique<ModelManager>();
 
-    auto event_source = technology_manager.getModelEventSource();
+    auto event_source = technology_manager->getModelEventSource();
     if (!event_source) {
       throw runtime_error("Event source can not be null ptr");
     }
@@ -71,7 +71,7 @@ int main() {
     auto tai_mock =
         std::make_shared<::testing::NiceMock<TechnologyAdapterMock>>(
             "MockedTAI");
-    technology_manager.registerTechnologyAdapter(tai_mock);
+    technology_manager->registerTechnologyAdapter(tai_mock);
     auto builder = tai_mock->getDeviceBuilder();
     auto device_mock = buildMock(builder.base());
     auto registry = tai_mock->getDeviceRegistry();
