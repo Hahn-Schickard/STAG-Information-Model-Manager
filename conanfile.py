@@ -53,10 +53,14 @@ class PackageConan(ConanFile):
 
     def requirements(self):
         # @+ START USER REQUIREMENTS
-        self.requires("data_consumer_adapter_interface/[~0.2]@hahn-schickard/stable",
-                      headers=True, libs=True, transitive_headers=True, transitive_libs=True)
-        self.requires("technology_adapter_interface/[~0.2]@hahn-schickard/stable",
-                      headers=True, libs=True, transitive_headers=True, transitive_libs=True)
+        self.requires(
+            "data_consumer_adapter_interface/[~0.2]@hahn-schickard/stable", headers=True, transitive_headers=True)
+        self.requires(
+            "technology_adapter_interface/[~0.2]@hahn-schickard/stable", headers=True, transitive_headers=True)
+        self.requires(
+            'information_model/[~0.3]@hahn-schickard/stable', headers=True, transitive_headers=True)
+        self.requires('hasll/[~0.3]@hahn-schickard/stable', headers=True,
+                      libs=True, transitive_headers=True, transitive_libs=True)
         # @- END USER REQUIREMENTS
 
     def configure(self):
