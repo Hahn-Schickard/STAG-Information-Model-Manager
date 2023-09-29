@@ -39,6 +39,15 @@ struct DeviceBuilder : public Information_Model::DeviceBuilderInterface {
       Writer write_cb,
       Reader read_cb) override;
 
+  std::string addFunction(const std::string& group_ref_id,
+      const std::string& name,
+      const std::string& desc,
+      Information_Model::DataType result_type,
+      Executor execute_cb,
+      Canceler cancel_cb,
+      Information_Model::Function::ParameterTypes supported_params = {})
+      override;
+
   Information_Model::UniqueDevicePtr getResult() override;
 
 private:

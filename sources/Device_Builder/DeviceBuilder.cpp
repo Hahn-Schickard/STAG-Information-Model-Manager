@@ -43,6 +43,20 @@ string DeviceBuilder::addWritableMetric(const string& group_ref_id,
       group_ref_id, name, desc, Functionality(data_type, read_cb, write_cb));
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
+string DeviceBuilder::addFunction(const string& group_ref_id,
+    const string& name,
+    const string& desc,
+    DataType result_type,
+    Executor execute_cb,
+    Canceler cancel_cb,
+    Function::ParameterTypes supported_params) {
+  return addDeviceElement(group_ref_id,
+      name,
+      desc,
+      Functionality(result_type, execute_cb, cancel_cb, supported_params));
+}
+
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 string DeviceBuilder::addDeviceElement(const string& group_ref_id,
     const string& name,
@@ -92,7 +106,7 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
     break;
   }
   default: {
-    throw std::invalid_argument("Requested to build unsupported ElementType");
+    throw invalid_argument("Requested to build unsupported ElementType");
   }
   }
   group->addDeviceElement(NonemptyDeviceElementPtr(element));
