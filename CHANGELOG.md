@@ -1,4 +1,20 @@
 # Changelog
+## [0.3.3] - 2023.10.09
+### Removed 
+ * Cmake install command for **Information_Model_ManagerConfig.cmake**
+ * Cmake install command for **Information_Model_Targets.cmake**
+ * CMake package configuration
+
+### Changed
+ * data_consumer_adapter_interface dependency to only use transitive headers
+ * technology_adapter_interface dependency to only use transitive headers
+
+### Added
+ * hasll dependency with full transience
+ * gtest dependency as a build requirement
+ * `DeviceBuilder::addObservableMetric()` method place holder
+ * `DeviceBuilder::addFunction()` method
+
 ## [0.3.2] - 2023.07.28
 ### Added
  - STAG logo to documentation 
