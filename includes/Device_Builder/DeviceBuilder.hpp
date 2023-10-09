@@ -39,6 +39,11 @@ struct DeviceBuilder : public Information_Model::DeviceBuilderInterface {
       Writer write_cb,
       Reader read_cb) override;
 
+  std::string addObservableMetric(const std::string& group_ref_id,
+      const std::string& name,
+      const std::string& desc,
+      Information_Model::DataType data_type) override;
+
   std::string addFunction(const std::string& group_ref_id,
       const std::string& name,
       const std::string& desc,

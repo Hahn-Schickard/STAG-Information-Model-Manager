@@ -44,6 +44,14 @@ string DeviceBuilder::addWritableMetric(const string& group_ref_id,
 }
 
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters
+string DeviceBuilder::addObservableMetric(const std::string& /* group_ref_id */,
+    const std::string& /* name */,
+    const std::string& /* desc */,
+    DataType /* data_type */) {
+  throw runtime_error("Observable metric support is not available");
+}
+
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
 string DeviceBuilder::addFunction(const string& group_ref_id,
     const string& name,
     const string& desc,
