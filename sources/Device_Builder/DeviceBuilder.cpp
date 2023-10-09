@@ -10,18 +10,17 @@ namespace Information_Model_Manager {
 DeviceBuilder::DeviceBuilder(const HaSLI::LoggerPtr& logger)
     : logger_(logger) {}
 
+// NOLINTBEGIN(bugprone-easily-swappable-parameters)
 void DeviceBuilder::buildDeviceBase(
     const string& unique_id, const string& name, const string& desc) {
   device_ = make_unique<DeviceImplementation>(unique_id, name, desc);
 }
 
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
 string DeviceBuilder::addDeviceElementGroup(
     const string& group_ref_id, const string& name, const string& desc) {
   return addDeviceElement(group_ref_id, name, desc, Functionality());
 }
 
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
 string DeviceBuilder::addReadableMetric(const string& group_ref_id,
     const string& name,
     const string& desc,
@@ -31,7 +30,6 @@ string DeviceBuilder::addReadableMetric(const string& group_ref_id,
       group_ref_id, name, desc, Functionality(data_type, read_cb));
 }
 
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
 string DeviceBuilder::addWritableMetric(const string& group_ref_id,
     const string& name,
     const string& desc,
@@ -42,7 +40,6 @@ string DeviceBuilder::addWritableMetric(const string& group_ref_id,
       group_ref_id, name, desc, Functionality(data_type, read_cb, write_cb));
 }
 
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
 string DeviceBuilder::addObservableMetric(const std::string& /* group_ref_id */,
     const std::string& /* name */,
     const std::string& /* desc */,
@@ -50,7 +47,6 @@ string DeviceBuilder::addObservableMetric(const std::string& /* group_ref_id */,
   throw runtime_error("Observable metric support is not available");
 }
 
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters
 string DeviceBuilder::addFunction(const string& group_ref_id,
     const string& name,
     const string& desc,
@@ -64,7 +60,6 @@ string DeviceBuilder::addFunction(const string& group_ref_id,
       Functionality(result_type, execute_cb, cancel_cb, supported_params));
 }
 
-// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 string DeviceBuilder::addDeviceElement(const string& group_ref_id,
     const string& name,
     const string& desc,
@@ -120,6 +115,7 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
 
   return ref_id;
 }
+// NOLINTEND(bugprone-easily-swappable-parameters)
 
 Information_Model::UniqueDevicePtr DeviceBuilder::getResult() {
   return move(device_);
@@ -131,17 +127,6 @@ DeviceGroupImplementationPtr DeviceBuilder::getGroupImplementation(
     return device_->getGroupImplementation().base();
   } else {
     return device_->getGroupImplementation()->getSubgroupImplementation(ref_id);
-  }
-}
-
-void DeviceBuilder::handleException(
-    const string& element_info, const exception_ptr& e_ptr) {
-  lock_guard(handle_exception_mx_);
-  try {
-    if (e_ptr)
-      rethrow_exception(e_ptr);
-  } catch (const exception& ex) {
-    logger_->error("{} caught an exception: {}", element_info, ex.what());
   }
 }
 } // namespace Information_Model_Manager
