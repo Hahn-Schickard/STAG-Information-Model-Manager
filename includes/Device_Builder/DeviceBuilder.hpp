@@ -6,8 +6,6 @@
 #include "HaSLL/Logger.hpp"
 #include "Information_Model/DeviceBuilderInterface.hpp"
 
-#include <exception>
-#include <mutex>
 #include <optional>
 
 namespace Information_Model_Manager {
@@ -68,11 +66,7 @@ private:
       const std::string& desc,
       const Functionality& functionality);
 
-  void handleException(
-      const std::string& element_info, const std::exception_ptr& e_ptr);
-
   DeviceImplementationPtr device_;
-  std::mutex handle_exception_mx_;
   HaSLI::LoggerPtr logger_;
 };
 } // namespace Information_Model_Manager
