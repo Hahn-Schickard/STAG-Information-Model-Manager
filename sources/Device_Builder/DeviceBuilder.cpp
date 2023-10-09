@@ -7,8 +7,7 @@ using namespace std;
 using namespace Information_Model;
 
 namespace Information_Model_Manager {
-DeviceBuilder::DeviceBuilder(
-    const HaSLI::LoggerPtr& logger) // NOLINT(modernize-pass-by-value)
+DeviceBuilder::DeviceBuilder(const HaSLI::LoggerPtr& logger)
     : logger_(logger) {}
 
 void DeviceBuilder::buildDeviceBase(
@@ -102,15 +101,12 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
   }
   case ElementType::FUNCTION: {
     auto execute = functionality.getExecute();
-    auto executable = NonemptyPointer::make_shared<FunctionImplementation>(
-        bind(&DeviceBuilder::handleException,
-            this,
-            placeholders::_1,
-            placeholders::_2),
-        functionality.data_type,
-        execute.supported_params,
-        execute.call,
-        execute.cancel);
+    auto executable =
+        NonemptyPointer::make_shared<FunctionImplementation>(logger_,
+            functionality.data_type,
+            execute.supported_params,
+            execute.call,
+            execute.cancel);
     NonemptyFunctionPtr interface(executable);
     element = makeDeviceElement(ref_id, name, desc, interface);
     executable->linkMetaInfo(NonemptyDeviceElementPtr(element));
