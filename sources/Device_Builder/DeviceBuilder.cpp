@@ -102,12 +102,15 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
   }
   case ElementType::FUNCTION: {
     auto execute = functionality.getExecute();
-    auto executable =
-        NonemptyPointer::make_shared<FunctionImplementation>(logger_,
-            functionality.data_type,
-            execute.supported_params,
-            execute.call,
-            execute.cancel);
+    auto executable = NonemptyPointer::make_shared<FunctionImplementation>(
+        bind(&DeviceBuilder::handleException,
+            this,
+            placeholders::_1,
+            placeholders::_2),
+        functionality.data_type,
+        execute.supported_params,
+        execute.call,
+        execute.cancel);
     NonemptyFunctionPtr interface(executable);
     element = makeDeviceElement(ref_id, name, desc, interface);
     executable->linkMetaInfo(NonemptyDeviceElementPtr(element));
@@ -132,6 +135,17 @@ DeviceGroupImplementationPtr DeviceBuilder::getGroupImplementation(
     return device_->getGroupImplementation().base();
   } else {
     return device_->getGroupImplementation()->getSubgroupImplementation(ref_id);
+  }
+}
+
+void DeviceBuilder::handleException(
+    const string& element_info, const exception_ptr& e_ptr) {
+  lock_guard(handle_exception_mx_);
+  try {
+    if (e_ptr)
+      rethrow_exception(e_ptr);
+  } catch (const exception& ex) {
+    logger_->error("{} caught an exception: {}", element_info, ex.what());
   }
 }
 } // namespace Information_Model_Manager

@@ -19,11 +19,13 @@ struct FunctionImplementation : public Information_Model::Function,
       std::pair<uintmax_t, std::future<Information_Model::DataVariant>>;
   using Executor = std::function<ExecutorResult(Function::Parameters)>;
   using Canceler = std::function<void(uintmax_t)>;
+  using ExceptionHandler =
+      std::function<void(const std::string&, const std::exception_ptr&)>;
 
-  FunctionImplementation(const HaSLI::LoggerPtr& logger,
+  FunctionImplementation(ExceptionHandler exception_handler,
       const ParameterTypes& parameters,
       const Executor& executor);
-  FunctionImplementation(const HaSLI::LoggerPtr& logger,
+  FunctionImplementation(ExceptionHandler exception_handler,
       Information_Model::DataType result_type,
       const ParameterTypes& parameters,
       const Executor& executor,
@@ -41,7 +43,7 @@ private:
   void removeCaller(uintmax_t call_id);
   ResultFuture addCaller(ExecutorResult&& promised_future);
 
-  HaSLI::LoggerPtr logger_;
+  ExceptionHandler exception_handler_;
   Executor executor_;
   Canceler canceler_;
   Information_Model::DataType result_type_;

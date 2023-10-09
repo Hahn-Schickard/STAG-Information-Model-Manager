@@ -8,20 +8,21 @@ using namespace Information_Model;
 using namespace HaSLI;
 
 namespace Information_Model_Manager {
-FunctionImplementation::FunctionImplementation(const LoggerPtr& logger,
+FunctionImplementation::FunctionImplementation(
+    ExceptionHandler exception_handler,
     const ParameterTypes& parameters,
     const Executor& executor)
     : FunctionImplementation(
-          logger, DataType::NONE, parameters, executor, nullptr) {}
+          exception_handler, DataType::NONE, parameters, executor, nullptr) {}
 
 FunctionImplementation::FunctionImplementation(
-    const LoggerPtr& logger, // NOLINT(modernize-pass-by-value)
+    ExceptionHandler exception_handler,
     DataType result_type,
     const ParameterTypes& parameters,
     const Executor& executor, // NOLINT(modernize-pass-by-value)
     const Canceler& canceler) // NOLINT(modernize-pass-by-value)
-    : Function(result_type, parameters), logger_(logger), executor_(executor),
-      canceler_(canceler) {}
+    : Function(result_type, parameters), exception_handler_(exception_handler),
+      executor_(executor), canceler_(canceler) {}
 
 void FunctionImplementation::checkParameters(
     const Parameters& requested_parameters) {
@@ -52,13 +53,9 @@ void FunctionImplementation::execute(const Parameters& parameters) {
     thread([this, &parameters]() -> void {
       try {
         executor_(parameters);
-      } catch (const exception& ex) {
-        logger_->error("{} execute call caught an exception: {}",
-            getElementInfo("Function"),
-            ex.what());
       } catch (...) {
-        logger_->critical("{} execute call caught an unknown exception",
-            getElementInfo("Function"));
+        exception_handler_(getElementInfo("Function") + " execute call",
+            std::current_exception());
       }
     }).detach();
   } else {
