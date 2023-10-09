@@ -90,7 +90,7 @@ string getNextElementID(const string& child_ref_id, size_t parent_level) {
 }
 
 DeviceElementGroupImplementation::DeviceElementGroupImplementation(
-    const string& base_ref_id) // NOLINT(modernize-pass-by-value)
+    const string& base_ref_id)
     : element_count_(0), base_ref_id_(base_ref_id) {}
 
 DeviceElementGroup::DeviceElements
