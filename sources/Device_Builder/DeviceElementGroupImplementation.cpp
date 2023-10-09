@@ -96,8 +96,7 @@ DeviceElementGroupImplementation::DeviceElementGroupImplementation(
 DeviceElementGroup::DeviceElements
 DeviceElementGroupImplementation::getSubelements() const {
   DeviceElementGroup::DeviceElements subelements;
-  // NOLINTNEXTLINE
-  for (auto element_pair : elements_map_) {
+  for (const auto& element_pair : elements_map_) {
     subelements.push_back(element_pair.second);
   }
   return subelements;
