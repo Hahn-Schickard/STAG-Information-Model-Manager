@@ -78,11 +78,11 @@ int main() {
     registry->registrate(NonemptyDevicePtr(device_mock));
 
     event_listener->waitForEvent();
-
-    exit(EXIT_SUCCESS);
   } catch (const exception& ex) {
     cerr << "An unhandled exception occurred while running example. Exception: "
          << ex.what() << endl;
     exit(EXIT_FAILURE);
   }
+
+  exit(EXIT_SUCCESS);
 }
