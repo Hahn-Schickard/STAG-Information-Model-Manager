@@ -1,7 +1,9 @@
 #include "ModelManager.hpp"
+#include "DeviceBuilder.hpp"
 #include "HaSLL/LoggerManager.hpp"
 
 #include <algorithm>
+#include <functional>
 
 using namespace std;
 using namespace Technology_Adapter;
@@ -11,7 +13,6 @@ using namespace HaSLI;
 namespace Information_Model_Manager {
 ModelManager::ModelManager()
     : logger_(LoggerManager::registerTypedLogger(this)),
-      builder_(make_shared<DeviceBuilder>(logger_)),
       registry_(make_shared<ModelRepository>()) {}
 
 ModelManager::TechnologyAdaptersList::iterator
@@ -26,9 +27,13 @@ vector<DevicePtr> ModelManager::getModelSnapshot() {
   return registry_->getModelSnapshot();
 }
 
+TAI::UniqueDeviceBuilderPtr ModelManager::makeBuilder() {
+  return std::make_unique<DeviceBuilder>(logger_);
+}
+
 bool ModelManager::registerTechnologyAdapter(TAI_Ptr adapter) {
   if (findTechnologyAdapter(adapter) == technology_adapters_.end()) {
-    adapter->setInterfaces(NonemptyDeviceBuilderInterfacePtr(builder_),
+    adapter->setInterfaces(std::bind(&ModelManager::makeBuilder, this),
         NonemptyModelRepositoryInterfacePtr(registry_));
     technology_adapters_.push_back(adapter);
     return true;
