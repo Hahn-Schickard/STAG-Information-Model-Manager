@@ -26,26 +26,26 @@ vector<DevicePtr> ModelManager::getModelSnapshot() {
   return registry_->getModelSnapshot();
 }
 
-bool ModelManager::registerTechnologyAdapter(TAI_Ptr adapter) {
+TAI::UniqueDeviceBuilderPtr ModelManager::makeBuilder() {
+  return std::make_unique<DeviceBuilder>(logger_);
+}
+
+void ModelManager::registerTechnologyAdapter(const TAI_Ptr& adapter) {
   if (findTechnologyAdapter(adapter) == technology_adapters_.end()) {
     adapter->setInterfaces(NonemptyDeviceBuilderInterfacePtr(builder_),
         NonemptyModelRepositoryInterfacePtr(registry_));
     technology_adapters_.push_back(adapter);
-    return true;
   } else {
-    //@TODO: Add logging/exception throwing here
-    return false;
+    throw TechnologyAdapterRegistered(adapter->name);
   }
 }
 
-bool ModelManager::deregisterTechnologyAdapter(TAI_Ptr adapter) {
+void ModelManager::deregisterTechnologyAdapter(const TAI_Ptr& adapter) {
   auto iterator = findTechnologyAdapter(adapter);
   if (iterator != technology_adapters_.end()) {
     technology_adapters_.erase(iterator);
-    return true;
   } else {
-    //@TODO: Add logging/exception throwing here
-    return false;
+    throw TechnologyAdapterNotFound(adapter->name);
   }
 }
 } // namespace Information_Model_Manager
