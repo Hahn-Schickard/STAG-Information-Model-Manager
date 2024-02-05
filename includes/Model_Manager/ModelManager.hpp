@@ -1,7 +1,6 @@
 #ifndef __INFORMATION_MODEL_MANAGER_HPP
 #define __INFORMATION_MODEL_MANAGER_HPP
 
-#include "DeviceBuilder.hpp"
 #include "ModelRepository.hpp"
 #include "Technology_Adapter_Interface/TechnologyAdapterInterface.hpp"
 
@@ -37,17 +36,18 @@ struct ModelManager {
 
 private:
   using TechnologyAdaptersList = std::vector<Technology_Adapter::TAI_Ptr>;
-  using DeviceBuilderPtr =
-      std::shared_ptr<Information_Model_Manager::DeviceBuilder>;
+  using UniqueDeviceBuilderPtr =
+      Technology_Adapter::TAI::UniqueDeviceBuilderPtr;
   using ModelRepositoryPtr =
       std::shared_ptr<Information_Model_Manager::ModelRepository>;
+
+  UniqueDeviceBuilderPtr makeBuilder();
 
   TechnologyAdaptersList::iterator findTechnologyAdapter(
       const Technology_Adapter::TAI_Ptr& adapter);
 
   TechnologyAdaptersList technology_adapters_;
   HaSLI::LoggerPtr logger_;
-  DeviceBuilderPtr builder_;
   ModelRepositoryPtr registry_;
 };
 } // namespace Information_Model_Manager
