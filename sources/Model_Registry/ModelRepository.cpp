@@ -26,7 +26,7 @@ void ModelRepository::logException(const exception_ptr& ex_ptr) {
   }
 }
 
-bool ModelRepository::add(NonemptyDevicePtr device) {
+bool ModelRepository::add(const NonemptyDevicePtr& device) {
   if (!deviceExists(device->getElementId())) {
     logger_->log(SeverityLevel::TRACE,
         "Registering device with id: {} within the Information Model",

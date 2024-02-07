@@ -25,7 +25,7 @@ class ModelRepository : public Technology_Adapter::ModelRepositoryInterface,
 public:
   ModelRepository();
 
-  bool add(Information_Model::NonemptyDevicePtr device) override;
+  bool add(const Information_Model::NonemptyDevicePtr& device) override;
   bool remove(const std::string& device_id) override;
   std::vector<Information_Model::DevicePtr> getModelSnapshot();
 };

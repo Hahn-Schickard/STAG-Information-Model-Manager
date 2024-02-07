@@ -2,25 +2,37 @@
 #define __INFORMATION_MODEL_MANAGER_HPP
 
 #include "ModelRepository.hpp"
+#include "Technology_Adapter_Interface/TechnologyAdapterInterface.hpp"
 
 #include "HaSLL/Logger.hpp"
-#include "Technology_Adapter_Interface/TechnologyManagerInterface.hpp"
 
 #include <memory>
+#include <stdexcept>
 #include <vector>
 
 using ModelEventSourcePtr = std::shared_ptr<Event_Model::EventSourceInterface<
     Data_Consumer_Adapter::ModelRepositoryEvent>>;
 
 namespace Information_Model_Manager {
-struct ModelManager : public Technology_Adapter::TechnologyManagerInterface {
+
+struct TechnologyAdapterRegistered : std::runtime_error {
+  TechnologyAdapterRegistered(const std::string& name)
+      : runtime_error(name + " Technology Adapter is already registered") {}
+};
+
+struct TechnologyAdapterNotFound : std::runtime_error {
+  TechnologyAdapterNotFound(const std::string& name)
+      : runtime_error(name + " Technology Adapter is not registered") {}
+};
+
+struct ModelManager {
   ModelManager();
 
   ModelEventSourcePtr getModelEventSource();
   std::vector<Information_Model::DevicePtr> getModelSnapshot();
 
-  bool registerTechnologyAdapter(Technology_Adapter::TAI_Ptr adapter) final;
-  bool deregisterTechnologyAdapter(Technology_Adapter::TAI_Ptr adapter) final;
+  void registerTechnologyAdapter(const Technology_Adapter::TAI_Ptr& adapter);
+  void deregisterTechnologyAdapter(const Technology_Adapter::TAI_Ptr& adapter);
 
 private:
   using TechnologyAdaptersList = std::vector<Technology_Adapter::TAI_Ptr>;
