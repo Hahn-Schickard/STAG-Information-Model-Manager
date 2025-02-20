@@ -28,7 +28,9 @@ vector<DevicePtr> ModelManager::getModelSnapshot() {
 }
 
 TAI::UniqueDeviceBuilderPtr ModelManager::makeBuilder() {
-  return std::make_unique<DeviceBuilder>(logger_);
+  return std::make_unique<DeviceBuilder>(
+      bind(&ModelRepository::logException, registry_, ::placeholders::_1),
+      logger_);
 }
 
 void ModelManager::registerTechnologyAdapter(const TAI_Ptr& adapter) {

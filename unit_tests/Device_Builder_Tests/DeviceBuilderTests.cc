@@ -14,7 +14,7 @@ using namespace HaSLL;
 
 // NOLINTNEXTLINE
 TEST(DeviceBuilder, canBuildSimplestDevice) {
-  auto builder = make_unique<DeviceBuilder>(
+  auto builder = make_unique<DeviceBuilder>([](const exception_ptr&) {},
       LoggerManager::registerLogger("DeviceBuilderTestsLogger"));
   builder->buildDeviceBase("1234", "name", "desc");
   auto device = builder->getResult();

@@ -22,7 +22,7 @@ public:
   SimpleReadableDeviceTests() = default;
 
   void SetUp() override {
-    auto builder = DeviceBuilder(
+    auto builder = DeviceBuilder([](const exception_ptr&) {},
         LoggerManager::registerLogger("SimpleReadableDeviceTestsLogger"));
     builder.buildDeviceBase("1234", "Simple Readable Device", "Lorem Ipsum");
     metric_id = builder.addReadableMetric("Readable",

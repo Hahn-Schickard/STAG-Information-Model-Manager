@@ -16,7 +16,7 @@ public:
   DeviceElementSearchTests() = default;
 
   void SetUp() override {
-    auto builder = DeviceBuilder(
+    auto builder = DeviceBuilder([](const exception_ptr&) {},
         LoggerManager::registerLogger("DeviceElementSearchTestsLogger"));
     builder.buildDeviceBase("Simple Readable Device", "1234", "Lorem Ipsum");
     readable_metric_1_id = builder.addReadableMetric("Readable",

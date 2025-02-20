@@ -29,7 +29,7 @@ public:
   SimpleWritableDeviceTests() = default;
 
   void SetUp() override {
-    auto builder = DeviceBuilder(
+    auto builder = DeviceBuilder([](const exception_ptr&) {},
         LoggerManager::registerLogger("SimpleWritableDeviceTestsLogger"));
     builder.buildDeviceBase("1234", "Simple Writable Device", "Lorem Ipsum");
     metric_id = builder.addWritableMetric("Writable",

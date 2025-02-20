@@ -1,14 +1,16 @@
 #include "DeviceBuilder.hpp"
 #include "FunctionImplementation.hpp"
 #include "MetricImplementation.hpp"
+#include "ObservableMetricImplementation.hpp"
 #include "WritableMetricImplementation.hpp"
 
 using namespace std;
 using namespace Information_Model;
 
 namespace Information_Model_Manager {
-DeviceBuilder::DeviceBuilder(const HaSLL::LoggerPtr& logger)
-    : logger_(logger) {}
+DeviceBuilder::DeviceBuilder(
+    const ExceptionHandler& ex_handler, const HaSLL::LoggerPtr& logger)
+    : ex_handler_(ex_handler), logger_(logger) {}
 
 // NOLINTBEGIN(bugprone-easily-swappable-parameters)
 void DeviceBuilder::buildDeviceBase(
@@ -18,7 +20,8 @@ void DeviceBuilder::buildDeviceBase(
 
 string DeviceBuilder::addDeviceElementGroup(
     const string& group_ref_id, const string& name, const string& desc) {
-  return addDeviceElement(group_ref_id, name, desc, Functionality());
+  return addDeviceElement(group_ref_id, name, desc, Functionality())
+      ->getElementId();
 }
 
 string DeviceBuilder::addReadableMetric(const string& group_ref_id,
@@ -27,7 +30,8 @@ string DeviceBuilder::addReadableMetric(const string& group_ref_id,
     DataType data_type,
     const Reader& read_cb) {
   return addDeviceElement(
-      group_ref_id, name, desc, Functionality(data_type, read_cb));
+      group_ref_id, name, desc, Functionality(data_type, read_cb))
+      ->getElementId();
 }
 
 string DeviceBuilder::addWritableMetric(const string& group_ref_id,
@@ -37,7 +41,8 @@ string DeviceBuilder::addWritableMetric(const string& group_ref_id,
     const Writer& write_cb,
     const Reader& read_cb) {
   return addDeviceElement(
-      group_ref_id, name, desc, Functionality(data_type, read_cb, write_cb));
+      group_ref_id, name, desc, Functionality(data_type, read_cb, write_cb))
+      ->getElementId();
 }
 
 pair<string, DeviceBuilder::ObservedValue> DeviceBuilder::addObservableMetric(
@@ -47,7 +52,15 @@ pair<string, DeviceBuilder::ObservedValue> DeviceBuilder::addObservableMetric(
     DataType data_type,
     const Reader& read_cb,
     const ObserveInitializer& initialized_cb) {
-  throw runtime_error("Observable metric support is not available");
+  auto element = addDeviceElement(group_ref_id,
+      name,
+      desc,
+      Functionality(data_type, read_cb, initialized_cb));
+  auto observable =
+      std::get<NonemptyObservableMetricPtr>(element->functionality).base();
+  return std::make_pair(element->getElementId(),
+      std::bind(
+          &ObservableMetric::observed, observable, std::placeholders::_1));
 }
 
 string DeviceBuilder::addFunction(const string& group_ref_id,
@@ -60,10 +73,11 @@ string DeviceBuilder::addFunction(const string& group_ref_id,
   return addDeviceElement(group_ref_id,
       name,
       desc,
-      Functionality(result_type, execute_cb, cancel_cb, supported_params));
+      Functionality(result_type, execute_cb, cancel_cb, supported_params))
+      ->getElementId();
 }
 
-string DeviceBuilder::addDeviceElement(const string& group_ref_id,
+DeviceElementPtr DeviceBuilder::addDeviceElement(const string& group_ref_id,
     const string& name,
     const string& desc,
     const Functionality& functionality) {
@@ -109,13 +123,24 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
     executable->linkMetaInfo(NonemptyDeviceElementPtr(element));
     break;
   }
+  case ElementType::OBSERVABLE: {
+    auto observe = functionality.getObserve();
+    auto observable = Nonempty::make_shared<ObservableMetricImplementation>(
+        functionality.data_type,
+        ex_handler_,
+        observe.read_part.callback,
+        observe.callback);
+    NonemptyObservableMetricPtr interface(observable);
+    element = makeDeviceElement(ref_id, name, desc, interface);
+    observable->linkMetaInfo(NonemptyDeviceElementPtr(element));
+  }
   default: {
     throw invalid_argument("Requested to build unsupported ElementType");
   }
   }
   group->addDeviceElement(NonemptyDeviceElementPtr(element));
 
-  return ref_id;
+  return element;
 }
 // NOLINTEND(bugprone-easily-swappable-parameters)
 

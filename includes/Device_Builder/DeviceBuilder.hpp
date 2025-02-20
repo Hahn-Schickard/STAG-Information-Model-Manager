@@ -17,7 +17,10 @@ struct DeviceBuilder : public Information_Model::DeviceBuilderInterface {
   using DeviceBuilderInterface::addReadableMetric;
   using DeviceBuilderInterface::addWritableMetric;
 
-  DeviceBuilder(const HaSLL::LoggerPtr& logger);
+  using ExceptionHandler = std::function<void(const std::exception_ptr&)>;
+
+  DeviceBuilder(
+      const ExceptionHandler& ex_handler, const HaSLL::LoggerPtr& logger);
 
   void buildDeviceBase(const std::string& unique_id,
       const std::string& name,
@@ -65,12 +68,14 @@ private:
   DeviceGroupImplementationPtr getGroupImplementation(
       const std::string& ref_id);
 
-  std::string addDeviceElement(const std::string& group_ref_id,
+  Information_Model::DeviceElementPtr addDeviceElement(
+      const std::string& group_ref_id,
       const std::string& name,
       const std::string& desc,
       const Functionality& functionality);
 
   DeviceImplementationPtr device_;
+  ExceptionHandler ex_handler_;
   HaSLL::LoggerPtr logger_;
 };
 } // namespace Information_Model_Manager

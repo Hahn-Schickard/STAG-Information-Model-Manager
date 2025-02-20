@@ -20,11 +20,11 @@ class ModelRepository : public Technology_Adapter::ModelRepositoryInterface,
   HaSLL::LoggerPtr logger_;
 
   bool deviceExists(const std::string& device_id);
-  void logException(const std::exception_ptr& ex_ptr);
 
 public:
   ModelRepository();
 
+  void logException(const std::exception_ptr& ex_ptr);
   bool add(const Information_Model::NonemptyDevicePtr& device) override;
   bool remove(const std::string& device_id) override;
   std::vector<Information_Model::DevicePtr> getModelSnapshot();
