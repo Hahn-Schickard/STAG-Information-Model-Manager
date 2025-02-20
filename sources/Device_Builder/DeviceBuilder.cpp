@@ -70,7 +70,7 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
   switch (functionality.type()) {
   case ElementType::GROUP: {
     auto sub_group =
-        NonemptyPointer::make_shared<DeviceElementGroupImplementation>(ref_id);
+        Nonempty::make_shared<DeviceElementGroupImplementation>(ref_id);
     group->addSubgroup(sub_group);
     element = makeDeviceElement(
         ref_id, name, desc, NonemptyDeviceElementGroupPtr(sub_group));
@@ -78,7 +78,7 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
   }
   case ElementType::READABLE: {
     auto read = functionality.getRead();
-    auto readable = NonemptyPointer::make_shared<MetricImplementation>(
+    auto readable = Nonempty::make_shared<MetricImplementation>(
         functionality.data_type, read.callback);
     NonemptyMetricPtr interface(readable);
     element = makeDeviceElement(ref_id, name, desc, interface);
@@ -87,7 +87,7 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
   }
   case ElementType::WRITABLE: {
     auto write = functionality.getWrite();
-    auto writable = NonemptyPointer::make_shared<WritableMetricImplementation>(
+    auto writable = Nonempty::make_shared<WritableMetricImplementation>(
         functionality.data_type, write.read_part.callback, write.callback);
     NonemptyWritableMetricPtr interface(writable);
     element = makeDeviceElement(ref_id, name, desc, interface);
@@ -96,8 +96,7 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
   }
   case ElementType::FUNCTION: {
     auto execute = functionality.getExecute();
-    auto executable =
-        NonemptyPointer::make_shared<FunctionImplementation>(logger_,
+    auto executable = Nonempty::make_shared<FunctionImplementation>(logger_,
             functionality.data_type,
             execute.supported_params,
             execute.call,

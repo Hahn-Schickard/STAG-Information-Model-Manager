@@ -21,8 +21,7 @@ private:
   using DeviceElementsMap = std::unordered_map<std::string,
       Information_Model::NonemptyDeviceElementPtr>;
   using NonemptyDeviceElementGroupImplementationPtr =
-      NonemptyPointer::NonemptyPtr<
-          std::shared_ptr<DeviceElementGroupImplementation>>;
+      Nonempty::Pointer<std::shared_ptr<DeviceElementGroupImplementation>>;
   using SubgroupsMap = std::unordered_map<std::string,
       NonemptyDeviceElementGroupImplementationPtr>;
 

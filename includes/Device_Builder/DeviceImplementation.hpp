@@ -8,8 +8,8 @@
 
 namespace Information_Model_Manager {
 struct DeviceImplementation : public Information_Model::Device {
-  using DeviceGroupImplementation = NonemptyPointer::NonemptyPtr<
-      std::shared_ptr<DeviceElementGroupImplementation>>;
+  using DeviceGroupImplementation =
+      Nonempty::Pointer<std::shared_ptr<DeviceElementGroupImplementation>>;
 
   DeviceImplementation(const std::string& ref_id,
       const std::string& name,
