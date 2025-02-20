@@ -5,16 +5,16 @@
 
 using namespace std;
 using namespace Information_Model;
-using namespace HaSLI;
+using namespace HaSLL;
 
 namespace Information_Model_Manager {
-FunctionImplementation::FunctionImplementation(const HaSLI::LoggerPtr& logger,
+FunctionImplementation::FunctionImplementation(const LoggerPtr& logger,
     const ParameterTypes& parameters,
     const Executor& executor)
     : FunctionImplementation(
           logger, DataType::NONE, parameters, executor, nullptr) {}
 
-FunctionImplementation::FunctionImplementation(const HaSLI::LoggerPtr& logger,
+FunctionImplementation::FunctionImplementation(const LoggerPtr& logger,
     DataType result_type,
     const ParameterTypes& parameters,
     const Executor& executor,

@@ -1,7 +1,5 @@
-#include "HaSLL/LoggerManager.hpp"
-#include "HaSLL/SPD_LoggerRepository.hpp"
-
 #include "Event_Model/EventListenerInterface.hpp"
+#include "HaSLL/LoggerManager.hpp"
 #include "Technology_Adapter_Interface/mocks/TechnologyAdapter_MOCK.hpp"
 
 #include "ModelManager.hpp"
@@ -56,33 +54,40 @@ private:
 };
 
 int main() {
+  auto status = EXIT_SUCCESS;
   try {
-    auto repo = std::make_shared<SPD_LoggerRepository>();
-    LoggerManager::initialise(repo);
+    LoggerManager::initialise(makeDefaultRepository());
 
-    auto technology_manager = std::make_unique<ModelManager>();
+    try {
+      auto technology_manager = std::make_unique<ModelManager>();
 
-    auto event_source = technology_manager->getModelEventSource();
-    if (!event_source) {
-      throw runtime_error("Event source can not be null ptr");
+      auto event_source = technology_manager->getModelEventSource();
+      if (!event_source) {
+        throw runtime_error("Event source can not be null ptr");
+      }
+      auto event_listener = std::make_shared<EventListener>(event_source);
+
+      auto tai_mock =
+          std::make_shared<::testing::NiceMock<TechnologyAdapterMock>>(
+              "MockedTAI");
+      technology_manager->registerTechnologyAdapter(tai_mock);
+      auto builder = tai_mock->getDeviceBuilder();
+      auto device_mock = buildMock(builder.base());
+      auto registry = tai_mock->getDeviceRegistry();
+      registry->registrate(NonemptyDevicePtr(device_mock));
+
+      event_listener->waitForEvent();
+    } catch (const exception& ex) {
+      cerr << "An unhandled exception occurred while running example. "
+              "Exception: "
+           << ex.what() << endl;
+      status = EXIT_FAILURE;
     }
-    auto event_listener = std::make_shared<EventListener>(event_source);
-
-    auto tai_mock =
-        std::make_shared<::testing::NiceMock<TechnologyAdapterMock>>(
-            "MockedTAI");
-    technology_manager->registerTechnologyAdapter(tai_mock);
-    auto builder = tai_mock->getDeviceBuilder();
-    auto device_mock = buildMock(builder.base());
-    auto registry = tai_mock->getDeviceRegistry();
-    registry->registrate(NonemptyDevicePtr(device_mock));
-
-    event_listener->waitForEvent();
-  } catch (const exception& ex) {
-    cerr << "An unhandled exception occurred while running example. Exception: "
-         << ex.what() << endl;
-    exit(EXIT_FAILURE);
+    LoggerManager::terminate();
+  } catch (...) {
+    cerr << "Unknown error occurred during program execution." << endl;
+    status = EXIT_FAILURE;
   }
 
-  exit(EXIT_SUCCESS);
+  exit(status);
 }

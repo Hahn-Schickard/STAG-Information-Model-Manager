@@ -9,7 +9,7 @@
 using namespace std;
 using namespace Information_Model;
 using namespace Information_Model_Manager;
-using namespace HaSLI;
+using namespace HaSLL;
 
 class DeviceElementSearchTests : public ::testing::Test {
 public:

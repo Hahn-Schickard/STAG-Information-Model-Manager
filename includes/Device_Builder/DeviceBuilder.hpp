@@ -67,7 +67,7 @@ private:
       const Functionality& functionality);
 
   DeviceImplementationPtr device_;
-  HaSLI::LoggerPtr logger_;
+  HaSLL::LoggerPtr logger_;
 };
 } // namespace Information_Model_Manager
 

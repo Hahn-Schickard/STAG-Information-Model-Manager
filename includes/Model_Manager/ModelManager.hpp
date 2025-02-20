@@ -47,7 +47,7 @@ private:
       const Technology_Adapter::TAI_Ptr& adapter);
 
   TechnologyAdaptersList technology_adapters_;
-  HaSLI::LoggerPtr logger_;
+  HaSLL::LoggerPtr logger_;
   ModelRepositoryPtr registry_;
 };
 } // namespace Information_Model_Manager

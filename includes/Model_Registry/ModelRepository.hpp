@@ -17,7 +17,7 @@ class ModelRepository : public Technology_Adapter::ModelRepositoryInterface,
   using DevicesMap =
       std::unordered_map<std::string, Information_Model::NonemptyDevicePtr>;
   DevicesMap devices_;
-  HaSLI::LoggerPtr logger_;
+  HaSLL::LoggerPtr logger_;
 
   bool deviceExists(const std::string& device_id);
   void logException(const std::exception_ptr& ex_ptr);

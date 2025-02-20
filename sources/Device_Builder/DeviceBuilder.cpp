@@ -7,7 +7,7 @@ using namespace std;
 using namespace Information_Model;
 
 namespace Information_Model_Manager {
-DeviceBuilder::DeviceBuilder(const HaSLI::LoggerPtr& logger)
+DeviceBuilder::DeviceBuilder(const HaSLL::LoggerPtr& logger)
     : logger_(logger) {}
 
 // NOLINTBEGIN(bugprone-easily-swappable-parameters)

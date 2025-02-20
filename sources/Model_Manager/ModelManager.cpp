@@ -8,7 +8,7 @@
 using namespace std;
 using namespace Technology_Adapter;
 using namespace Information_Model;
-using namespace HaSLI;
+using namespace HaSLL;
 
 namespace Information_Model_Manager {
 ModelManager::ModelManager()
