@@ -13,10 +13,11 @@ struct DeviceBuilder : public Information_Model::DeviceBuilderInterface {
   // import interface overloads
   using DeviceBuilderInterface::addDeviceElementGroup;
   using DeviceBuilderInterface::addFunction;
+  using DeviceBuilderInterface::addObservableMetric;
   using DeviceBuilderInterface::addReadableMetric;
   using DeviceBuilderInterface::addWritableMetric;
 
-  DeviceBuilder(const HaSLI::LoggerPtr& logger);
+  DeviceBuilder(const HaSLL::LoggerPtr& logger);
 
   void buildDeviceBase(const std::string& unique_id,
       const std::string& name,
@@ -30,27 +31,30 @@ struct DeviceBuilder : public Information_Model::DeviceBuilderInterface {
       const std::string& name,
       const std::string& desc,
       Information_Model::DataType data_type,
-      Reader read_cb) override;
+      const Reader& read_cb) override;
 
   std::string addWritableMetric(const std::string& group_ref_id,
       const std::string& name,
       const std::string& desc,
       Information_Model::DataType data_type,
-      Writer write_cb,
-      Reader read_cb) override;
+      const Writer& write_cb,
+      const Reader& read_cb) override;
 
-  std::string addObservableMetric(const std::string& group_ref_id,
+  std::pair<std::string, ObservedValue> addObservableMetric(
+      const std::string& group_ref_id,
       const std::string& name,
       const std::string& desc,
-      Information_Model::DataType data_type) override;
+      Information_Model::DataType data_type,
+      const Reader& read_cb,
+      const ObserveInitializer& initialized_cb) override;
 
   std::string addFunction(const std::string& group_ref_id,
       const std::string& name,
       const std::string& desc,
       Information_Model::DataType result_type,
-      Executor execute_cb,
-      Canceler cancel_cb,
-      Information_Model::Function::ParameterTypes supported_params = {})
+      const Executor& execute_cb,
+      const Canceler& cancel_cb,
+      const Information_Model::Function::ParameterTypes& supported_params = {})
       override;
 
   Information_Model::UniqueDevicePtr getResult() override;

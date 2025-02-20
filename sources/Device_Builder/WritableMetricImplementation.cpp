@@ -12,7 +12,8 @@ WritableMetricImplementation::WritableMetricImplementation(
     : WritableMetric(data_type), MetricImplementation(data_type, move(read_cb)),
       write_cb_(move(write_cb)) {}
 
-void WritableMetricImplementation::setMetricValue(DataVariant value) {
+void WritableMetricImplementation::setMetricValue(
+    const DataVariant& value) const {
   if (write_cb_) {
     write_cb_(value);
   } else {
@@ -21,12 +22,12 @@ void WritableMetricImplementation::setMetricValue(DataVariant value) {
   }
 }
 
-bool WritableMetricImplementation::isWriteOnly() {
+bool WritableMetricImplementation::isWriteOnly() const {
   return !hasReadCapability();
 }
 
 // Point redeclarations to real implementation in MetricImplementation
-DataVariant WritableMetricImplementation::getMetricValue() {
+DataVariant WritableMetricImplementation::getMetricValue() const {
   return MetricImplementation::getMetricValue();
 }
 } // namespace Information_Model_Manager

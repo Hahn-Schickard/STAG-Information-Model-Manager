@@ -13,11 +13,12 @@ struct WritableMetricImplementation : public Information_Model::WritableMetric,
   WritableMetricImplementation(
       Information_Model::DataType data_type, Reader read_cb, Writer write_cb);
 
-  void setMetricValue(Information_Model::DataVariant value) override;
-  bool isWriteOnly() override;
+  void setMetricValue(
+      const Information_Model::DataVariant& value) const override;
+  bool isWriteOnly() const override;
   // Redeclare overrides, so default Information_Model::WritableMetric
   // implementations are not used instead of MetricImplementation
-  Information_Model::DataVariant getMetricValue() override;
+  Information_Model::DataVariant getMetricValue() const override;
 
 private:
   Writer write_cb_;

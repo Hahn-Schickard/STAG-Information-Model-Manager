@@ -25,7 +25,7 @@ string DeviceBuilder::addReadableMetric(const string& group_ref_id,
     const string& name,
     const string& desc,
     DataType data_type,
-    Reader read_cb) {
+    const Reader& read_cb) {
   return addDeviceElement(
       group_ref_id, name, desc, Functionality(data_type, read_cb));
 }
@@ -34,16 +34,19 @@ string DeviceBuilder::addWritableMetric(const string& group_ref_id,
     const string& name,
     const string& desc,
     DataType data_type,
-    Writer write_cb,
-    Reader read_cb) {
+    const Writer& write_cb,
+    const Reader& read_cb) {
   return addDeviceElement(
       group_ref_id, name, desc, Functionality(data_type, read_cb, write_cb));
 }
 
-string DeviceBuilder::addObservableMetric(const std::string& /* group_ref_id */,
-    const std::string& /* name */,
-    const std::string& /* desc */,
-    DataType /* data_type */) {
+pair<string, DeviceBuilder::ObservedValue> DeviceBuilder::addObservableMetric(
+    const string& group_ref_id,
+    const string& name,
+    const string& desc,
+    DataType data_type,
+    const Reader& read_cb,
+    const ObserveInitializer& initialized_cb) {
   throw runtime_error("Observable metric support is not available");
 }
 
@@ -51,9 +54,9 @@ string DeviceBuilder::addFunction(const string& group_ref_id,
     const string& name,
     const string& desc,
     DataType result_type,
-    Executor execute_cb,
-    Canceler cancel_cb,
-    Function::ParameterTypes supported_params) {
+    const Executor& execute_cb,
+    const Canceler& cancel_cb,
+    const Function::ParameterTypes& supported_params) {
   return addDeviceElement(group_ref_id,
       name,
       desc,
@@ -97,10 +100,10 @@ string DeviceBuilder::addDeviceElement(const string& group_ref_id,
   case ElementType::FUNCTION: {
     auto execute = functionality.getExecute();
     auto executable = Nonempty::make_shared<FunctionImplementation>(logger_,
-            functionality.data_type,
-            execute.supported_params,
-            execute.call,
-            execute.cancel);
+        functionality.data_type,
+        execute.supported_params,
+        execute.call,
+        execute.cancel);
     NonemptyFunctionPtr interface(executable);
     element = makeDeviceElement(ref_id, name, desc, interface);
     executable->linkMetaInfo(NonemptyDeviceElementPtr(element));

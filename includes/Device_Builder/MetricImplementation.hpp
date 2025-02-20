@@ -16,10 +16,10 @@ struct MetricImplementation : public Information_Model::Metric,
   MetricImplementation();
   MetricImplementation(Information_Model::DataType data_type, Reader read_cb);
 
-  Information_Model::DataVariant getMetricValue() override;
+  Information_Model::DataVariant getMetricValue() const override;
 
 protected:
-  bool hasReadCapability();
+  bool hasReadCapability() const;
 
   Information_Model::DataType data_type_;
   Reader read_cb_;
