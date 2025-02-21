@@ -39,7 +39,7 @@ void ModelManager::registerTechnologyAdapter(const TAI_Ptr& adapter) {
         NonemptyModelRepositoryInterfacePtr(registry_));
     technology_adapters_.push_back(adapter);
   } else {
-    throw TechnologyAdapterRegistered(adapter->name);
+    throw TechnologyAdapterRegistered(adapter->name());
   }
 }
 
@@ -48,7 +48,7 @@ void ModelManager::deregisterTechnologyAdapter(const TAI_Ptr& adapter) {
   if (iterator != technology_adapters_.end()) {
     technology_adapters_.erase(iterator);
   } else {
-    throw TechnologyAdapterNotFound(adapter->name);
+    throw TechnologyAdapterNotFound(adapter->name());
   }
 }
 } // namespace Information_Model_Manager
