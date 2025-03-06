@@ -34,7 +34,7 @@ public:
     builder.buildDeviceBase("1234", "Simple Writable Device", "Lorem Ipsum");
     metric_id = builder.addWritableMetric("Writable",
         "This is a writable INTEGER metric",
-        DataType::INTEGER,
+        DataType::Integer,
         bind(&WriteFunctionMock::operator(), &write_callback, placeholders::_1),
         bind(&ReadFunctionMock::operator(), &read_callback));
     device = builder.getResult();

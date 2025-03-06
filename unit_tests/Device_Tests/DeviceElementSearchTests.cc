@@ -21,18 +21,18 @@ public:
     builder.buildDeviceBase("Simple Readable Device", "1234", "Lorem Ipsum");
     readable_metric_1_id = builder.addReadableMetric("Readable",
         "This is a readable BOOLEAN metric",
-        DataType::BOOLEAN,
+        DataType::Boolean,
         nullptr);
     builder.addReadableMetric("Readable",
         "This is a readable BOOLEAN metric",
-        DataType::BOOLEAN,
+        DataType::Boolean,
         nullptr);
     auto subgroup_1_id =
         builder.addDeviceElementGroup("Group 1", "Just some group.");
     writable_metric_1_id = builder.addWritableMetric(subgroup_1_id,
         "Writable",
         "This is a writable INTEGER metric",
-        DataType::INTEGER,
+        DataType::Integer,
         nullptr,
         nullptr);
     auto subgroup_2_id = builder.addDeviceElementGroup(
@@ -40,17 +40,17 @@ public:
     readable_metric_2_id = builder.addReadableMetric(subgroup_2_id,
         "Readable",
         "This is a readable FLOAT metric",
-        DataType::DOUBLE,
+        DataType::Double,
         nullptr);
     builder.addWritableMetric(subgroup_2_id,
         "Writable",
         "This is a writable INTEGER metric",
-        DataType::INTEGER,
+        DataType::Integer,
         nullptr,
         nullptr);
     builder.addReadableMetric("Readable",
         "This is a readable STRING metric",
-        DataType::STRING,
+        DataType::String,
         nullptr);
     device = builder.getResult();
   }

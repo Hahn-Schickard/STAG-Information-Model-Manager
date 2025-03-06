@@ -27,7 +27,7 @@ public:
     builder.buildDeviceBase("1234", "Simple Readable Device", "Lorem Ipsum");
     metric_id = builder.addReadableMetric("Readable",
         "This is a readable BOOLEAN metric",
-        DataType::BOOLEAN,
+        DataType::Boolean,
         bind(&ReadFunctionMock::operator(), &read_callback));
     if (metric_id.empty()) {
       throw runtime_error("Failed to build readable metric!");

@@ -12,7 +12,7 @@ FunctionImplementation::FunctionImplementation(const LoggerPtr& logger,
     const ParameterTypes& parameters,
     const Executor& executor)
     : FunctionImplementation(
-          logger, DataType::NONE, parameters, executor, nullptr) {}
+          logger, DataType::None, parameters, executor, nullptr) {}
 
 FunctionImplementation::FunctionImplementation(const LoggerPtr& logger,
     DataType result_type,
@@ -93,7 +93,7 @@ DataVariant FunctionImplementation::call(
   if (executor_) {
     if (canceler_) {
       checkParameters(parameters);
-      if (result_type_ != DataType::NONE) {
+      if (result_type_ != DataType::None) {
         auto execution_call =
             std::async(std::launch::async, [this, &parameters]() {
               auto promised_future = executor_(parameters);
@@ -126,7 +126,7 @@ Function::ResultFuture FunctionImplementation::asyncCall(
   if (executor_) {
     if (canceler_) {
       checkParameters(parameters);
-      if (result_type_ != DataType::NONE) {
+      if (result_type_ != DataType::None) {
         return addCaller(move(executor_(parameters)));
       } else {
         return Function::asyncCall();

@@ -85,7 +85,7 @@ DeviceElementPtr DeviceBuilder::addDeviceElement(const string& group_ref_id,
   auto ref_id = group->generateReferenceID();
   DeviceElementPtr element;
   switch (functionality.type()) {
-  case ElementType::GROUP: {
+  case ElementType::Group: {
     auto sub_group =
         Nonempty::make_shared<DeviceElementGroupImplementation>(ref_id);
     group->addSubgroup(sub_group);
@@ -93,7 +93,7 @@ DeviceElementPtr DeviceBuilder::addDeviceElement(const string& group_ref_id,
         ref_id, name, desc, NonemptyDeviceElementGroupPtr(sub_group));
     break;
   }
-  case ElementType::READABLE: {
+  case ElementType::Readable: {
     auto read = functionality.getRead();
     auto readable = Nonempty::make_shared<MetricImplementation>(
         functionality.data_type, read.callback);
@@ -102,7 +102,7 @@ DeviceElementPtr DeviceBuilder::addDeviceElement(const string& group_ref_id,
     readable->linkMetaInfo(NonemptyDeviceElementPtr(element));
     break;
   }
-  case ElementType::WRITABLE: {
+  case ElementType::Writable: {
     auto write = functionality.getWrite();
     auto writable = Nonempty::make_shared<WritableMetricImplementation>(
         functionality.data_type, write.read_part.callback, write.callback);
@@ -111,7 +111,7 @@ DeviceElementPtr DeviceBuilder::addDeviceElement(const string& group_ref_id,
     writable->linkMetaInfo(NonemptyDeviceElementPtr(element));
     break;
   }
-  case ElementType::FUNCTION: {
+  case ElementType::Executable: {
     auto execute = functionality.getExecute();
     auto executable = Nonempty::make_shared<FunctionImplementation>(logger_,
         functionality.data_type,
@@ -123,7 +123,7 @@ DeviceElementPtr DeviceBuilder::addDeviceElement(const string& group_ref_id,
     executable->linkMetaInfo(NonemptyDeviceElementPtr(element));
     break;
   }
-  case ElementType::OBSERVABLE: {
+  case ElementType::Observable: {
     auto observe = functionality.getObserve();
     auto observable = Nonempty::make_shared<ObservableMetricImplementation>(
         functionality.data_type,

@@ -5,7 +5,7 @@ using namespace Information_Model;
 
 namespace Information_Model_Manager {
 MetricImplementation::MetricImplementation()
-    : MetricImplementation(DataType::UNKNOWN, nullptr) {}
+    : MetricImplementation(DataType::Unknown, nullptr) {}
 
 MetricImplementation::MetricImplementation(DataType data_type, Reader read_cb)
     : Metric(data_type), read_cb_(move(read_cb)) {}
