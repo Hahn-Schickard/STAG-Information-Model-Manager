@@ -1,4 +1,30 @@
 # Changelog
+## [0.4.0] - 2025.03.11
+### Added
+ - windows support
+ - concrete `DeviceBuilder::addObservableMetric()` implementation
+ - `ObservableMetricImplementation`
+ - `ModelManager::logException(const std::exception_ptr&)` method
+
+### Changed
+ - `Data_Consumer_Adapter_Interface` to v0.3 and exposed its public dependencies to the package
+ - `Technology_Adapter_Interface` to v0.4 and exposed its public dependencies to the package
+ - `GTest` to v1.16
+ - `DeviceBuilder` to accept an `ExceptionHandler` callable
+ - `std::string DeviceBuilder::addReadableMetric()` to accept `const Reader&` callable
+ - `std::string DeviceBuilder::addWritableMetric()` to accept `const Reader&` and `const Writer&` callable
+ - `std::string DeviceBuilder::addFunction()` to accept `const Executor&`, `const Canceler&` and `const Information_Model::Function::ParameterTypes&` arguments
+ - `Information_Model::DataVariant WritableMetricImplementation::getMetricValue()` implementation to be `const`
+ - `ModelManager::(de)registerTechnologyAdapter()` methods to accept `const&` arguments
+ - `ModelManager::add()` method to accept `const Information_Model::NonemptyDevicePtr&`
+ - `DeviceBuilderPtr` into `UniqueDeviceBuilderPtr`
+ - `Information_Model::DataType` enum values into Camel_Case
+ - `Information_Model::ElementType` enum values into Camel_Case
+ - `logger_->log(SeverityLevel::[LEVEL], ...)` into `logger_->[LEVEL](...)`
+
+### Removed
+ - explicit dependency to `Information_Model`
+
 ## [0.3.3] - 2023.10.09
 ### Removed 
  * Cmake install command for **Information_Model_ManagerConfig.cmake**
