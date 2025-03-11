@@ -54,10 +54,12 @@ class PackageConan(ConanFile):
     def requirements(self):
         # @+ START USER REQUIREMENTS
         self.requires(
-            "data_consumer_adapter_interface/[~0.3]@hahn-schickard/stable", headers=True, transitive_headers=True)
+            "data_consumer_adapter_interface/[~0.3]@hahn-schickard/stable",
+            headers=True,  libs=True, transitive_headers=True, transitive_libs=True)
         self.requires(
-            "technology_adapter_interface/[~0.4]@hahn-schickard/stable", headers=True, transitive_headers=True)
-             # @- END USER REQUIREMENTS
+            "technology_adapter_interface/[~0.4]@hahn-schickard/stable",
+            headers=True,  libs=True, transitive_headers=True, transitive_libs=True)
+        # @- END USER REQUIREMENTS
 
     def build_requirements(self):
         self.test_requires("gtest/[~1.16]")
