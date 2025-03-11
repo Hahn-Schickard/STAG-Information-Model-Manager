@@ -1,5 +1,4 @@
 #include "HaSLL/LoggerManager.hpp"
-#include "HaSLL/SPD_LoggerRepository.hpp"
 #include "Information_Model_Manager/ModelManager.hpp"
 
 #include <iostream>
@@ -10,18 +9,25 @@ using namespace std;
 using namespace Information_Model_Manager;
 
 int main() {
+  auto status = EXIT_SUCCESS;
   try {
-    auto repo = std::make_shared<SPD_LoggerRepository>();
-    LoggerManager::initialise(repo);
+    LoggerManager::initialise(makeDefaultRepository());
+    try {
+      auto technology_manager = ModelManager();
+      if (!technology_manager.getModelEventSource()) {
+        throw runtime_error("Event source can not be null ptr");
+      }
+      cout << "Integration test succeeded." << endl;
 
-    auto technology_manager = ModelManager();
-    if (!technology_manager.getModelEventSource()) {
-      throw runtime_error("Event source can not be null ptr");
+    } catch (const exception& ex) {
+      cerr << "Integration test failed due to exception: " << ex.what() << endl;
+      status = EXIT_FAILURE;
     }
-    cout << "Integration test succeeded." << endl;
-    exit(EXIT_SUCCESS);
-  } catch (const exception& ex) {
-    cerr << "Integration test failed due to exception: " << ex.what() << endl;
-    exit(EXIT_FAILURE);
+
+    LoggerManager::terminate();
+  } catch (...) {
+    cerr << "Integration test failed due to an unknown exception" << endl;
+    status = EXIT_FAILURE;
   }
+  exit(status);
 }
