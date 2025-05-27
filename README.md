@@ -1,9 +1,15 @@
-<img src="docs/images/vendor-logo.png" alt="" width="200"/>
-
 # Information Model Manager
 
 ## Description
 STAG Information Model Manager, provides concrete [Information Model](https://git.hahn-schickard.de/hahn-schickard/software-sollutions/application-engineering/internal/opc_ua_dev_group/gateway-project/information-model) Interface Implementations, as well as concrete [Event_Source](https://git.hahn-schickard.de/hahn-schickard/software-sollutions/application-engineering/internal/cpp-projects/event-model) implementation for [Technology Adapter Interface](https://git.hahn-schickard.de/hahn-schickard/software-sollutions/application-engineering/internal/opc_ua_dev_group/gateway-project/technology-adapter-interface) and [Data Consumer Adapter Interface](https://git.hahn-schickard.de/hahn-schickard/software-sollutions/application-engineering/internal/opc_ua_dev_group/gateway-project/data-consumer-adapter-interface) to hook up to.
+
+## Fresh setup
+
+This project uses git submodules, please initialize them when creating a fresh repository clone. To initialize all of the submodule run the following command:
+
+```
+git submodule update --init --recursive
+```
 
 ## Documentation
 
@@ -13,7 +19,7 @@ If you want to have the latest documentation with your changes locally, you can 
 doxygen Doxyfile
 ```
 
-This will generate html like documentation at `[PROJECT_ROOT]/docs/code_documentation/html`. To use it open the `[PROJECT_ROOT]/docs/code_documentation/html/index.html` file with your browser.
+This will generate html like documentation at `[PROJECT_ROOT]/docs/html`. To read the generated files, open the `[PROJECT_ROOT]/docs/html/index.html` with your browser.
 
 ## Dependencies
 ### Required
