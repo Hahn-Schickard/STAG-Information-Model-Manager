@@ -8,9 +8,9 @@ file(GLOB Model_Event_Source_Tests "${CMAKE_CURRENT_LIST_DIR}/Model_Event_Source
 
 #@+ ====================== User TEST_SUITES configuration ==========================
 list(APPEND TEST_SUITES
-                       ${Device_Test_Suite}
-                       ${Device_Builder_Test_Suite}
-                       ${Model_Event_Source_Tests}
+            ${Device_Test_Suite}
+            ${Device_Builder_Test_Suite}
+            ${Model_Event_Source_Tests}
 )
 #@- ========================= END OF USER CONFIGURATION ============================
 
@@ -22,8 +22,8 @@ target_sources(${THIS} PRIVATE
 
 #@+ ==================== User TEST_DEPENDCIES configuration =======================
 list(APPEND TEST_DEPENDCIES
-                              Model_Manager
-                              Device_Builder
+            ${PROJECT_NAME}_Manager
+            ${PROJECT_NAME}_Builder
 )
 #@- ========================= END OF USER CONFIGURATION ===========================
 
