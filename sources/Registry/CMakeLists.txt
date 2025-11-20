@@ -1,6 +1,3 @@
-cmake_minimum_required(VERSION 3.6) 
-
-
 #@+ ======================== User MODULE NAME configuration ============================
 set(THIS Registry)
 #@- =========================== END OF USER CONFIGURATION ===============================
