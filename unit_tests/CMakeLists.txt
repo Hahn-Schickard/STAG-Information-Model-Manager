@@ -24,7 +24,7 @@ target_sources(${THIS}
 #@+ ======================= User TEST_DECENCIES configuration ===========================
 list(APPEND TEST_DECENCIES
     ${PROJECT_NAME}_Manager
-    ${PROJECT_NAME}_Builder
+    ${PROJECT_NAME}_Model
 )
 #@- =========================== END OF USER CONFIGURATION ===============================
 target_link_libraries(${THIS}

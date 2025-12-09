@@ -20,7 +20,8 @@ target_sources(${TARGET}
 target_link_libraries(${TARGET} 
     PUBLIC
         Technology_Adapter_Interface::Technology_Adapter_Interface
-        ${PROJECT_NAME}_Builder
+        Data_Consumer_Adapter_Interface::Data_Consumer_Adapter_Interface
+        ${PROJECT_NAME}_Model
         ${PROJECT_NAME}_Registry                                 
 )
 

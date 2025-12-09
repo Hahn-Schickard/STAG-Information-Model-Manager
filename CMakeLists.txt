@@ -58,6 +58,7 @@ find_package(GTest REQUIRED)
 find_package(HaSLL REQUIRED)
 find_package(Data_Consumer_Adapter_Interface REQUIRED)
 find_package(Technology_Adapter_Interface REQUIRED)
+find_package(Event_Model REQUIRED)
 find_package(Threads REQUIRED)
 #@- =========================== END OF USER CONFIGURATION ===============================
 

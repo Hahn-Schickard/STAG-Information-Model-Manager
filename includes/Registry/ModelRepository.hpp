@@ -1,34 +1,46 @@
-#ifndef __MODEL_MANAGER_HPP
-#define __MODEL_MANAGER_HPP
+#ifndef __MODEL_REPOSITORY_HPP
+#define __MODEL_REPOSITORY_HPP
 
-#include "Data_Consumer_Adapter_Interface/DataConsumerAdapterInterface.hpp"
-#include "Event_Model/AsyncEventSource.hpp"
-#include "HaSLL/Logger.hpp"
-#include "Information_Model/Device.hpp"
-#include "Technology_Adapter_Interface/ModelRepositoryInterface.hpp"
+#include <Data_Consumer_Adapter_Interface/DataConsumerAdapter.hpp>
+#include <Event_Model/SourceInterface.hpp>
+#include <HaSLL/Logger.hpp>
+#include <Information_Model/Device.hpp>
+#include <Technology_Adapter_Interface/ModelRepository.hpp>
 
 #include <memory>
 #include <unordered_map>
 
 namespace Information_Model_Manager {
-class ModelRepository : public Technology_Adapter::ModelRepositoryInterface,
-                        public Event_Model::AsyncEventSource<
-                            Data_Consumer_Adapter::ModelRepositoryEvent> {
+struct ModelRepository : public Technology_Adapter::ModelRepository {
+  ModelRepository();
+
+  ~ModelRepository() override;
+
+  bool add(const Information_Model::DevicePtr& device) override;
+
+  bool remove(const std::string& device_id) override;
+
+  std::vector<Information_Model::DevicePtr> getModelSnapshot();
+
+  Data_Consumer_Adapter::DataConnector getModelDataConnector();
+
+private:
+  void logException(const std::exception_ptr& ex_ptr);
+
+  Data_Consumer_Adapter::DataConnectionPtr connect(
+      const Data_Consumer_Adapter::DataNotifier& notifier);
+
+  using RegistryChange = Data_Consumer_Adapter::RegistryChange;
+  using EventSourcePtr = Event_Model::SourceInterfacePtr<RegistryChange>;
   using DevicesMap =
-      std::unordered_map<std::string, Information_Model::NonemptyDevicePtr>;
-  DevicesMap devices_;
-  HaSLL::LoggerPtr logger_;
+      std::unordered_map<std::string, Information_Model::DevicePtr>;
 
   bool deviceExists(const std::string& device_id);
 
-public:
-  ModelRepository();
-
-  void logException(const std::exception_ptr& ex_ptr);
-  bool add(const Information_Model::NonemptyDevicePtr& device) override;
-  bool remove(const std::string& device_id) override;
-  std::vector<Information_Model::DevicePtr> getModelSnapshot();
+  HaSLL::LoggerPtr logger_;
+  EventSourcePtr source_;
+  DevicesMap devices_;
 };
 } // namespace Information_Model_Manager
 
-#endif //__MODEL_MANAGER_HPP
+#endif //__MODEL_REPOSITORY_HPP

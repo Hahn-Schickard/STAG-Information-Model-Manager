@@ -1,11 +1,11 @@
 #@+ ======================== User TARGET NAME configuration =============================
-set(THIS Builder)
+set(THIS Model)
 #@- =========================== END OF USER CONFIGURATION ===============================
 
 set(TARGET ${PROJECT_NAME}_${THIS})
 
 #@+ =========================== User TARGET configuration ===============================
-set(THIS_INCLUDES_DIR ${INCLUDES_DIR}/Builder)
+set(THIS_INCLUDES_DIR ${INCLUDES_DIR}/Model)
 file(GLOB THIS_INCLUDES ${THIS_INCLUDES_DIR}/*.hpp)
 file(GLOB SOURCEFILES "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
 
@@ -22,7 +22,8 @@ target_sources(${TARGET}
 target_link_libraries(${TARGET} 
     PUBLIC
         Technology_Adapter_Interface::Technology_Adapter_Interface
-        Information_Model::Information_Model                                 
+        Information_Model::Information_Model
+        Event_Model::Event_Model                     
 )
 #@- =========================== END OF USER CONFIGURATION ===============================
 

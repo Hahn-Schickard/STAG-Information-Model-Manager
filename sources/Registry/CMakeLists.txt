@@ -21,7 +21,8 @@ target_link_libraries(${TARGET}
     PUBLIC
         Technology_Adapter_Interface::Technology_Adapter_Interface
         Data_Consumer_Adapter_Interface::Data_Consumer_Adapter_Interface
-        HaSLL::HaSLL                              
+        Event_Model::Event_Model
+        HaSLL::HaSLL                  
 )
 #@- =========================== END OF USER CONFIGURATION ===============================
 

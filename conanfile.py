@@ -57,12 +57,21 @@ class PackageConan(ConanFile):
 
     def requirements(self):
         # @+ START USER REQUIREMENTS
-        self.requires(
-            "data_consumer_adapter_interface/[~0.3]@hahn-schickard/stable",
-            headers=True,  libs=True, transitive_headers=True, transitive_libs=True)
-        self.requires(
-            "technology_adapter_interface/[~0.4]@hahn-schickard/stable",
-            headers=True,  libs=True, transitive_headers=True, transitive_libs=True)
+        self.requires("data_consumer_adapter_interface/[~0.4]@hahn-schickard/stable",
+                      headers=True,
+                      libs=True,
+                      transitive_headers=True,
+                      transitive_libs=True
+                      )
+        self.requires("technology_adapter_interface/[~0.5]@hahn-schickard/stable",
+                      headers=True,
+                      libs=True,
+                      transitive_headers=True,
+                      transitive_libs=True
+                      )
+        self.requires("event_model/[~0.5]@hahn-schickard/stable",
+                      visible=False
+                      )
         # @- END USER REQUIREMENTS
 
     def build_requirements(self):
@@ -73,6 +82,10 @@ class PackageConan(ConanFile):
     def configure(self):
         # @+ START USER REQUIREMENTS OPTION CONFIGURATION
         self.options["gtest/*"].shared = True
+        self.options["event_model"].shared = True
+        self.options["event_model"].fPIC = True
+        self.options["event_model"].multithreading = True
+        self.options["event_model"].priority_listeners = True
         # @- END USER REQUIREMENTS OPTION CONFIGURATION
 
     def layout(self):
