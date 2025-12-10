@@ -10,10 +10,9 @@
 #include <stdexcept>
 #include <vector>
 
+namespace Information_Model_Manager {
 using ModelEventSourcePtr = std::shared_ptr<
     Event_Model::SourceInterface<Data_Consumer_Adapter::RegistryChangePtr>>;
-
-namespace Information_Model_Manager {
 
 struct TechnologyAdapterRegistered : std::runtime_error {
   TechnologyAdapterRegistered(const std::string& name)
