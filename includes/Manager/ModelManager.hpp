@@ -3,7 +3,6 @@
 
 #include "ModelRepository.hpp"
 
-#include <HaSLL/Logger.hpp>
 #include <Technology_Adapter_Interface/ResponseRepository.hpp>
 #include <Technology_Adapter_Interface/TechnologyAdapter.hpp>
 
@@ -51,7 +50,6 @@ private:
   TechnologyAdaptersList::iterator findTechnologyAdapter(
       const TAI_Ptr& adapter);
 
-  HaSLL::LoggerPtr logger_;
   TechnologyAdaptersList technology_adapters_;
   ModelRepositoryPtr registry_;
 };

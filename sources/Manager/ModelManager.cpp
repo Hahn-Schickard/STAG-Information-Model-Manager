@@ -1,6 +1,5 @@
 #include "ModelManager.hpp"
 #include "Builder.hpp"
-#include <HaSLL/LoggerManager.hpp>
 
 #include <algorithm>
 #include <functional>
@@ -9,11 +8,8 @@ namespace Information_Model_Manager {
 using namespace std;
 using namespace Technology_Adapter;
 using namespace Information_Model;
-using namespace HaSLL;
 
-ModelManager::ModelManager()
-    : logger_(LoggerManager::registerTypedLogger(this)),
-      registry_(make_shared<ModelRepository>()) {}
+ModelManager::ModelManager() : registry_(make_shared<ModelRepository>()) {}
 
 ModelManager::TechnologyAdaptersList::iterator
 ModelManager::findTechnologyAdapter(const TAI_Ptr& adapter) {
