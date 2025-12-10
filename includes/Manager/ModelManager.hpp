@@ -41,8 +41,7 @@ struct ModelManager {
 
 private:
   using TechnologyAdaptersList = std::vector<TAI_Ptr>;
-  using ModelRepositoryPtr =
-      std::shared_ptr<Information_Model_Manager::ModelRepository>;
+  using ModelRepositoryPtr = std::shared_ptr<ModelRepository>;
 
   Information_Model::DeviceBuilderPtr makeBuilder();
 
