@@ -60,19 +60,22 @@ int main() {
     LoggerManager::initialise(makeDefaultRepository());
 
     try {
-      auto technology_manager = std::make_unique<ModelManager>();
+      {
+        auto technology_manager = std::make_unique<ModelManager>();
 
-      auto model_connector = technology_manager->getModelDataConnector();
-      auto dummy_dca = std::make_shared<DummyDCA>(model_connector);
+        auto model_connector = technology_manager->getModelDataConnector();
+        auto dummy_dca = std::make_shared<DummyDCA>(model_connector);
 
-      auto dummy_tai = std::make_shared<TechnologyAdapter>("Dummy_TAI");
-      technology_manager->registerTechnologyAdapter(dummy_tai);
-      auto registry = dummy_tai->getRegistry();
-      registry->registrate(buildDummyDevice(dummy_tai->getBuilder()));
+        auto dummy_tai = std::make_shared<TechnologyAdapter>("Dummy_TAI");
+        technology_manager->registerTechnologyAdapter(dummy_tai);
+        auto registry = dummy_tai->getRegistry();
+        registry->registrate(buildDummyDevice(dummy_tai->getBuilder()));
 
-      this_thread::sleep_for(1s);
+        this_thread::sleep_for(1s);
 
-      registry->deregistrate("1234");
+        registry->deregistrate("1234");
+      }
+      cout << "All modules destroyed" << endl;
     } catch (const exception& ex) {
       cerr << "An unhandled exception occurred while running example. "
               "Exception: "
