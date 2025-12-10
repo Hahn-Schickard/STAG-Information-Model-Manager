@@ -12,6 +12,8 @@ struct ReadableImpl : public Information_Model::Readable {
 
   ReadableImpl(Information_Model::DataType type, const ReadCallback& read_cb);
 
+  ~ReadableImpl() override = default;
+
   Information_Model::DataType dataType() const final;
 
   Information_Model::DataVariant read() const final;

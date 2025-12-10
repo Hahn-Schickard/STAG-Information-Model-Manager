@@ -14,6 +14,8 @@ struct ElementImpl : virtual public Information_Model::Element,
       const Information_Model::BuildInfo& meta,
       const Information_Model::ElementFunction& function);
 
+  ~ElementImpl() override = default;
+
   Information_Model::ElementType type() const final;
 
   Information_Model::ElementFunction function() const final;

@@ -12,6 +12,8 @@ namespace Information_Model_Manager {
 struct FullMetaInfo : public virtual Information_Model::MetaInfo {
   FullMetaInfo(const std::string& id, const Information_Model::BuildInfo& meta);
 
+  ~FullMetaInfo() override = default;
+
   std::string id() const final;
 
   std::string name() const final;

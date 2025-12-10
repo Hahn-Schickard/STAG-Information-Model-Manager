@@ -13,6 +13,8 @@ struct DeviceImpl : virtual public Information_Model::Device,
                     public FullMetaInfo {
   DeviceImpl(const std::string& id, const Information_Model::BuildInfo& meta);
 
+  ~DeviceImpl() override = default;
+
   Information_Model::GroupPtr group() const final;
 
   size_t size() const final;

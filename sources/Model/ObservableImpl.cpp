@@ -12,6 +12,8 @@ struct Connection : public Information_Model::Observer {
   explicit Connection(const ListenerPtr<DataVariant>& listener)
       : listener_(listener) {}
 
+  ~Connection() override = default;
+
 private:
   ListenerPtr<DataVariant> listener_;
 };

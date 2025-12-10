@@ -17,6 +17,8 @@ struct GroupImpl : public Information_Model::Group {
 
   GroupImpl(const std::string& id);
 
+  ~GroupImpl() override = default;
+
   size_t size() const final;
 
   ElementsMap asMap() const final;
@@ -34,8 +36,6 @@ struct GroupImpl : public Information_Model::Group {
 private:
   using SubgroupsMap =
       std::unordered_map<std::string, Information_Model::GroupPtr>;
-
-  Information_Model::ElementPtr getElement(const std::string& ref_id);
 
   ElementsMap elements_;
   SubgroupsMap subgroups_;

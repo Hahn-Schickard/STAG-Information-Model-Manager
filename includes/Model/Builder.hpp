@@ -18,6 +18,8 @@ struct Builder : public Information_Model::DeviceBuilder {
   using IsObservingCallback =
       Information_Model::DeviceBuilder::IsObservingCallback;
 
+  ~Builder() override = default;
+
   void setDeviceInfo(const std::string& unique_id,
       const Information_Model::BuildInfo& element_info) final;
 

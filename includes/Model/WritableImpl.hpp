@@ -20,6 +20,8 @@ struct WritableImpl : public Information_Model::Writable {
       const ReadCallback& read_cb,
       const WriteCallback& write_cb);
 
+  ~WritableImpl() override = default;
+
   Information_Model::DataType dataType() const final;
 
   Information_Model::DataVariant read() const final;

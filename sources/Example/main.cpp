@@ -28,6 +28,8 @@ struct DummyDCA : public Data_Consumer_Adapter::DataConsumerAdapter {
   explicit DummyDCA(const Data_Consumer_Adapter::DataConnector& connector)
       : DataConsumerAdapter("Example DCAI", connector) {}
 
+  ~DummyDCA() override = default;
+
 private:
   void registrate(const DevicePtr& device) override {
     auto [_, emplaced] = devices_.emplace(device->id());

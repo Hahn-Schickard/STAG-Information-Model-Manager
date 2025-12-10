@@ -23,6 +23,8 @@ struct CallableImpl : public Information_Model::Callable {
       const AsyncExecuteCallback& call_cb,
       const CancelCallback& cancel_cb);
 
+  ~CallableImpl() override = default;
+
   void execute(const Information_Model::Parameters& parameters) const final;
 
   Information_Model::DataVariant call(uintmax_t timeout) const final;

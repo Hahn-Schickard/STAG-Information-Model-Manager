@@ -31,6 +31,8 @@ struct ModelManager {
 
   ModelManager();
 
+  ~ModelManager() = default;
+
   Data_Consumer_Adapter::DataConnector getModelDataConnector();
 
   std::vector<Information_Model::DevicePtr> getModelSnapshot();

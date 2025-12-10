@@ -21,6 +21,8 @@ struct ObservableImpl : public Information_Model::Observable {
       const ReadCallback& read_cb,
       const IsObservingCallback& observed);
 
+  ~ObservableImpl() override = default;
+
   Information_Model::DataType dataType() const final;
 
   Information_Model::DataVariant read() const final;
