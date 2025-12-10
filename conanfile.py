@@ -82,8 +82,8 @@ class PackageConan(ConanFile):
     def configure(self):
         # @+ START USER REQUIREMENTS OPTION CONFIGURATION
         self.options["gtest/*"].shared = True
-        self.options["event_model"].shared = True
-        self.options["event_model"].fPIC = True
+        self.options["event_model"].shared = False
+        self.options["event_model"].fPIC = False
         self.options["event_model"].multithreading = True
         self.options["event_model"].priority_listeners = True
         # @- END USER REQUIREMENTS OPTION CONFIGURATION
