@@ -70,7 +70,10 @@ class PackageConan(ConanFile):
                       transitive_libs=True
                       )
         self.requires("event_model/[~0.5]@hahn-schickard/stable",
-                      visible=False
+                      headers=True,
+                      libs=True,
+                      transitive_headers=True,
+                      transitive_libs=True
                       )
         # @- END USER REQUIREMENTS
 
@@ -122,6 +125,11 @@ class PackageConan(ConanFile):
         self.cpp_info.libs = collect_libs(self)
         self.cpp_info.set_property("cmake_find_mode", "both")
         # @+ START USER DEFINES
+        self.cpp_info.requires = [
+            "event_model::event_model",
+            "data_consumer_adapter_interface::data_consumer_adapter_interface",
+            "technology_adapter_interface::technology_adapter_interface"
+        ]
         # @- END USER DEFINES
         self.cpp_info.set_property("cmake_file_name", self.full_name)
         cmake_target_name = self.full_name + "::" + self.full_name
