@@ -11,7 +11,7 @@ file(GLOB SOURCEFILES "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
 
 INCLUDE_DIRS_AND_FILES("${THIS_INCLUDES_DIRS}" THIS_INCLUDES)
 
-add_library(${TARGET})
+add_library(${TARGET} OBJECT)
 target_sources(${TARGET}
     PUBLIC
         ${THIS_INCLUDES}
@@ -21,7 +21,6 @@ target_sources(${TARGET}
 
 target_link_libraries(${TARGET} 
     PUBLIC
-        Technology_Adapter_Interface::Technology_Adapter_Interface
         Information_Model::Information_Model
         Event_Model::Event_Model                     
 )
