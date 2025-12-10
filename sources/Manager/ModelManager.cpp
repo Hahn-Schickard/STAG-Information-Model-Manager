@@ -11,10 +11,9 @@ using namespace Information_Model;
 
 ModelManager::ModelManager() : registry_(make_shared<ModelRepository>()) {}
 
-ModelManager::TechnologyAdaptersList::iterator
-ModelManager::findTechnologyAdapter(const TAI_Ptr& adapter) {
-  return find(
-      technology_adapters_.begin(), technology_adapters_.end(), adapter);
+ModelManager::TechnologyAdaptersList::iterator ModelManager::find(
+    const TAI_Ptr& adapter) {
+  return std::find(adapters_.begin(), adapters_.end(), adapter);
 }
 
 Data_Consumer_Adapter::DataConnector ModelManager::getModelDataConnector() {
@@ -25,24 +24,19 @@ vector<DevicePtr> ModelManager::getModelSnapshot() {
   return registry_->getModelSnapshot();
 }
 
-Information_Model::DeviceBuilderPtr ModelManager::makeBuilder() {
-  return std::make_shared<Builder>();
-}
-
 void ModelManager::registerTechnologyAdapter(const TAI_Ptr& adapter) {
-  if (findTechnologyAdapter(adapter) == technology_adapters_.end()) {
+  if (find(adapter) == adapters_.end()) {
     adapter->setInterfaces(
-        std::bind(&ModelManager::makeBuilder, this), registry_);
-    technology_adapters_.push_back(adapter);
+        []() { return std::make_shared<Builder>(); }, registry_);
+    adapters_.push_back(adapter);
   } else {
     throw TechnologyAdapterRegistered(adapter->name());
   }
 }
 
 void ModelManager::deregisterTechnologyAdapter(const TAI_Ptr& adapter) {
-  auto iterator = findTechnologyAdapter(adapter);
-  if (iterator != technology_adapters_.end()) {
-    technology_adapters_.erase(iterator);
+  if (auto iterator = find(adapter); iterator != adapters_.end()) {
+    adapters_.erase(iterator);
   } else {
     throw TechnologyAdapterNotFound(adapter->name());
   }

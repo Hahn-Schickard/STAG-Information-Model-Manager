@@ -43,12 +43,9 @@ private:
   using TechnologyAdaptersList = std::vector<TAI_Ptr>;
   using ModelRepositoryPtr = std::shared_ptr<ModelRepository>;
 
-  Information_Model::DeviceBuilderPtr makeBuilder();
+  TechnologyAdaptersList::iterator find(const TAI_Ptr& adapter);
 
-  TechnologyAdaptersList::iterator findTechnologyAdapter(
-      const TAI_Ptr& adapter);
-
-  TechnologyAdaptersList technology_adapters_;
+  TechnologyAdaptersList adapters_;
   ModelRepositoryPtr registry_;
 };
 } // namespace Information_Model_Manager
