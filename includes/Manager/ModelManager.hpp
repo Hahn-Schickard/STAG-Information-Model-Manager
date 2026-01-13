@@ -27,7 +27,7 @@ struct TechnologyAdapterNotFound : std::runtime_error {
 struct ModelManager {
   using TAI_Ptr = Technology_Adapter::TechnologyAdapterPtr;
 
-  ModelManager();
+  ModelManager() = default;
 
   ~ModelManager() = default;
 
@@ -46,7 +46,7 @@ private:
   TechnologyAdaptersList::iterator find(const TAI_Ptr& adapter);
 
   TechnologyAdaptersList adapters_;
-  ModelRepositoryPtr registry_;
+  ModelRepositoryPtr registry_ = std::make_shared<ModelRepository>();
 };
 } // namespace Information_Model_Manager
 

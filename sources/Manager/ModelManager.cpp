@@ -9,8 +9,6 @@ using namespace std;
 using namespace Technology_Adapter;
 using namespace Information_Model;
 
-ModelManager::ModelManager() : registry_(make_shared<ModelRepository>()) {}
-
 ModelManager::TechnologyAdaptersList::iterator ModelManager::find(
     const TAI_Ptr& adapter) {
   return std::find(adapters_.begin(), adapters_.end(), adapter);
