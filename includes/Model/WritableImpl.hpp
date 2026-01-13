@@ -35,6 +35,8 @@ private:
   ReadCallback read_;
   WriteCallback write_;
 };
+
+using WritableImplPtr = std::shared_ptr<WritableImpl>;
 } // namespace Information_Model_Manager
 
 #endif //__MODEL_WRITABLE_IMPLEMENTATION_HPP_
