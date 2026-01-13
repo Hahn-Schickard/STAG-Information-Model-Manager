@@ -32,6 +32,13 @@ DataVariant ObservableImpl::read() const { return readable_->read(); }
 [[nodiscard]] ObserverPtr ObservableImpl::subscribe(
     const ObservableImpl::ObserveCallback& observe_cb,
     const ObservableImpl::ExceptionHandler& handler) {
+  if (!observe_cb) {
+    throw invalid_argument("ObserveCallback can not be empty");
+  }
+  if (!handler) {
+    throw invalid_argument("ExceptionHandler can not be empty");
+  }
+
   // use the default normal priority, for DataVariant events
   auto connection = makeListener<DataVariant>(observe_cb, handler, source_);
 
