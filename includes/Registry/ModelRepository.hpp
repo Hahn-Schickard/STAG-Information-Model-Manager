@@ -16,6 +16,14 @@ struct ModelRepository : public Technology_Adapter::ModelRepository {
 
   ~ModelRepository() override;
 
+  ModelRepository(const ModelRepository&) = delete;
+
+  ModelRepository(ModelRepository&&) = delete;
+
+  ModelRepository& operator=(const ModelRepository&) = delete;
+
+  ModelRepository& operator=(ModelRepository&&) = delete;
+
   bool add(const Information_Model::DevicePtr& device) override;
 
   bool remove(const std::string& device_id) override;
