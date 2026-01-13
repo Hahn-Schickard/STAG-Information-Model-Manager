@@ -13,7 +13,12 @@ WritableImpl::WritableImpl(
 
 DataType WritableImpl::dataType() const { return type_; }
 
-DataVariant WritableImpl::read() const { return read_(); }
+DataVariant WritableImpl::read() const {
+  if (!read_) {
+    throw NonReadable();
+  }
+  return read_();
+}
 
 bool WritableImpl::isWriteOnly() const { return read_ == nullptr; }
 
