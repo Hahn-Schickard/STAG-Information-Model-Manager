@@ -15,7 +15,7 @@ struct GroupImpl : public Information_Model::Group {
       std::unordered_map<std::string, Information_Model::ElementPtr>;
   using ElementVector = std::vector<Information_Model::ElementPtr>;
 
-  GroupImpl(const std::string& id);
+  explicit GroupImpl(const std::string& id);
 
   ~GroupImpl() override = default;
 

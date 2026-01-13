@@ -15,12 +15,12 @@ using ModelEventSourcePtr = std::shared_ptr<
     Event_Model::SourceInterface<Data_Consumer_Adapter::RegistryChangePtr>>;
 
 struct TechnologyAdapterRegistered : std::runtime_error {
-  TechnologyAdapterRegistered(const std::string& name)
+  explicit TechnologyAdapterRegistered(const std::string& name)
       : runtime_error(name + " Technology Adapter is already registered") {}
 };
 
 struct TechnologyAdapterNotFound : std::runtime_error {
-  TechnologyAdapterNotFound(const std::string& name)
+  explicit TechnologyAdapterNotFound(const std::string& name)
       : runtime_error(name + " Technology Adapter is not registered") {}
 };
 
