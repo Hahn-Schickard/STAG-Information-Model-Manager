@@ -38,6 +38,8 @@ private:
   IsObservingCallback observed_;
   Event_Model::SourceInterfacePtr<Information_Model::DataVariant> source_;
 };
+
+using ObservableImplPtr = std::shared_ptr<ObservableImpl>;
 } // namespace Information_Model_Manager
 
 #endif //__MODEL_OBSERVABLE_IMPLEMENTATION_HPP_
