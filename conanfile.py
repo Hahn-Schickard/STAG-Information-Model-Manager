@@ -80,6 +80,7 @@ class PackageConan(ConanFile):
     def build_requirements(self):
         self.test_requires("gtest/[~1.17]")
         # @+ START USER BUILD REQUIREMENTS
+        self.test_requires("variant_visitor/[~0.2]@hahn-schickard/stable")
         # @- END USER BUILD REQUIREMENTS
 
     def configure(self):

@@ -25,6 +25,7 @@ target_sources(${THIS}
 list(APPEND TEST_DECENCIES
     ${PROJECT_NAME}_Manager
     ${PROJECT_NAME}_Model
+    Variant_Visitor::Variant_Visitor
 )
 #@- =========================== END OF USER CONFIGURATION ===============================
 target_link_libraries(${THIS}
