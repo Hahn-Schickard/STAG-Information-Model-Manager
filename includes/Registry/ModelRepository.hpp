@@ -28,7 +28,7 @@ struct ModelRepository : public Technology_Adapter::ModelRepository {
 
   bool remove(const std::string& device_id) override;
 
-  std::vector<Information_Model::DevicePtr> getModelSnapshot();
+  std::vector<Information_Model::DevicePtr> getModelSnapshot() const;
 
   Data_Consumer_Adapter::DataConnector getModelDataConnector();
 
