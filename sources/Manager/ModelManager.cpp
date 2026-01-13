@@ -14,11 +14,12 @@ ModelManager::TechnologyAdaptersList::iterator ModelManager::find(
   return std::find(adapters_.begin(), adapters_.end(), adapter);
 }
 
-Data_Consumer_Adapter::DataConnector ModelManager::getModelDataConnector() {
+Data_Consumer_Adapter::DataConnector
+ModelManager::getModelDataConnector() const {
   return registry_->getModelDataConnector();
 }
 
-vector<DevicePtr> ModelManager::getModelSnapshot() {
+vector<DevicePtr> ModelManager::getModelSnapshot() const {
   return registry_->getModelSnapshot();
 }
 

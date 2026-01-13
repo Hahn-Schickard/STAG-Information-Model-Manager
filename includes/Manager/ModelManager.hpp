@@ -31,9 +31,9 @@ struct ModelManager {
 
   ~ModelManager() = default;
 
-  Data_Consumer_Adapter::DataConnector getModelDataConnector();
+  Data_Consumer_Adapter::DataConnector getModelDataConnector() const;
 
-  std::vector<Information_Model::DevicePtr> getModelSnapshot();
+  std::vector<Information_Model::DevicePtr> getModelSnapshot() const;
 
   void registerTechnologyAdapter(const TAI_Ptr& adapter);
 
