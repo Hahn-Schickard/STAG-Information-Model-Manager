@@ -78,7 +78,7 @@ class PackageConan(ConanFile):
         # @- END USER REQUIREMENTS
 
     def build_requirements(self):
-        self.test_requires("gtest/[~1.16]")
+        self.test_requires("gtest/[~1.17]")
         # @+ START USER BUILD REQUIREMENTS
         # @- END USER BUILD REQUIREMENTS
 
