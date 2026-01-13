@@ -52,7 +52,7 @@ bool ModelRepository::remove(const string& device_id) {
 
 vector<DevicePtr> ModelRepository::getModelSnapshot() {
   vector<DevicePtr> result;
-  for (auto& [_, device] : devices_) {
+  for (const auto& [_, device] : devices_) {
     result.push_back(device);
   }
   return result;
