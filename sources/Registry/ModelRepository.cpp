@@ -75,8 +75,8 @@ void ModelRepository::logException(const std::exception_ptr& ex_ptr) {
 }
 
 struct ListenerConnection : public DataConnection {
-  ListenerConnection(ListenerPtr<RegistryChange>&& listener)
-      : listener_(listener) {}
+  explicit ListenerConnection(ListenerPtr<RegistryChange>&& listener)
+      : listener_(move(listener)) {}
 
   ~ListenerConnection() override = default;
 
