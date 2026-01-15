@@ -30,6 +30,8 @@ struct DeviceImpl : virtual public Information_Model::Device,
 private:
   GroupImplPtr root_;
 };
+
+using DeviceImplPtr = std::shared_ptr<DeviceImpl>;
 } // namespace Information_Model_Manager
 
 #endif //__MODEL_DEVICE_IMPLEMENTATION_HPP_
