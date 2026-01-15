@@ -23,6 +23,8 @@ struct ElementImpl : virtual public Information_Model::Element,
 private:
   Information_Model::ElementFunction function_;
 };
+
+using ElementImplPtr = std::shared_ptr<ElementImpl>;
 } // namespace Information_Model_Manager
 
 #endif //__MODEL_ELEMENT_IMPLEMENTATION_HPP_

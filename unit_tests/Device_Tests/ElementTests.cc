@@ -53,7 +53,7 @@ struct ElementTests : public TestWithParam<ElementTestParam> {
   }
 
   ElementTestParam expected;
-  shared_ptr<ElementImpl> tested;
+  ElementImplPtr tested;
 };
 
 TEST_P(ElementTests, canGetType) {
