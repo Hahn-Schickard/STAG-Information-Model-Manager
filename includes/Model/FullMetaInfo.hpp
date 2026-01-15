@@ -24,6 +24,8 @@ private:
   std::string id_;
   Information_Model::BuildInfo meta_;
 };
+
+using FullMetaInfoPtr = std::shared_ptr<FullMetaInfo>;
 } // namespace Information_Model_Manager
 
 #endif //__MODEL_META_INFO_IMPLEMENTATION_HPP_
