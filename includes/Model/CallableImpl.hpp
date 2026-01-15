@@ -51,6 +51,8 @@ private:
   AsyncExecuteCallback call_;
   CancelCallback cancel_;
 };
+
+using CallableImplPtr = std::shared_ptr<CallableImpl>;
 } // namespace Information_Model_Manager
 
 #endif //__MODEL_CALLABLE_IMPLEMENTATION_HPP_
