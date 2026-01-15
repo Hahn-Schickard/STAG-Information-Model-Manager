@@ -85,10 +85,10 @@ void GroupImpl::addElement(const ElementPtr& element) {
     sanitized_id.pop_back();
   }
   if (element->id() == sanitized_id) {
-    throw invalid_argument("Given element has the same ID as this GroupImpl");
+    throw invalid_argument("Given element has the same ID as this group");
   }
   if (element->id().compare(0, id_.length(), id_) != 0) {
-    throw invalid_argument("Given element is not part of this GroupImpl");
+    throw invalid_argument("Given element is not part of this group");
   }
 
   auto sub_id = element->id().substr(id_.size());
@@ -103,7 +103,7 @@ void GroupImpl::addElement(const ElementPtr& element) {
     auto parent = this->element(id_ + sub_id.substr(0, group_marker));
     if (parent->type() != ElementType::Group) {
       throw invalid_argument(
-          "Parent element " + parent->id() + " is not a GroupImpl");
+          "Parent element " + parent->id() + " is not a group");
     }
     auto parent_function =
         dynamic_pointer_cast<GroupImpl>(get<GroupPtr>(parent->function()));
@@ -111,7 +111,7 @@ void GroupImpl::addElement(const ElementPtr& element) {
   } else {
     if (!elements_.try_emplace(sub_id, element).second) {
       throw logic_error(
-          "Element with id " + element->id() + " is already in this GroupImpl");
+          "Element with id " + element->id() + " is already in this group");
     }
     if (element->type() == ElementType::Group) {
       auto subgroup_id = sub_id.substr(0, sub_id.find('.'));
