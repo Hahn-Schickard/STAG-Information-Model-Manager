@@ -82,6 +82,14 @@ struct GroupTests : public testing::Test {
 };
 
 TEST_F(GroupTests, addElementThrows) {
+  auto print_element_ids = [this]() {
+    string result = "This device contains: \n";
+    tested->visit([&result](const ElementPtr& element) {
+      result += element->id() + "\n";
+    });
+    return result;
+  };
+
   EXPECT_THAT([&]() { tested->addElement(nullptr); },
       ThrowsMessage<invalid_argument>(HasSubstr("Given element is empty")));
 
@@ -93,7 +101,8 @@ TEST_F(GroupTests, addElementThrows) {
                 DataType::Opaque, []() { return true; })));
       },
       ThrowsMessage<invalid_argument>(
-          HasSubstr("Given element is not part of this group")));
+          HasSubstr("Given element is not part of this group")))
+      << print_element_ids();
 
   EXPECT_THAT(
       [&]() {
@@ -103,7 +112,8 @@ TEST_F(GroupTests, addElementThrows) {
                 DataType::Opaque, []() { return true; })));
       },
       ThrowsMessage<invalid_argument>(
-          HasSubstr("Given element is not part of this group")));
+          HasSubstr("Given element is not part of this group")))
+      << print_element_ids();
 
   EXPECT_THAT(
       [&]() {
@@ -113,7 +123,8 @@ TEST_F(GroupTests, addElementThrows) {
                 DataType::Opaque, []() { return true; })));
       },
       ThrowsMessage<invalid_argument>(
-          HasSubstr("Given element has the same ID as this group")));
+          HasSubstr("Given element has the same ID as this group")))
+      << print_element_ids();
 
   EXPECT_THAT(
       [&]() {
@@ -123,7 +134,8 @@ TEST_F(GroupTests, addElementThrows) {
                 DataType::Opaque, []() { return true; })));
       },
       ThrowsMessage<logic_error>(HasSubstr(
-          "Element with id " + base_id + ".0 is already in this group")));
+          "Element with id " + base_id + ".0 is already in this group")))
+      << print_element_ids();
 }
 
 TEST_F(GroupTests, throwsElementNotFound) {
