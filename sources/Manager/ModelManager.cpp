@@ -24,6 +24,10 @@ vector<DevicePtr> ModelManager::getModelSnapshot() const {
 }
 
 void ModelManager::registerTechnologyAdapter(const TAI_Ptr& adapter) {
+  if (!adapter) {
+    throw invalid_argument("Can not register an empty adapter");
+  }
+
   if (find(adapter) == adapters_.end()) {
     adapter->setInterfaces(
         []() { return std::make_shared<Builder>(); }, registry_);
@@ -34,6 +38,10 @@ void ModelManager::registerTechnologyAdapter(const TAI_Ptr& adapter) {
 }
 
 void ModelManager::deregisterTechnologyAdapter(const TAI_Ptr& adapter) {
+  if (!adapter) {
+    throw invalid_argument("Can not deregister an empty adapter");
+  }
+
   if (auto iterator = find(adapter); iterator != adapters_.end()) {
     adapters_.erase(iterator);
   } else {
