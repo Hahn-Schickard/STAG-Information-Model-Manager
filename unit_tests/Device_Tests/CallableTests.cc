@@ -117,6 +117,28 @@ TEST_P(CallableTests, canAsyncCall) {
   }
 }
 
+TEST_P(CallableTests, canTimeout) {
+  if (expected.supportsResult()) {
+    promise<DataVariant> promised_result;
+    EXPECT_CALL(mock_async, Call(expected.arg_values))
+        .Times(Exactly(2))
+        .WillOnce([&promised_result](const Parameters&) {
+          // Cause a timeout
+          auto result_future = ResultFuture(
+              make_shared<uintmax_t>(0), promised_result.get_future());
+          return result_future;
+        });
+
+    EXPECT_THROW(tested->call(expected.arg_values, 200), CallTimedout);
+    promised_result.set_value(true); // avoid broken future exception
+
+    EXPECT_EQ(tested->call(expected.arg_values, 200), expected.result.value());
+  } else {
+    EXPECT_THROW(
+        tested->call(expected.arg_values, 200), ResultReturningNotSupported);
+  }
+}
+
 TEST_P(CallableTests, canCancelCall) {
   if (expected.supportsResult()) {
     promise<DataVariant> promised_result;
