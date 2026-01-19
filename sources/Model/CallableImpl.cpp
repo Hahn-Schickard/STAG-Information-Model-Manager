@@ -38,9 +38,6 @@ DataVariant CallableImpl::call(uintmax_t timeout) const {
 DataVariant CallableImpl::call(
     const Parameters& parameters, uintmax_t timeout) const {
   canReturn();
-  if (!call_) {
-    throw ResultReturningNotSupported();
-  }
   checkParameters(parameters, supported_params_);
 
   auto result_future = call_(parameters);
@@ -55,9 +52,6 @@ DataVariant CallableImpl::call(
 [[nodiscard]] ResultFuture CallableImpl::asyncCall(
     const Parameters& parameters) const {
   canReturn();
-  if (!call_) {
-    throw ResultReturningNotSupported();
-  }
   checkParameters(parameters, supported_params_);
 
   return call_(parameters);
@@ -65,9 +59,6 @@ DataVariant CallableImpl::call(
 
 void CallableImpl::cancelAsyncCall(uintmax_t call_id) const {
   canReturn();
-  if (!cancel_) {
-    throw ResultReturningNotSupported();
-  }
 
   cancel_(call_id);
 }
