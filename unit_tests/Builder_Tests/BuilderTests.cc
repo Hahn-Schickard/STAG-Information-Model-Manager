@@ -1,10 +1,3 @@
-#include "CallableImpl.hpp"
-#include "DeviceImpl.hpp"
-#include "ElementImpl.hpp"
-#include "ObservableImpl.hpp"
-#include "ReadableImpl.hpp"
-#include "WritableImpl.hpp"
-
 #include "Builder.hpp"
 
 #include <gmock/gmock.h>
@@ -27,81 +20,82 @@ TEST(BuilderTests, throwsDeviceBuildInProgress) {
       DeviceBuildInProgress);
 }
 
+constexpr auto RETURNS_TRUE = []() { return true; };
+constexpr auto WRITES_NOTHING = [](const DataVariant&) {};
+constexpr auto ENABLES_OBSERVATION = [](bool) {};
+constexpr auto EXECUTES_NOTHING = [](const Parameters&) {};
+constexpr auto CALLS_NOTHING = [](const Parameters&) {
+  promise<DataVariant> promised_result;
+  auto result_future =
+      ResultFuture(make_shared<uintmax_t>(0), promised_result.get_future());
+  promised_result.set_exception(
+      make_exception_ptr(runtime_error("Test exception")));
+  return result_future;
+};
+constexpr auto CANCELS_NOTHING = [](uintmax_t) {};
+
 TEST(BuilderTests, throwsDeviceInfoNotSet) {
   auto builder = make_shared<Builder>();
-  auto returns_true = []() { return true; };
-  auto writes_nothing = [](const DataVariant&) {};
-  auto enables_observation = [](bool) {};
-  auto executes_nothing = [](const Parameters&) {};
-  auto calls_nothing = [](const Parameters&) {
-    promise<DataVariant> promised_result;
-    auto result_future =
-        ResultFuture(make_shared<uintmax_t>(0), promised_result.get_future());
-    promised_result.set_exception(
-        make_exception_ptr(runtime_error("Test exception")));
-    return result_future;
-  };
-  auto cancels_nothing = [](uintmax_t) {};
 
   EXPECT_THROW(builder->addGroup(BuildInfo{"group_name"}), DeviceInfoNotSet);
 
   EXPECT_THROW(builder->addGroup("group_id", BuildInfo{}), DeviceInfoNotSet);
 
   EXPECT_THROW(builder->addReadable(
-                   BuildInfo{"readable_name"}, DataType::Boolean, returns_true),
+                   BuildInfo{"readable_name"}, DataType::Boolean, RETURNS_TRUE),
       DeviceInfoNotSet);
 
   EXPECT_THROW(builder->addReadable(
-                   "group_id", BuildInfo{}, DataType::Boolean, returns_true),
+                   "group_id", BuildInfo{}, DataType::Boolean, RETURNS_TRUE),
       DeviceInfoNotSet);
 
   EXPECT_THROW(
       builder->addWritable(
-          BuildInfo{}, DataType::Boolean, writes_nothing, returns_true),
+          BuildInfo{}, DataType::Boolean, WRITES_NOTHING, RETURNS_TRUE),
       DeviceInfoNotSet);
 
   EXPECT_THROW(builder->addWritable("group_id",
                    BuildInfo{},
                    DataType::Boolean,
-                   writes_nothing,
-                   returns_true),
+                   WRITES_NOTHING,
+                   RETURNS_TRUE),
       DeviceInfoNotSet);
 
   EXPECT_THROW(
       builder->addObservable(
-          BuildInfo{}, DataType::Boolean, returns_true, enables_observation),
+          BuildInfo{}, DataType::Boolean, RETURNS_TRUE, ENABLES_OBSERVATION),
       DeviceInfoNotSet);
 
   EXPECT_THROW(builder->addObservable("group_id",
                    BuildInfo{},
                    DataType::Boolean,
-                   returns_true,
-                   enables_observation),
+                   RETURNS_TRUE,
+                   ENABLES_OBSERVATION),
       DeviceInfoNotSet);
 
   EXPECT_THROW(builder->addCallable(BuildInfo{},
                    DataType::Boolean,
-                   executes_nothing,
-                   calls_nothing,
-                   cancels_nothing,
+                   EXECUTES_NOTHING,
+                   CALLS_NOTHING,
+                   CANCELS_NOTHING,
                    ParameterTypes{}),
       DeviceInfoNotSet);
 
   EXPECT_THROW(builder->addCallable("group_id",
                    BuildInfo{},
                    DataType::Boolean,
-                   executes_nothing,
-                   calls_nothing,
-                   cancels_nothing,
+                   EXECUTES_NOTHING,
+                   CALLS_NOTHING,
+                   CANCELS_NOTHING,
                    ParameterTypes{}),
       DeviceInfoNotSet);
 
   EXPECT_THROW(
-      builder->addCallable(BuildInfo{}, executes_nothing, ParameterTypes{}),
+      builder->addCallable(BuildInfo{}, EXECUTES_NOTHING, ParameterTypes{}),
       DeviceInfoNotSet);
 
   EXPECT_THROW(builder->addCallable(
-                   "group_id", BuildInfo{}, executes_nothing, ParameterTypes{}),
+                   "group_id", BuildInfo{}, EXECUTES_NOTHING, ParameterTypes{}),
       DeviceInfoNotSet);
 
   EXPECT_THROW(builder->result(), DeviceInfoNotSet);
@@ -220,10 +214,9 @@ TEST(BuilderTests, throwsInvalidArgument) {
 
   EXPECT_THAT(
       [builder_ptr]() {
-        builder_ptr->addObservable(
-            BuildInfo{"observable_name"},
+        builder_ptr->addObservable(BuildInfo{"observable_name"},
             DataType::Boolean,
-            []() { return true; },
+            RETURNS_TRUE,
             nullptr);
       },
       ThrowsMessage<invalid_argument>(
@@ -271,10 +264,9 @@ TEST(BuilderTests, throwsInvalidArgument) {
 
   EXPECT_THAT(
       [builder_ptr]() {
-        builder_ptr->addCallable(
-            BuildInfo{"callable_name"},
+        builder_ptr->addCallable(BuildInfo{"callable_name"},
             DataType::Boolean,
-            [](const Parameters&) {},
+            EXECUTES_NOTHING,
             nullptr,
             nullptr);
       },
@@ -283,17 +275,10 @@ TEST(BuilderTests, throwsInvalidArgument) {
   // NOLINTBEGIN(modernize-use-nullptr)
   EXPECT_THAT(
       [builder_ptr]() {
-        builder_ptr->addCallable(
-            BuildInfo{"callable_name"},
+        builder_ptr->addCallable(BuildInfo{"callable_name"},
             DataType::Boolean,
-            [](const Parameters&) {},
-            [](const Parameters&) {
-              promise<DataVariant> promise;
-              promise.set_exception(
-                  make_exception_ptr(CallCanceled(0, "Mock Builder Test")));
-              // we need to set it as 0, not nullptr
-              return ResultFuture(0, promise.get_future());
-            },
+            EXECUTES_NOTHING,
+            CALLS_NOTHING,
             nullptr);
       },
       ThrowsMessage<invalid_argument>(
@@ -308,40 +293,31 @@ TEST(BuilderTests, returnsCorrectID) {
 
   EXPECT_EQ(builder->addGroup(BuildInfo{"group_name"}), "base_id:0");
 
-  EXPECT_EQ(
-      builder->addReadable(
-          BuildInfo{"readable_name"}, DataType::Boolean, []() { return true; }),
+  EXPECT_EQ(builder->addReadable(
+                BuildInfo{"readable_name"}, DataType::Boolean, RETURNS_TRUE),
       "base_id:1");
 
-  EXPECT_EQ(builder->addWritable(BuildInfo{"writable_name"},
-                DataType::Boolean,
-                [](const DataVariant&) {}),
+  EXPECT_EQ(builder->addWritable(
+                BuildInfo{"writable_name"}, DataType::Boolean, WRITES_NOTHING),
       "base_id:2");
 
   EXPECT_EQ(builder
-                ->addObservable(
-                    BuildInfo{"observable_name"},
+                ->addObservable(BuildInfo{"observable_name"},
                     DataType::Boolean,
-                    []() { return true; },
-                    [](bool) {})
+                    RETURNS_TRUE,
+                    ENABLES_OBSERVATION)
                 .first,
       "base_id:3");
 
-  EXPECT_EQ(builder->addCallable(
-                BuildInfo{"executable_name"}, [](const Parameters&) {}),
+  EXPECT_EQ(
+      builder->addCallable(BuildInfo{"executable_name"}, EXECUTES_NOTHING),
       "base_id:4");
 
-  EXPECT_EQ(builder->addCallable(
-                BuildInfo{"callable_name"},
+  EXPECT_EQ(builder->addCallable(BuildInfo{"callable_name"},
                 DataType::Boolean,
-                [](const Parameters&) {},
-                [](const Parameters&) {
-                  promise<DataVariant> promise;
-                  promise.set_exception(
-                      make_exception_ptr(CallCanceled(0, "Mock Builder Test")));
-                  return ResultFuture(0, promise.get_future());
-                },
-                [](uintmax_t) {}),
+                EXECUTES_NOTHING,
+                CALLS_NOTHING,
+                CANCELS_NOTHING),
       "base_id:5");
 
   // Subgroup tests
@@ -351,42 +327,34 @@ TEST(BuilderTests, returnsCorrectID) {
   EXPECT_EQ(builder->addReadable("base_id:0.0",
                 BuildInfo{"readable_name"},
                 DataType::Boolean,
-                []() { return true; }),
+                RETURNS_TRUE),
       "base_id:0.0.0");
 
   EXPECT_EQ(builder->addWritable("base_id:0.0",
                 BuildInfo{"writable_name"},
                 DataType::Boolean,
-                [](const DataVariant&) {}),
+                WRITES_NOTHING),
       "base_id:0.0.1");
 
   EXPECT_EQ(builder
-                ->addObservable(
-                    "base_id:0.0",
+                ->addObservable("base_id:0.0",
                     BuildInfo{"observable_name"},
                     DataType::Boolean,
-                    []() { return true; },
-                    [](bool) {})
+                    RETURNS_TRUE,
+                    ENABLES_OBSERVATION)
                 .first,
       "base_id:0.0.2");
 
-  EXPECT_EQ(builder->addCallable("base_id:0.0",
-                BuildInfo{"executable_name"},
-                [](const Parameters&) {}),
+  EXPECT_EQ(builder->addCallable(
+                "base_id:0.0", BuildInfo{"executable_name"}, EXECUTES_NOTHING),
       "base_id:0.0.3");
 
-  EXPECT_EQ(builder->addCallable(
-                "base_id:0.0",
+  EXPECT_EQ(builder->addCallable("base_id:0.0",
                 BuildInfo{"callable_name"},
                 DataType::Boolean,
-                [](const Parameters&) {},
-                [](const Parameters&) {
-                  promise<DataVariant> promise;
-                  promise.set_exception(
-                      make_exception_ptr(CallCanceled(0, "Mock Builder Test")));
-                  return ResultFuture(0, promise.get_future());
-                },
-                [](uintmax_t) {}),
+                EXECUTES_NOTHING,
+                CALLS_NOTHING,
+                CANCELS_NOTHING),
       "base_id:0.0.4");
   // NOLINTEND(modernize-use-nullptr)
   EXPECT_NO_THROW(builder->result());
