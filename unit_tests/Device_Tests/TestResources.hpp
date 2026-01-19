@@ -4,6 +4,16 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+namespace Information_Model {
+inline std::string PrintToString(const DataVariant& param) {
+  return toString(param);
+}
+
+inline void PrintTo(const DataVariant& param, std::ostream* os) {
+  *os << toString(param);
+}
+} // namespace Information_Model
+
 namespace Information_Model_Manager::testing {
 inline Information_Model::DataVariant otherThan(
     const Information_Model::DataVariant& input) {
@@ -32,11 +42,6 @@ inline Information_Model::DataVariant otherThan(
       }); // NOLINTEND(readability-magic-numbers)
 }
 
-inline void PrintTo(
-    const Information_Model::DataVariant& param, std::ostream* os) {
-  *os << toString(param);
-}
-
 // NOLINTNEXTLINE(readability-identifier-naming)
 MATCHER_P(ExceptionPointee, exception_type, "") {
   try {
@@ -47,5 +52,4 @@ MATCHER_P(ExceptionPointee, exception_type, "") {
         ex.what() == exception_type.what();
   }
 }
-
 } // namespace Information_Model_Manager::testing
