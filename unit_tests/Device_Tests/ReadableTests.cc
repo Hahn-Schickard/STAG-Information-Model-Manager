@@ -1,4 +1,5 @@
 #include "ReadableImpl.hpp"
+#include "TestResources.hpp"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

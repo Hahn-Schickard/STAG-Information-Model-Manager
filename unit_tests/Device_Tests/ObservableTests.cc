@@ -1,7 +1,7 @@
 #include "ObservableImpl.hpp"
+#include "TestResources.hpp"
 
 #include <Event_Model/ThreadPool.hpp>
-#include <Variant_Visitor/Visitor.hpp>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -10,35 +10,6 @@ namespace Information_Model_Manager::testing {
 using namespace std;
 using namespace ::testing;
 using namespace Information_Model;
-
-// NOLINTNEXTLINE(readability-identifier-naming)
-MATCHER_P(ExceptionPointee, exception_type, "") {
-  try {
-    rethrow_exception(arg);
-    return false;
-  } catch (const exception& ex) {
-    return typeid(ex) == typeid(exception_type) &&
-        ex.what() == exception_type.what();
-  }
-}
-
-DataVariant otherThan(const DataVariant& input) {
-  return Variant_Visitor::match(
-      input, // NOLINTBEGIN(readability-magic-numbers)
-      [](bool) -> DataVariant {
-        return std::vector<uint8_t>{0x00, 0x01, 0xAB};
-      },
-      [](intmax_t) -> DataVariant {
-        return Timestamp{2025, 9, 10, 13, 01, 24, 32};
-      },
-      [](uintmax_t) -> DataVariant { return std::string("A new value"); },
-      [](double) -> DataVariant { return uintmax_t{9789121}; },
-      [](Timestamp) -> DataVariant { return intmax_t{-698872}; },
-      [](const std::vector<uint8_t>&) -> DataVariant { return true; },
-      [](const std::string&) -> DataVariant {
-        return 20.3512;
-      }); // NOLINTEND(readability-magic-numbers)
-}
 
 struct ObservableTests : public TestWithParam<DataVariant> {
   ObservableTests() : expected(GetParam()) {
