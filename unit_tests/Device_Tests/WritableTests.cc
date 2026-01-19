@@ -1,3 +1,4 @@
+#include "TestResources.hpp"
 #include "WritableImpl.hpp"
 
 #include <gmock/gmock.h>
@@ -76,6 +77,27 @@ TEST_P(WritableTests, canReadTwice) {
     EXPECT_EQ(tested->read(), expected.value.value());
     EXPECT_EQ(tested->read(), expected.value.value());
   }
+}
+
+TEST_P(WritableTests, canWrite) {
+  // None and Unknown values are t supported in this test case
+  auto value = setVariant(expected.type).value();
+
+  EXPECT_CALL(mock_writable, Call(value)).Times(Exactly(1));
+
+  EXPECT_NO_THROW(tested->write(value));
+}
+
+TEST_P(WritableTests, canWriteTwice) {
+  // None and Unknown values are t supported in this test case
+  auto value = setVariant(expected.type).value();
+  auto other_value = otherThan(value);
+
+  EXPECT_CALL(mock_writable, Call(value)).Times(Exactly(1));
+  EXPECT_CALL(mock_writable, Call(other_value)).Times(Exactly(1));
+
+  EXPECT_NO_THROW(tested->write(value););
+  EXPECT_NO_THROW(tested->write(other_value););
 }
 
 // NOLINTBEGIN(readability-magic-numbers)
