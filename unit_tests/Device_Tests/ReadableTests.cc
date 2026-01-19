@@ -9,6 +9,11 @@ using namespace std;
 using namespace ::testing;
 using namespace Information_Model;
 
+TEST(ReadableCtorTests, throwsInvalidArgument) {
+  EXPECT_THROW(
+      make_shared<ReadableImpl>(DataType::None, nullptr), invalid_argument);
+}
+
 struct ReadableTests : public TestWithParam<DataVariant> {
   ReadableTests() : expected(GetParam()) {
     tested = make_shared<ReadableImpl>(
