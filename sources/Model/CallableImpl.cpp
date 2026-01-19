@@ -48,8 +48,7 @@ DataVariant CallableImpl::call(
       future_status::ready) {
     return result_future.get();
   } else {
-    // @todo: Save Meta info for element name
-    throw CallTimedout("ElementName");
+    throw CallTimedout("metric");
   }
 }
 
