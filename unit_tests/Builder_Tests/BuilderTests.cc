@@ -137,6 +137,17 @@ TEST(BuilderTests, throwsInvalidArgument) {
 
   EXPECT_THAT(
       [builder_ptr]() {
+        builder_ptr->addReadable("Nonsense parent ID",
+            BuildInfo{"readable_name"},
+            DataType::Boolean,
+            RETURNS_TRUE);
+      },
+      ThrowsMessage<invalid_argument>(
+          HasSubstr("No parent group with ID Nonsense parent ID exists. Build "
+                    "parent group first")));
+
+  EXPECT_THAT(
+      [builder_ptr]() {
         builder_ptr->addReadable(
             BuildInfo{"readable_name"}, DataType::None, nullptr);
       },
