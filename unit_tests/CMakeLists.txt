@@ -7,11 +7,11 @@ file(GLOB TestSuite "${CMAKE_CURRENT_LIST_DIR}/TestSuite/*")
 
 file(GLOB Device_Test_Suite "${CMAKE_CURRENT_LIST_DIR}/Device_Tests/*")
 file(GLOB Builder_Test_Suite "${CMAKE_CURRENT_LIST_DIR}/Builder_Tests/*")
-file(GLOB Model_Event_Source_Tests "${CMAKE_CURRENT_LIST_DIR}/Model_Event_Source_Tests/*")
+file(GLOB Registry_Tests "${CMAKE_CURRENT_LIST_DIR}/Registry_Tests/*")
 list(APPEND TEST_SUITES
     ${Device_Test_Suite}
     ${Builder_Test_Suite}
-    ${Model_Event_Source_Tests}
+    ${Registry_Tests}
 )
 #@- =========================== END OF USER CONFIGURATION ===============================
 add_executable(${THIS})

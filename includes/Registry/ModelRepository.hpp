@@ -49,6 +49,8 @@ private:
   EventSourcePtr source_;
   DevicesMap devices_;
 };
+
+using ModelRepositoryPtr = std::shared_ptr<ModelRepository>;
 } // namespace Information_Model_Manager
 
 #endif //__MODEL_REPOSITORY_HPP
