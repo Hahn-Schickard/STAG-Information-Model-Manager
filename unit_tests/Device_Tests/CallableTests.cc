@@ -93,9 +93,14 @@ TEST_P(CallableTests, canExecute) {
 
 TEST_P(CallableTests, canCall) {
   if (expected.supportsResult()) {
+    EXPECT_CALL(mock_async, Call(_)).Times(Exactly(1));
+    EXPECT_EQ(tested->call(200), expected.result.value());
+
     EXPECT_CALL(mock_async, Call(expected.arg_values)).Times(Exactly(1));
     EXPECT_EQ(tested->call(expected.arg_values, 200), expected.result.value());
   } else {
+    EXPECT_THROW(tested->call(200), ResultReturningNotSupported);
+
     EXPECT_THROW(
         tested->call(expected.arg_values, 200), ResultReturningNotSupported);
   }
