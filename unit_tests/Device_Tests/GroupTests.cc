@@ -17,7 +17,7 @@ struct GroupTests : public testing::Test {
   GroupTests() {
     auto readable =
         make_shared<ReadableImpl>(DataType::Boolean, []() { return true; });
-    auto readable_id = tested->generateID();
+    readable_id = tested->generateID();
     auto readable_element = make_shared<ElementImpl>(
         readable_id, BuildInfo{"readable", "just a readable"}, readable);
     tested->addElement(readable_element);
@@ -74,6 +74,7 @@ struct GroupTests : public testing::Test {
 
   string base_id = "based_id:0";
   GroupImplPtr tested = make_shared<GroupImpl>(base_id);
+  string readable_id;
   string sub_group_id;
   ElementPtr sub_element;
   GroupImplPtr sub_sub_group;
@@ -92,6 +93,16 @@ TEST_F(GroupTests, addElementThrows) {
 
   EXPECT_THAT([&]() { tested->addElement(nullptr); },
       ThrowsMessage<invalid_argument>(HasSubstr("Given element is empty")));
+
+  EXPECT_THAT(
+      [&]() {
+        tested->addElement(make_shared<ElementImpl>(readable_id + ".0",
+            BuildInfo{"a", "b"},
+            make_shared<ReadableImpl>(
+                DataType::Opaque, []() { return true; })));
+      },
+      ThrowsMessage<invalid_argument>(
+          HasSubstr("Parent element " + readable_id + " is not a group")));
 
   EXPECT_THAT(
       [&]() {
