@@ -48,6 +48,8 @@ private:
   TechnologyAdaptersList adapters_;
   ModelRepositoryPtr registry_ = std::make_shared<ModelRepository>();
 };
+
+using ModelManagerPtr = std::shared_ptr<ModelManager>;
 } // namespace Information_Model_Manager
 
 #endif //__MODEL_MANAGER_HPP
