@@ -117,6 +117,33 @@ TEST_P(CallableTests, canAsyncCall) {
   }
 }
 
+TEST_P(CallableTests, canCancelCall) {
+  if (expected.supportsResult()) {
+    promise<DataVariant> promised_result;
+    EXPECT_CALL(mock_async, Call(expected.arg_values))
+        .Times(Exactly(1))
+        .WillOnce([&promised_result](const Parameters&) {
+          auto result_future = ResultFuture(
+              make_shared<uintmax_t>(0), promised_result.get_future());
+          return result_future;
+        });
+    EXPECT_CALL(mock_cancel, Call(_))
+        .Times(Exactly(1))
+        .WillOnce([&promised_result](uintmax_t id) {
+          promised_result.set_exception(
+              make_exception_ptr(CallCanceled(id, "Callable")));
+        });
+    auto result_future = tested->asyncCall(expected.arg_values);
+
+    EXPECT_NO_THROW(tested->cancelAsyncCall(result_future.id()););
+
+    EXPECT_THROW(result_future.get(), CallCanceled);
+  } else {
+    EXPECT_THROW(
+        tested->asyncCall(expected.arg_values), ResultReturningNotSupported);
+  }
+}
+
 // NOLINTBEGIN(readability-magic-numbers)
 INSTANTIATE_TEST_SUITE_P(CallableTestsValues,
     CallableTests,
