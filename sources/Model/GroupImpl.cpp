@@ -58,7 +58,7 @@ ElementPtr GroupImpl::element(const string& ref_id) const {
     if (auto it = subgroups_.find(subgroup_id); it != subgroups_.end()) {
       return it->second->element(ref_id);
     } else {
-      // no subGroupImpl containing given id exists
+      // no subgroup containing given id exists
       throw ElementNotFound(ref_id);
     }
   }
