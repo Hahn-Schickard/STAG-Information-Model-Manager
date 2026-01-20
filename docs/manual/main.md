@@ -4,4 +4,8 @@ STAG Information Model Manager, provides concrete [Information Model](https://gi
 
 This module is only meant to be used by the System Runner project and **SHOULD NOT** be used on it's own. For this reason, no usage manual will be provided.
 
+### For maintainers
+
 A high level overview of [Information Model](https://git.hahn-schickard.de/hahn-schickard/software-sollutions/application-engineering/internal/opc_ua_dev_group/gateway-project/information-model) implementation can be found in [Model Implementation](#model_implementation) chapter. 
+
+An implementation overview of `Technology Adapters` and `Data Consumer Adapters` management as well as communication between them can be found in [Adapter Management](#adapter_management) chapter.
