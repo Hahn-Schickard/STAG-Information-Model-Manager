@@ -37,31 +37,33 @@ MetaInfo --|> Element
 together {
   interface Group as "**<<Information_Model>>**\nGroup"
   interface Readable as "**<<Information_Model>>**\nReadable"
-  interface Writable as "**<<Information_Model>>**\nWritable"
   interface Observable as "**<<Information_Model>>**\nObservable"
+  interface Writable as "**<<Information_Model>>**\nWritable"
   interface Callable as "**<<Information_Model>>**\nCallable"
 }
 
 class ElementImpl as "**<<Information_Model_Manager>>**\nElementImpl"
 class GroupImpl as "**<<Information_Model_Manager>>**\nGroupImpl"
 class ReadableImpl as "**<<Information_Model_Manager>>**\nReadableImpl"
-class WritableImpl as "**<<Information_Model_Manager>>**\nWritableImpl"
 class ObservableImpl as "**<<Information_Model_Manager>>**\nObservableImpl"
+class WritableImpl as "**<<Information_Model_Manager>>**\nWritableImpl"
 class CallableImpl as "**<<Information_Model_Manager>>**\nCallableImpl"
 
 Element <|.left. ElementImpl
 Device o-- Group
 
 Element *-- Readable
-Element *-- Writable
 Element *-- Observable
+Element *-- Writable
 Element *-- Callable
 Element --* Group
 Element o-- Group
 
 Readable <|.down. ReadableImpl
-Writable <|.down. WritableImpl
 Observable <|.down. ObservableImpl
+ObservableImpl o-right- ReadableImpl
+Writable <|.down. WritableImpl
 Callable <|.down. CallableImpl
 Group <|.down. GroupImpl
+
 @enduml
