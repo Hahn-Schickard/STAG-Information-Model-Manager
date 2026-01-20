@@ -14,8 +14,8 @@ int main() {
     LoggerManager::initialise(makeDefaultRepository());
     try {
       auto technology_manager = ModelManager();
-      if (!technology_manager.getModelEventSource()) {
-        throw runtime_error("Event source can not be null ptr");
+      if (!technology_manager.getModelDataConnector()) {
+        throw runtime_error("Model Data Connector can not be null ptr");
       }
       cout << "Integration test succeeded." << endl;
 

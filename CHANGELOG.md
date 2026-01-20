@@ -1,4 +1,21 @@
 # Changelog
+## [0.5.0] - 2025.01.20
+### Changed
+ - `DeviceBuilder` into `Builder` to conform to `Information_Model` v0.5
+ - `DeviceElementGroupImplementation` into `GroupIml` to conform to `Information_Model` v0.5
+ - `DeviceImplementation` into `DeviceImpl` to conform to `Information_Model` v0.5
+ - `FunctionImplementation` into `CallableImpl` to conform to `Information_Model` v0.5
+ - `MetricImplementation` into `ReadableImpl` to conform to `Information_Model` v0.5
+ - `ObservableMetricImplementation` into `ObservableImpl` to conform to `Information_Model` v0.5
+ - `WritableMetricImplementation` into `WritableImpl` to conform to `Information_Model` v0.5
+ - `Data_Consumer_Adapter_Interface` to v0.4
+ - `Technology_Adapter_Interface` to v0.5
+ - `Event_Model` to v0.5
+ - `ModelManager` & `ModelRepository` to use the new event model implementation
+
+### Removed
+ - `ElementMetaInfo` 
+
 ## [0.4.0] - 2025.03.11
 ### Added
  - windows support

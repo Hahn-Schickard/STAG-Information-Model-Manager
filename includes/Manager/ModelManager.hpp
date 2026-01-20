@@ -1,55 +1,55 @@
-#ifndef __INFORMATION_MODEL_MANAGER_HPP
-#define __INFORMATION_MODEL_MANAGER_HPP
+#ifndef __MODEL_MANAGER_HPP
+#define __MODEL_MANAGER_HPP
 
 #include "ModelRepository.hpp"
-#include "Technology_Adapter_Interface/TechnologyAdapterInterface.hpp"
 
-#include "HaSLL/Logger.hpp"
+#include <Technology_Adapter_Interface/ResponseRepository.hpp>
+#include <Technology_Adapter_Interface/TechnologyAdapter.hpp>
 
 #include <memory>
 #include <stdexcept>
 #include <vector>
 
-using ModelEventSourcePtr = std::shared_ptr<Event_Model::EventSourceInterface<
-    Data_Consumer_Adapter::ModelRepositoryEvent>>;
-
 namespace Information_Model_Manager {
+using ModelEventSourcePtr = std::shared_ptr<
+    Event_Model::SourceInterface<Data_Consumer_Adapter::RegistryChangePtr>>;
 
 struct TechnologyAdapterRegistered : std::runtime_error {
-  TechnologyAdapterRegistered(const std::string& name)
+  explicit TechnologyAdapterRegistered(const std::string& name)
       : runtime_error(name + " Technology Adapter is already registered") {}
 };
 
 struct TechnologyAdapterNotFound : std::runtime_error {
-  TechnologyAdapterNotFound(const std::string& name)
+  explicit TechnologyAdapterNotFound(const std::string& name)
       : runtime_error(name + " Technology Adapter is not registered") {}
 };
 
 struct ModelManager {
-  ModelManager();
+  using TAI_Ptr = Technology_Adapter::TechnologyAdapterPtr;
 
-  ModelEventSourcePtr getModelEventSource();
-  std::vector<Information_Model::DevicePtr> getModelSnapshot();
+  ModelManager() = default;
 
-  void registerTechnologyAdapter(const Technology_Adapter::TAI_Ptr& adapter);
-  void deregisterTechnologyAdapter(const Technology_Adapter::TAI_Ptr& adapter);
+  ~ModelManager() = default;
+
+  Data_Consumer_Adapter::DataConnector getModelDataConnector() const;
+
+  std::vector<Information_Model::DevicePtr> getModelSnapshot() const;
+
+  void registerTechnologyAdapter(const TAI_Ptr& adapter);
+
+  void deregisterTechnologyAdapter(const TAI_Ptr& adapter);
 
 private:
-  using TechnologyAdaptersList = std::vector<Technology_Adapter::TAI_Ptr>;
-  using UniqueDeviceBuilderPtr =
-      Technology_Adapter::TAI::UniqueDeviceBuilderPtr;
-  using ModelRepositoryPtr =
-      std::shared_ptr<Information_Model_Manager::ModelRepository>;
+  using TechnologyAdaptersList = std::vector<TAI_Ptr>;
+  using ModelRepositoryPtr = std::shared_ptr<ModelRepository>;
 
-  UniqueDeviceBuilderPtr makeBuilder();
+  TechnologyAdaptersList::iterator find(const TAI_Ptr& adapter);
 
-  TechnologyAdaptersList::iterator findTechnologyAdapter(
-      const Technology_Adapter::TAI_Ptr& adapter);
-
-  TechnologyAdaptersList technology_adapters_;
-  HaSLL::LoggerPtr logger_;
-  ModelRepositoryPtr registry_;
+  TechnologyAdaptersList adapters_;
+  ModelRepositoryPtr registry_ = std::make_shared<ModelRepository>();
 };
+
+using ModelManagerPtr = std::shared_ptr<ModelManager>;
 } // namespace Information_Model_Manager
 
-#endif //__INFORMATION_MODEL_MANAGER_HPP
+#endif //__MODEL_MANAGER_HPP

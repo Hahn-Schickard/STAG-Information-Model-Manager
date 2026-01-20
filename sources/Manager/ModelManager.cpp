@@ -1,52 +1,49 @@
 #include "ModelManager.hpp"
-#include "DeviceBuilder.hpp"
-#include "HaSLL/LoggerManager.hpp"
+#include "Builder.hpp"
 
 #include <algorithm>
 #include <functional>
 
+namespace Information_Model_Manager {
 using namespace std;
 using namespace Technology_Adapter;
 using namespace Information_Model;
-using namespace HaSLL;
 
-namespace Information_Model_Manager {
-ModelManager::ModelManager()
-    : logger_(LoggerManager::registerTypedLogger(this)),
-      registry_(make_shared<ModelRepository>()) {}
-
-ModelManager::TechnologyAdaptersList::iterator
-ModelManager::findTechnologyAdapter(const TAI_Ptr& adapter) {
-  return find(
-      technology_adapters_.begin(), technology_adapters_.end(), adapter);
+ModelManager::TechnologyAdaptersList::iterator ModelManager::find(
+    const TAI_Ptr& adapter) {
+  return std::find(adapters_.begin(), adapters_.end(), adapter);
 }
 
-ModelEventSourcePtr ModelManager::getModelEventSource() { return registry_; }
+Data_Consumer_Adapter::DataConnector
+ModelManager::getModelDataConnector() const {
+  return registry_->getModelDataConnector();
+}
 
-vector<DevicePtr> ModelManager::getModelSnapshot() {
+vector<DevicePtr> ModelManager::getModelSnapshot() const {
   return registry_->getModelSnapshot();
 }
 
-TAI::UniqueDeviceBuilderPtr ModelManager::makeBuilder() {
-  return std::make_unique<DeviceBuilder>(
-      bind(&ModelRepository::logException, registry_, ::placeholders::_1),
-      logger_);
-}
-
 void ModelManager::registerTechnologyAdapter(const TAI_Ptr& adapter) {
-  if (findTechnologyAdapter(adapter) == technology_adapters_.end()) {
-    adapter->setInterfaces(std::bind(&ModelManager::makeBuilder, this),
-        NonemptyModelRepositoryInterfacePtr(registry_));
-    technology_adapters_.push_back(adapter);
+  if (!adapter) {
+    throw invalid_argument("Can not register an empty adapter");
+  }
+
+  if (find(adapter) == adapters_.end()) {
+    adapter->setInterfaces(
+        []() { return std::make_shared<Builder>(); }, registry_);
+    adapters_.push_back(adapter);
   } else {
     throw TechnologyAdapterRegistered(adapter->name());
   }
 }
 
 void ModelManager::deregisterTechnologyAdapter(const TAI_Ptr& adapter) {
-  auto iterator = findTechnologyAdapter(adapter);
-  if (iterator != technology_adapters_.end()) {
-    technology_adapters_.erase(iterator);
+  if (!adapter) {
+    throw invalid_argument("Can not deregister an empty adapter");
+  }
+
+  if (auto iterator = find(adapter); iterator != adapters_.end()) {
+    adapters_.erase(iterator);
   } else {
     throw TechnologyAdapterNotFound(adapter->name());
   }
