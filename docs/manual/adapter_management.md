@@ -1,6 +1,6 @@
 # Adapter Management {#adapter_management}
 
-The diagram bellow depicts how `Technology Adapters` and `Data Consumer Adapters` are used within the `Information_Model_Manager` as well as how registered `Technology Adapter` and `Data Consumer Adapter` implementations communicate via the `Event Model`.
+The diagram bellow depicts how `Technology Adapters` and `Data Consumer Adapters` are used within the `Information_Model_Manager` as well as how the registered `Technology Adapter` and `Data Consumer Adapter` implementations communicate via the `Event Model`.
 
 @startuml
 hide members
